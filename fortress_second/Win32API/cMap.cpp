@@ -26,6 +26,7 @@ void cMap::Setup()
 		wall.PosX = 1035 + (i * 41);
 		wall.PosY = 365;
 		wall.isBreak = false;
+		wall.type = eBox;
 		vecWall.push_back(wall);
 	}
 
@@ -34,14 +35,16 @@ void cMap::Setup()
 		wall.PosX = 2315 + (i * 41);
 		wall.PosY = 365;
 		wall.isBreak = false;
+		wall.type = eWall;
 		vecWall.push_back(wall);
 	}
 
 	for (int i = 0; i < 14; ++i)
 	{
 		wall.PosX = 2235 + (i * 41);
-		wall.PosY = 203;
+		wall.PosY = 200;
 		wall.isBreak = false;
+		wall.type = eWall;
 		vecWall.push_back(wall);
 	}
 
@@ -50,16 +53,18 @@ void cMap::Setup()
 		if (i == 4)
 			continue;
 		wall.PosX = 2915 + (i * 41);
-		wall.PosY = 203;
+		wall.PosY = 200;
 		wall.isBreak = false;
+		wall.type = eWall;
 		vecWall.push_back(wall);
 	}
 
 	for (int i = 0; i < 6; ++i)
 	{
 		wall.PosX = 4995 + (i * 41);
-		wall.PosY = 203;
+		wall.PosY = 200;
 		wall.isBreak = false;
+		wall.type = eWall;
 		vecWall.push_back(wall);
 	}
 }
@@ -76,8 +81,8 @@ void cMap::Update()
 	{
 		if (iter->isBreak)
 		{
-			g_pPixelManager->DrawImage(m_pImgGround, m_pImgMagenta, iter->PosX, iter->PosY, 42, 43);
-			g_pPixelManager->DrawImage(m_pImgBackgoround, m_pImgDraw, iter->PosX, iter->PosY, 42, 43);
+			g_pPixelManager->DrawImage(m_pImgGround, m_pImgMagenta, iter->PosX, iter->PosY, 42, 44);
+			g_pPixelManager->DrawImage(m_pImgBackgoround, m_pImgDraw, iter->PosX, iter->PosY, 42, 44);
 			cout << iter->PosX << endl;
 			iter = vecWall.erase(iter);
 		}

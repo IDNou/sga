@@ -1,10 +1,17 @@
 #pragma once
 
+enum BoxType
+{
+	eWall = 0,
+	eBox
+};
+
 struct tagWall
 {
-	int PosX;
-	int PosY;
-	bool  isBreak;
+	int		PosX;
+	int		PosY;
+	BoxType type;
+	bool	isBreak;
 };
 
 class cMap

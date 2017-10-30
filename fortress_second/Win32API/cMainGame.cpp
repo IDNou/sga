@@ -27,6 +27,9 @@ void cMainGame::Setup()
 	m_pPlayer->Setup();
 	m_pPlayer->SetMap(m_pMap);
 	m_pPlayer->SetObject(m_pObject);
+	m_pObject->Setup();
+	m_pObject->SetPlayer(m_pPlayer);
+	m_pObject->SetMap(m_pMap);
 }
 
 void cMainGame::Update()
@@ -37,6 +40,7 @@ void cMainGame::Update()
 	{
 		m_pMap->Update();
 		m_pPlayer->Update();
+		m_pObject->Update();
 
 		if (m_pPlayer->GetIsDie())
 			m_isPlaying = false;
@@ -58,6 +62,7 @@ void cMainGame::Render()
 		m_pMap->Render();
 		MiniMapRender();
 		m_pPlayer->Render();
+		m_pObject->Render();
 	}
 	else
 	{
@@ -93,7 +98,7 @@ void cMainGame::LoadImageFromFile()
 	g_pImageManager->AddImage("MarioLeft", "images/mario_left.bmp", 105, 30, 4, 1, true, RGB(255, 0, 255));
 
 	/* ¸ó½ºÅÍ */
-	g_pImageManager->AddImage("MushRoom", "images/mushroom.bmp", 46, 24, 2, 1, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("MushRoom", "images/mushroom.bmp", 75, 60, 2, 1, true, RGB(255, 0, 255));
 
 }
 

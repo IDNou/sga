@@ -80,6 +80,7 @@ void cPlayer::Update()
 			if (m_pMap->GetMoveX() > 0)
 			{
 				m_pMap->SetMoveX(m_pMap->GetMoveX() - 5);
+				m_pObject->SetMoveGroundX(m_pMap->GetMoveX());
 			}
 			else
 				m_pPlayerImage->SetPosX(m_fPosX - 5.0f);
@@ -105,7 +106,7 @@ void cPlayer::Update()
 			if (m_pMap->GetMoveX() < m_pMapImg->GetFrameWidth() - 810)
 			{
 				m_pMap->SetMoveX(m_pMap->GetMoveX() + 5);
-				
+				m_pObject->SetMoveGroundX(m_pMap->GetMoveX());
 			}
 			else
 				m_pPlayerImage->SetPosX(m_fPosX + 5.0f);
@@ -141,7 +142,8 @@ void cPlayer::Update()
 
 			for (auto iter = m_pMap->GetVecWall().begin(); iter != m_pMap->GetVecWall().end(); ++iter)
 			{
-				if (IntersectRect(&rt, &RectMakeCenter(TprobeX, TprobeY, 2, 2),&RectMake(iter->PosX - (m_pMap->GetMoveX()+5), iter->PosY, 40, 40)))
+				if (IntersectRect(&rt, &RectMakeCenter(TprobeX, TprobeY, 2, 2),&RectMake(iter->PosX - (m_pMap->GetMoveX()+5), iter->PosY, 40, 40))
+					&& iter->type == eWall)
 				{
 					iter->isBreak = true;
 				}
@@ -179,12 +181,8 @@ void cPlayer::MiniRender()
 {
 	HPEN hPen = (HPEN)CreatePen(0, 3, RGB(255, 0, 0));
 	HPEN hSelectPen = (HPEN)SelectObject(g_hDC, hPen);
-#ifdef _DEBUG
-
 
 	EllipseMakeCenter(g_hDC, m_pPlayerImage->GetPosX(), m_pPlayerImage->GetPosY(), 10, 10);
-
-#endif // _DEBUG
 
 	DeleteObject(hSelectPen);
 	DeleteObject(hPen);
