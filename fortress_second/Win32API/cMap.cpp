@@ -26,7 +26,15 @@ void cMap::Setup()
 		wall.PosX = 1035 + (i * 41);
 		wall.PosY = 365;
 		wall.isBreak = false;
-		wall.type = eBox;
+		if (i == 2) {
+			wall.type = eMushRoomBox;
+			wall.MushRoomItemNum = 1;
+		}
+		else
+		{
+			wall.type = eBox;
+			wall.MushRoomItemNum = 0;
+		}
 		vecWall.push_back(wall);
 	}
 
@@ -36,6 +44,7 @@ void cMap::Setup()
 		wall.PosY = 365;
 		wall.isBreak = false;
 		wall.type = eWall;
+		wall.MushRoomItemNum = 0;
 		vecWall.push_back(wall);
 	}
 
@@ -45,6 +54,7 @@ void cMap::Setup()
 		wall.PosY = 200;
 		wall.isBreak = false;
 		wall.type = eWall;
+		wall.MushRoomItemNum = 0;
 		vecWall.push_back(wall);
 	}
 
@@ -56,6 +66,7 @@ void cMap::Setup()
 		wall.PosY = 200;
 		wall.isBreak = false;
 		wall.type = eWall;
+		wall.MushRoomItemNum = 0;
 		vecWall.push_back(wall);
 	}
 
@@ -65,6 +76,7 @@ void cMap::Setup()
 		wall.PosY = 200;
 		wall.isBreak = false;
 		wall.type = eWall;
+		wall.MushRoomItemNum = 0;
 		vecWall.push_back(wall);
 	}
 }
@@ -76,6 +88,10 @@ void cMap::Update()
 		g_pPixelManager->RemoveBrush(m_pImgGround, g_ptMouse.x, g_ptMouse.y, 40);
 		g_pPixelManager->RemoveBrush(m_pImgBackgoround, g_ptMouse.x, g_ptMouse.y, 40);
 	}*/
+	/*if (g_pKeyManager->isStayKeyDown(VK_RBUTTON)) {
+		g_pPixelManager->DrawImage(m_pImgGround, m_pImgMagenta, g_ptMouse.x + moveBackgrounX, g_ptMouse.y, 40, 40);
+		g_pPixelManager->DrawImage(m_pImgBackgoround, m_pImgMagenta, g_ptMouse.x + moveBackgrounX, g_ptMouse.y, 40, 40);
+	}*/
 
 	for (auto iter = vecWall.begin(); iter != vecWall.end();)
 	{
@@ -83,16 +99,10 @@ void cMap::Update()
 		{
 			g_pPixelManager->DrawImage(m_pImgGround, m_pImgMagenta, iter->PosX, iter->PosY, 42, 44);
 			g_pPixelManager->DrawImage(m_pImgBackgoround, m_pImgDraw, iter->PosX, iter->PosY, 42, 44);
-			cout << iter->PosX << endl;
 			iter = vecWall.erase(iter);
 		}
 		else
 			++iter;
-	}
-
-	if (g_pKeyManager->isStayKeyDown(VK_RBUTTON)) {
-		g_pPixelManager->DrawImage(m_pImgGround, m_pImgMagenta, g_ptMouse.x + moveBackgrounX, g_ptMouse.y, 40, 40);
-		g_pPixelManager->DrawImage(m_pImgBackgoround, m_pImgMagenta, g_ptMouse.x + moveBackgrounX, g_ptMouse.y, 40, 40);
 	}
 }
 

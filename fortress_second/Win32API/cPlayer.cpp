@@ -31,7 +31,9 @@ void cPlayer::Setup()
 	m_nDamageDelay = 0;
 	m_nMapYPos = MAP1_Y;
 	m_fJumpPower = 10.0f;
+	m_fEnermyJump = 6.0f;
 	frameCount = 10;
+	smallJump = false;
 	isDie = false;
 
 	SetLanding();
@@ -123,7 +125,7 @@ void cPlayer::Update()
 	{
 		m_pPlayerImage->SetPosY(m_fPosY + 3.0f);
 	}
-#endif // _DEBUGH
+#endif // 
 
 	if (!m_isJumpping && g_pKeyManager->isOnceKeyDown(VK_SPACE))
 	{
@@ -140,12 +142,23 @@ void cPlayer::Update()
 		{
 			m_fJumpPower = m_fGravity - 5.0f;
 
+			cout << TprobeX + m_pMap->GetMoveX() << endl;
+
 			for (auto iter = m_pMap->GetVecWall().begin(); iter != m_pMap->GetVecWall().end(); ++iter)
 			{
 				if (IntersectRect(&rt, &RectMakeCenter(TprobeX, TprobeY, 2, 2),&RectMake(iter->PosX - (m_pMap->GetMoveX()+5), iter->PosY, 40, 40))
 					&& iter->type == eWall)
 				{
 					iter->isBreak = true;
+				}
+				else if (IntersectRect(&rt, &RectMakeCenter(TprobeX, TprobeY, 2, 2), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 40))
+					&& iter->type == eMushRoomBox)
+				{
+ 					for (auto iter2 = m_pObject->GetMushRoomItem().begin(); iter2 != m_pObject->GetMushRoomItem().end(); ++iter2)
+					{
+						if (iter->MushRoomItemNum == iter2->objMushRoomItemNum)
+							iter2->isActiveMushRoomItem = true;
+					}
 				}
 			}
 		}
@@ -161,6 +174,50 @@ void cPlayer::Update()
 		}
 	}
 
+	//바 타고가는거
+	RECT tc;
+	if (IntersectRect(&tc, &RectMakeCenter(m_pPlayerImage->GetBoundingBox().left, m_pPlayerImage->GetBoundingBox().top, m_pPlayerImage->GetFrameWidth(), m_pPlayerImage->GetFrameHeight()),
+		&RectMake(m_pObject->GetMoveBar()->GetPosX() + m_pObject->GetMoveBar()->GetFrameWidth() / 2, m_pObject->GetMoveBar()->GetPosY(),
+		m_pObject->GetMoveBar()->GetWidth(), m_pObject->GetMoveBar()->GetHeight())))
+	{
+		cout << "ㅊㅊ" << endl;
+	}
+
+	// 버섯몬스터
+	RECT ct;
+	for (auto iter = m_pObject->GetMushRoom().begin(); iter != m_pObject->GetMushRoom().end(); ++iter)
+	{
+		if (IntersectRect(&ct, &RectMakeCenter(BprobeX, BprobeY, 40, 2), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 50)))
+		{
+			smallJump = true;
+			iter->isDie = true;
+		}
+		else if (IntersectRect(&ct, &RectMakeCenter(RprobeX, RprobeY, 2, 20), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 50)))
+		{
+			isDie = true;
+		}
+		else if (IntersectRect(&ct, &RectMakeCenter(LprobeX, LprobeY, 2, 20), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 50)))
+		{
+			isDie = true;
+		}
+	}
+
+	if (smallJump)
+	{
+		m_pPlayerImage->SetPosY(m_fPosY - m_fEnermyJump + m_fGravity);
+		m_fGravity += GRAVITY;
+
+		if (m_fGravity > m_fEnermyJump)
+		{
+			BprobeY = m_pPlayerImage->GetPosY() + m_pPlayerImage->GetFrameHeight() / 2 + m_fGravity;
+
+			if (g_pPixelManager->CheckPixel(m_pMapImg, BprobeX + m_pMap->GetMoveX(), BprobeY - 5) == false)
+			{
+				m_fGravity = 0.0f;
+				smallJump = false;
+			}	
+		}
+	}
 	
 	if (BprobeY >= 600) {
 		m_pPlayerImage->SetPosY(m_fPosY + 3.0f);

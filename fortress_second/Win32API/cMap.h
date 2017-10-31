@@ -3,13 +3,15 @@
 enum BoxType
 {
 	eWall = 0,
-	eBox
+	eBox,
+	eMushRoomBox
 };
 
 struct tagWall
 {
 	int		PosX;
 	int		PosY;
+	int		MushRoomItemNum;
 	BoxType type;
 	bool	isBreak;
 };

@@ -8,8 +8,9 @@
 cObjects::cObjects()
 {
 	m_pMushRoom = g_pImageManager->FindImage("MushRoom");
-
 	m_pMapImg = g_pImageManager->FindImage("Map_Magenta");
+	m_pItemMushRoom = g_pImageManager->FindImage("ItemMushRoom");
+	m_pMoveBar = g_pImageManager->FindImage("bar");
 }
 
 cObjects::~cObjects()
@@ -20,6 +21,18 @@ void cObjects::Setup()
 {
 	moveGroundX = 0;
 	framecount = 20;
+
+	sct_MushRoomItem.PosX = 1115;
+	sct_MushRoomItem.PosY = 325;
+	sct_MushRoomItem.objMushRoomItemNum = 1;
+	sct_MushRoomItem.isActiveMushRoomItem = false;
+	vecMushRoomItem.push_back(sct_MushRoomItem);
+
+	sct_MushRoomItem.PosX = 3560;
+	sct_MushRoomItem.PosY = 325;
+	sct_MushRoomItem.objMushRoomItemNum = 2;
+	sct_MushRoomItem.isActiveMushRoomItem = false;
+	vecMushRoomItem.push_back(sct_MushRoomItem);
 
 	sct_MushRooom.PosX =1300;
 	sct_MushRooom.PosY = 480;
@@ -99,6 +112,8 @@ void cObjects::Update()
 			++iter;
 	}
 
+	m_pMoveBar->SetPosX(m_pMoveBar->GetPosX() + 1);
+
 	--framecount;
 }
 
@@ -118,6 +133,22 @@ void cObjects::Render()
 		DeleteObject(hSelectPen);
 		DeleteObject(hPen);
 
+		RectangleMake(g_hDC, iter->PosX - moveGroundX, iter->PosY, 40, 50);
+
 		m_pMushRoom->FrameRender(g_hDC, iter->PosX - moveGroundX, iter->PosY, m_pMushRoom->GetFrameX(), m_pMushRoom->GetFrameY());
 	}
+
+	for (auto iter = vecMushRoomItem.begin(); iter != vecMushRoomItem.end(); ++iter)
+	{
+		if (iter->isActiveMushRoomItem)
+		{
+			m_pItemMushRoom->Render(g_hDC, iter->PosX - moveGroundX, iter->PosY);
+		}
+	}
+
+	m_pMoveBar->Render(g_hDC,m_pMoveBar->GetPosX() + m_pMoveBar->GetFrameWidth()/2 -moveGroundX,m_pMoveBar->GetPosY());
+
+#ifdef _DEBUG
+	RectangleMake(g_hDC, m_pMoveBar->GetPosX() + m_pMoveBar->GetFrameWidth() / 2 - moveGroundX, m_pMoveBar->GetPosY(), m_pMoveBar->GetWidth(), m_pMoveBar->GetHeight());
+#endif // DEBUG
 }

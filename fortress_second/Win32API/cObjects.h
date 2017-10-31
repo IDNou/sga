@@ -19,6 +19,13 @@ struct tagMushRoom
 	bool		isDie;
 };
 
+struct tagMushRoomItem
+{
+	int PosX;
+	int PosY;
+	int	objMushRoomItemNum;
+	bool isActiveMushRoomItem;
+};
 
 class cObjects
 {
@@ -31,8 +38,12 @@ private:
 
 	cImage*		m_pMushRoom;
 	cImage*		m_pMapImg;
+	cImage*		m_pItemMushRoom;
+	cImage*		m_pMoveBar;
 	tagMushRoom		sct_MushRooom;
+	tagMushRoomItem		sct_MushRoomItem;
 	vector<tagMushRoom> vecMushRoom;
+	vector<tagMushRoomItem> vecMushRoomItem;
 
 	int			moveGroundX;
 	int			framecount;
@@ -43,7 +54,6 @@ private:
 	int			LprobeY;
 	int			RprobeX;
 	int			RprobeY;
-	
 
 public:
 	cObjects();
@@ -54,7 +64,9 @@ public:
 	void Render();
 
 #pragma region Get
-	
+	vector<tagMushRoom> &GetMushRoom() { return vecMushRoom; }
+	vector<tagMushRoomItem> &GetMushRoomItem() { return vecMushRoomItem; }
+	cImage*	&GetMoveBar() { return m_pMoveBar; }
 #pragma endregion
 
 #pragma region Set

@@ -27,7 +27,9 @@ private:
 	float			m_fGravity;			// 중력 (점프시 사용)
 	bool			m_isJumpping;		// 점프 중이냐?
 	float			m_fJumpPower;		// 점프 파워
+	float			m_fEnermyJump;
 	bool			isDie;
+	bool			smallJump;
 
 	int				m_nMapYPos;			// 플레이어의 바닥위 설정 (맵에 따라 다르게 설정이 필요)
 	int				m_nDamageDelay;		// 연속 데미지 방지용 딜레이(무적 모드)
@@ -45,6 +47,7 @@ public:
 	void Update();
 	void MiniRender();
 	void Render();
+	void CreateMushRoomItem();
 
 #pragma region Get
 	RECT GetBoundingBox() { return m_pPlayerImage->GetBoundingBox(); }
