@@ -14,6 +14,9 @@ private:
 	cPlayer*     m_pPlayer;
 	cObjects*	 m_pObject;
 
+	int PosX;
+	int PosY;
+
 public:
 	cMap();
 	~cMap();
@@ -29,6 +32,7 @@ public:
 #pragma region Set
 	void SetPlayer(cPlayer* player) { m_pPlayer = player; }
 	void SetObject(cObjects* object) { m_pObject = object; }
+	void SetPosXY(int x, int y) { PosX = x; PosY = y; }
 #pragma endregion
 };
 

@@ -100,14 +100,14 @@ void cMainGame::LoadImageFromFile()
 
 void cMainGame::MiniMapRender()
 {
-	m_pBufferMinimap = g_pImageManager->FindImage("Map");
-	m_pImgBackgoround = g_pImageManager->FindImage("Map");
-	m_pPlayer->MiniRender();
+	//m_pImgBackgoround = g_pImageManager->FindImage("Map");
+	//m_pBufferMinimap = g_pImageManager->FindImage("Map");
+	//m_pPlayer->MiniRender();
 	
 	//PatBlt(m_pImgMiniMap->GetMemDC(), 0, 0, WINSIZEX, WINSIZEY / 5, BLACKNESS);
-	m_pImgBackgoround->Render(m_pImgMiniMap->GetMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY, WINSIZEX, m_pImgBackgoround->GetFrameHeight());
-	m_pBufferMinimap->AlphaRender(m_pImgMiniMap->GetMemDC(), 0, 0, WINSIZEX, WINSIZEY / 5, 64); // ¾ËÆÄ ¹Ì´Ï¸Ê
+	//m_pImgBackgoround->Render(m_pImgMiniMap->GetMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY, WINSIZEX, m_pImgBackgoround->GetFrameHeight());
+	//m_pBufferMinimap->AlphaRender(m_pImgMiniMap->GetMemDC(), 0, 0, WINSIZEX, WINSIZEY / 5, 64); // ¾ËÆÄ ¹Ì´Ï¸Ê
 	//m_backBuffer->Render(m_pImgMiniMap->GetMemDC(), m_pMap->GetMoveX() / (m_pBufferMinimap->GetFrameWidth() / WINSIZEX), 0,
 	//	WINSIZEX/(m_pBufferMinimap->GetFrameWidth() / WINSIZEX), WINSIZEY / 5); // ¹Ì´Ï¸Ê ÃßÀû±â
-	m_pImgMiniMap->Render(g_hDC, 0, 0);
+	//m_pImgMiniMap->Render(g_hDC, 0, 0);
 }

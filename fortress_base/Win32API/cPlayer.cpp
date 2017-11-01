@@ -23,7 +23,8 @@ void cPlayer::Setup()
 
 void cPlayer::Update()
 {
-	
+	if (g_pKeyManager->isOnceKeyDown(VK_SPACE))
+		m_pMap->SetPosXY(500, 500);
 	
 }
 
