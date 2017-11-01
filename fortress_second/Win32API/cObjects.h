@@ -25,6 +25,15 @@ struct tagMushRoomItem
 	int PosY;
 	int	objMushRoomItemNum;
 	bool isActiveMushRoomItem;
+	bool isDie;
+	Left_Right	dir;
+};
+
+struct tagFlower
+{
+	int PosX;
+	int PosY;
+	bool isDie;
 };
 
 class cObjects
@@ -40,6 +49,7 @@ private:
 	cImage*		m_pMapImg;
 	cImage*		m_pItemMushRoom;
 	cImage*		m_pMoveBar;
+	cImage*		m_pFlower;
 	tagMushRoom		sct_MushRooom;
 	tagMushRoomItem		sct_MushRoomItem;
 	vector<tagMushRoom> vecMushRoom;

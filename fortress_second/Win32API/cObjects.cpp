@@ -11,6 +11,7 @@ cObjects::cObjects()
 	m_pMapImg = g_pImageManager->FindImage("Map_Magenta");
 	m_pItemMushRoom = g_pImageManager->FindImage("ItemMushRoom");
 	m_pMoveBar = g_pImageManager->FindImage("bar");
+	m_pFlower = g_pImageManager->FindImage("Flower");
 }
 
 cObjects::~cObjects()
@@ -26,13 +27,17 @@ void cObjects::Setup()
 	sct_MushRoomItem.PosY = 325;
 	sct_MushRoomItem.objMushRoomItemNum = 1;
 	sct_MushRoomItem.isActiveMushRoomItem = false;
+	sct_MushRoomItem.dir = RIGHT;
+	sct_MushRoomItem.isDie = false;
 	vecMushRoomItem.push_back(sct_MushRoomItem);
 
-	sct_MushRoomItem.PosX = 3560;
+	/*sct_MushRoomItem.PosX = 3560;
 	sct_MushRoomItem.PosY = 325;
 	sct_MushRoomItem.objMushRoomItemNum = 2;
 	sct_MushRoomItem.isActiveMushRoomItem = false;
-	vecMushRoomItem.push_back(sct_MushRoomItem);
+	sct_MushRoomItem.dir = RIGHT;
+	sct_MushRoomItem.isDie = false;
+	vecMushRoomItem.push_back(sct_MushRoomItem);*/
 
 	sct_MushRooom.PosX =1300;
 	sct_MushRooom.PosY = 480;
@@ -103,7 +108,7 @@ void cObjects::Update()
 		else if (iter->dir == RIGHT)
 			iter->PosX += 1;
 	}
-
+	//버섯 적 삭제
 	for (auto iter = vecMushRoom.begin(); iter != vecMushRoom.end();)
 	{
 		if (iter->isDie)
@@ -112,7 +117,47 @@ void cObjects::Update()
 			++iter;
 	}
 
+	for (auto iter = vecMushRoomItem.begin(); iter != vecMushRoomItem.end(); )
+	{
+		if (iter->isDie)
+			iter = vecMushRoomItem.erase(iter);
+		else
+			++iter;
+	}
+
+	//바움직임
 	m_pMoveBar->SetPosX(m_pMoveBar->GetPosX() + 1);
+
+	//아이템 버섯 움직임
+	for (auto iter = vecMushRoomItem.begin(); iter != vecMushRoomItem.end(); ++iter)
+	{
+
+		BprobeX = iter->PosX + 20;
+		BprobeY = iter->PosY + 40;
+		LprobeX = iter->PosX;
+		LprobeY = iter->PosY + 25;
+		RprobeX = iter->PosX + 40;
+		RprobeY = iter->PosY + 25;
+
+		if (g_pPixelManager->CheckPixel(m_pMapImg, BprobeX, BprobeY))
+			iter->PosY += 5;
+		else if (g_pPixelManager->CheckPixel(m_pMapImg, BprobeX, BprobeY - 5) == false)
+			iter->PosY -= 5;
+
+		if (iter->isActiveMushRoomItem)
+		{
+			if (g_pPixelManager->CheckPixel(m_pMapImg, LprobeX, LprobeY) == false)
+				iter->dir = RIGHT;
+
+			else if (g_pPixelManager->CheckPixel(m_pMapImg, RprobeX, RprobeY) == false)
+				iter->dir = LEFT;
+
+			if (iter->dir == LEFT)
+				iter->PosX -= 2;
+			else if (iter->dir == RIGHT)
+				iter->PosX += 2;
+		}
+	}
 
 	--framecount;
 }
@@ -132,8 +177,9 @@ void cObjects::Render()
 
 		DeleteObject(hSelectPen);
 		DeleteObject(hPen);
-
+#ifdef _DEBUG
 		RectangleMake(g_hDC, iter->PosX - moveGroundX, iter->PosY, 40, 50);
+#endif // DEBUG
 
 		m_pMushRoom->FrameRender(g_hDC, iter->PosX - moveGroundX, iter->PosY, m_pMushRoom->GetFrameX(), m_pMushRoom->GetFrameY());
 	}
@@ -143,6 +189,7 @@ void cObjects::Render()
 		if (iter->isActiveMushRoomItem)
 		{
 			m_pItemMushRoom->Render(g_hDC, iter->PosX - moveGroundX, iter->PosY);
+			//RectangleMake(g_hDC, iter->PosX - moveGroundX, iter->PosY, 37, 40);
 		}
 	}
 

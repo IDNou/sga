@@ -8,7 +8,6 @@
 cPlayer::cPlayer()
 {
 	m_pPlayerImage = g_pImageManager->FindImage("MarioRight");
-
 	m_pMapImg = g_pImageManager->FindImage("Map_Magenta");
 }
 
@@ -35,6 +34,7 @@ void cPlayer::Setup()
 	frameCount = 10;
 	smallJump = false;
 	isDie = false;
+	isGiant = false;
 
 	SetLanding();
 
@@ -142,8 +142,6 @@ void cPlayer::Update()
 		{
 			m_fJumpPower = m_fGravity - 5.0f;
 
-			cout << TprobeX + m_pMap->GetMoveX() << endl;
-
 			for (auto iter = m_pMap->GetVecWall().begin(); iter != m_pMap->GetVecWall().end(); ++iter)
 			{
 				if (IntersectRect(&rt, &RectMakeCenter(TprobeX, TprobeY, 2, 2),&RectMake(iter->PosX - (m_pMap->GetMoveX()+5), iter->PosY, 40, 40))
@@ -174,14 +172,46 @@ void cPlayer::Update()
 		}
 	}
 
+	RECT MushRoomRt;
+	for (auto iter = m_pObject->GetMushRoomItem().begin(); iter != m_pObject->GetMushRoomItem().end(); ++iter)
+	{
+		if (IntersectRect(&MushRoomRt, &RectMake(m_pPlayerImage->GetBoundingBox().left, m_pPlayerImage->GetBoundingBox().top, m_pPlayerImage->GetFrameWidth(), m_pPlayerImage->GetFrameHeight()),
+			&RectMake(iter->PosX - m_pMap->GetMoveX(), iter->PosY, 37, 40))
+			&& iter->isActiveMushRoomItem)
+		{
+			isGiant = true;
+			int posx = m_pPlayerImage->GetPosX();
+			int posy = m_pPlayerImage->GetPosY();
+			m_pPlayerImage = g_pImageManager->FindImage("MarioRight2");
+			m_pPlayerImage->SetPosX(posx);
+			m_pPlayerImage->SetPosY(posy);
+			iter->isDie = true;
+		}
+	}
+
 	//바 타고가는거
 	RECT tc;
-	if (IntersectRect(&tc, &RectMakeCenter(m_pPlayerImage->GetBoundingBox().left, m_pPlayerImage->GetBoundingBox().top, m_pPlayerImage->GetFrameWidth(), m_pPlayerImage->GetFrameHeight()),
-		&RectMake(m_pObject->GetMoveBar()->GetPosX() + m_pObject->GetMoveBar()->GetFrameWidth() / 2, m_pObject->GetMoveBar()->GetPosY(),
+	if (IntersectRect(&tc, &RectMakeCenter(BprobeX, BprobeY, 40, 2),
+		&RectMake(m_pObject->GetMoveBar()->GetPosX() + m_pObject->GetMoveBar()->GetFrameWidth() / 2 - m_pMap->GetMoveX(), m_pObject->GetMoveBar()->GetPosY(),
 		m_pObject->GetMoveBar()->GetWidth(), m_pObject->GetMoveBar()->GetHeight())))
 	{
-		cout << "ㅊㅊ" << endl;
+		SetLanding();
+		m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() - 5);
+
+		if (m_pPlayerImage->GetPosX() < WINSIZEX / 2 + 100)
+			m_pPlayerImage->SetPosX(m_fPosX + 1.0f);
+		else
+		{
+			if (m_pMap->GetMoveX() < m_pMapImg->GetFrameWidth() - 810)
+			{
+				m_pMap->SetMoveX(m_pMap->GetMoveX() + 1);
+				m_pObject->SetMoveGroundX(m_pMap->GetMoveX());
+			}
+			else
+				m_pPlayerImage->SetPosX(m_fPosX + 1.0f);
+		}
 	}
+
 
 	// 버섯몬스터
 	RECT ct;
@@ -194,11 +224,29 @@ void cPlayer::Update()
 		}
 		else if (IntersectRect(&ct, &RectMakeCenter(RprobeX, RprobeY, 2, 20), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 50)))
 		{
-			isDie = true;
+			if (isGiant)
+			{
+				int posx = m_pPlayerImage->GetPosX();
+				int posy = m_pPlayerImage->GetPosY();
+				m_pPlayerImage = g_pImageManager->FindImage("MarioRight");
+				m_pPlayerImage->SetPosX(posx);
+				m_pPlayerImage->SetPosY(posy);
+			}
+			else
+				isDie = true;
 		}
 		else if (IntersectRect(&ct, &RectMakeCenter(LprobeX, LprobeY, 2, 20), &RectMake(iter->PosX - (m_pMap->GetMoveX() + 5), iter->PosY, 40, 50)))
 		{
-			isDie = true;
+			if (isGiant)
+			{
+				int posx = m_pPlayerImage->GetPosX();
+				int posy = m_pPlayerImage->GetPosY();
+				m_pPlayerImage = g_pImageManager->FindImage("MarioRight");
+				m_pPlayerImage->SetPosX(posx);
+				m_pPlayerImage->SetPosY(posy);
+			}
+			else
+				isDie = true;
 		}
 	}
 

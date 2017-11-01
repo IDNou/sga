@@ -90,14 +90,16 @@ void cMainGame::LoadImageFromFile()
 	/* 지형물 오브젝트*/
 	g_pImageManager->AddImage("fill", "images/fill.bmp", 193, 134, true, RGB(255, 0, 255));
 	g_pImageManager->AddImage("magenta", "images/magenta.bmp", 157, 149, true, RGB(0, 0, 0));
-	g_pImageManager->AddImage("bar", "images/MoveBar.bmp", 48, 7, 1, 1, 10, 150, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("bar", "images/MoveBar.bmp", 137, 20, 1, 1, 10, 150, true, RGB(255, 0, 255));
 
 	/* 플레이어 */
 	g_pImageManager->AddImage("MarioRight", "images/mario_right.bmp", 262, 40, 4, 1, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("MarioRight2", "images/mario_right.bmp", 262, 80, 4, 1, true, RGB(255, 0, 255));
 	g_pImageManager->AddImage("MarioLeft", "images/mario_left.bmp", 105, 30, 4, 1, true, RGB(255, 0, 255));
 
 	/* 몬스터 */
 	g_pImageManager->AddImage("MushRoom", "images/mushroom.bmp", 75, 60, 2, 1, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Flower", "images/flower.bmp", 32, 45, true, RGB(255, 0, 255));
 
 	/* 아이템 */
 	g_pImageManager->AddImage("ItemMushRoom", "images/itemMushRoom.bmp", 37, 40, true, RGB(255, 0, 255));

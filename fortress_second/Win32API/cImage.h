@@ -114,8 +114,12 @@ public:
 	HDC GetMemDC() { return m_pImageInfo->hMemDC; }
 	int GetWidth() { return m_pImageInfo->nWidth; }
 	int GetHeight() { return m_pImageInfo->nHeight; }
+	void SetWidth(int width) { m_pImageInfo->nWidth = width; }
+	void SetHeight(int height) { m_pImageInfo->nHeight = height; }
 	int GetFrameWidth() { return m_pImageInfo->nFrameWidth; }
 	int GetFrameHeight() { return m_pImageInfo->nFrameHeight; }
+	void SetFrameWidth(int width) { m_pImageInfo->nFrameWidth = width; }
+	void SetFrameHeight(int height) { m_pImageInfo->nFrameHeight = height; }
 
 	// ÇÁ·¹ÀÓ ÀÎµ¦½º °ÙÅÍ, ¼ÂÅÍ
 	int GetFrameX() { return m_pImageInfo->nCurrFrameX; }
