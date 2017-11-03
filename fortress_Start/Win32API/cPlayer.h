@@ -11,10 +11,14 @@ private:
 	cImage*			m_pPlayerImage;		// 플레이어 이미지 파일
 
 	float			m_fGravity;			// 중력 (점프시 사용)
-	bool			m_isJumpping;		// 점프 중이냐?
-	float			m_fJumpPower;		// 점프 파워
 	float			m_fMoveSpeed;		// 캐릭터 이동 스피드
 	bool			m_isMapMove;		// 맵이 움직이는가?
+	float			BprobeX;
+	float			BprobeY;
+	float			RprobeX;
+	float			RprobeY;
+	float			LprobeX;
+	float			LprobeY;
 
 	cProgressBar*	m_pHpBar;
 	float			m_fMaxHp;
@@ -31,8 +35,11 @@ public:
 	void Update();
 	void Render();
 
+#pragma region Set
 	void SetMap(cMap* map) { m_pMap = map; }
+#pragma endregion
 
+#pragma region Get
 	RECT GetBoundingBox() { return m_pPlayerImage->GetBoundingBox(); }
 	float GetPosX() { return m_pPlayerImage->GetPosX(); }
 	float GetPosY() { return m_pPlayerImage->GetPosY(); }
@@ -40,5 +47,6 @@ public:
 	bool GetMapMove() { return m_isMapMove; }
 	float GetSizeX() { return m_pPlayerImage->GetFrameWidth(); }
 	float GetSizeY() { return m_pPlayerImage->GetFrameHeight(); }
+#pragma endregion
 };
 

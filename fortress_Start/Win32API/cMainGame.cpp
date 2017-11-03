@@ -58,8 +58,9 @@ void cMainGame::Render()
 	{
 		m_pMap->Render();
 		m_pPlayer->Render();
+		m_pImgMapBuffer->Render(g_hDC, 0, 0, m_pPlayer->GetPosX() - WINSIZEX / 2, m_pPlayer->GetPosY() - WINSIZEY / 2, WINSIZEX, WINSIZEY);
 
-		MiniMapRender();
+	//	MiniMapRender();
 	}
 	else
 	{
@@ -90,7 +91,7 @@ void cMainGame::LoadImageFromFile()
 	g_pImageManager->AddImage("ProgressFront", "images/progressBarFront.bmp", 50, 10);
 
 	/* 플레이어 */
-	g_pImageManager->AddImage("Player", "images/tank_cannon.bmp", 60, 60, 1, 1, 200, MAP1_Y, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Player", "images/tank_cannonRight.bmp", 60, 60, 1, 1, 1500, MAP1_Y, true, RGB(255, 0, 255));
 }
 
 void cMainGame::MiniMapRender()

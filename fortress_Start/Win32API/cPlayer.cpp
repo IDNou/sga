@@ -20,7 +20,6 @@ cPlayer::~cPlayer()
 
 void cPlayer::Setup()
 {
-	m_fJumpPower = 10.0f;
 	m_fMoveSpeed = 3.0f; //  *g_pTimeManager->GetDeltaTime();
 	m_isMapMove = false;
 
@@ -36,53 +35,35 @@ void cPlayer::Update()
 	float probeY = m_pPlayerImage->GetPosY() + m_pMap->GetPosY() + m_pPlayerImage->GetFrameHeight() / 2 + 1;
 
 	// false °æ¿ì ¶¥À§¿¡ ÂøÁö
-	if (!g_pPixelManager->CheckPixel(m_pImgMapBuffer, probeX, probeY))
-	{
-		
-		// ¶¥¼ÓÀ¸·Î ¹¯ÈùÇÈ¼¿ °Ë»ç
-		int deepY = 0;
-		while (!g_pPixelManager->CheckPixel(m_pImgMapBuffer, probeX, probeY - deepY - 1))
-		{
-			++deepY;
-		}
+	//if (!g_pPixelManager->CheckPixel(m_pImgMapBuffer, probeX, probeY))
+	//{
+	//	
+	//	//// ¶¥¼ÓÀ¸·Î ¹¯ÈùÇÈ¼¿ °Ë»ç
+	//	//int deepY = 0;
+	//	//while (!g_pPixelManager->CheckPixel(m_pImgMapBuffer, probeX, probeY - deepY - 1))
+	//	//{
+	//	//	++deepY;
+	//	//}
 
-		// ¶¥¿¡ ÂøÁö ÇÑ µÚ ¶¥¼Ó¿¡ ¹ÚÈù¸¸Å­ À§·Î ¿Ã¸®°í ³«ÇÏ Á¾·á
-		m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() - deepY);
-		m_fGravity = 0.0f;
-		m_isJumpping = false;
-	}
-	else
-	{
-		// Áß·ÂÀ» »ç¿ëÇÏ¿© ³«ÇÏ
-		m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() + m_fGravity);
-		m_fGravity += GRAVITY;
-	}
-
-	//else if (g_pPixelManager->CheckPixel(m_pImgMapBuffer, probeX, probeY - 5) == false)
-	//	m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() - 5);
+	//	//// ¶¥¿¡ ÂøÁö ÇÑ µÚ ¶¥¼Ó¿¡ ¹ÚÈù¸¸Å­ À§·Î ¿Ã¸®°í ³«ÇÏ Á¾·á
+	//	//m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() - deepY);
+	//	//m_fGravity = 0.0f;
+	//}
+	//else
+	//{
+	//	// Áß·ÂÀ» »ç¿ëÇÏ¿© ³«ÇÏ
+	//	/*m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() + m_fGravity);
+	//	m_fGravity += GRAVITY;*/
+	//}
 
 	// È­¸é»ó¿¡¼­ÀÇ ¿òÁ÷ÀÓ ¹üÀ§ Á¦ÇÑ
-	if (g_pKeyManager->isStayKeyDown(VK_LEFT) && m_pPlayerImage->GetPosX() > WINSIZEX / 5)
+	if (g_pKeyManager->isStayKeyDown(VK_LEFT))
 	{
-		m_isMapMove = false;
-		m_pPlayerImage->SetPosX(m_pPlayerImage->GetPosX() - m_fMoveSpeed);
+		
 	}
-	else if (g_pKeyManager->isStayKeyDown(VK_RIGHT) && m_pPlayerImage->GetPosX() < WINSIZEX / 2)
+	else if (g_pKeyManager->isStayKeyDown(VK_RIGHT))
 	{
-		m_isMapMove = false;
-		m_pPlayerImage->SetPosX(m_pPlayerImage->GetPosX() + m_fMoveSpeed);
-	}
-	else
-		m_isMapMove = true;
 
-	if (!m_isJumpping && g_pKeyManager->isOnceKeyDown(VK_SPACE))
-	{
-		m_isJumpping = true;
-	}
-
-	if (m_isJumpping)
-	{
-		m_pPlayerImage->SetPosY(m_pPlayerImage->GetPosY() - m_fJumpPower);
 	}
 
 	// Ã¼·Â¹Ù ¾÷µ¥ÀÌÆ®
@@ -105,7 +86,13 @@ void cPlayer::Render()
 	DeleteObject(hSelectPen);
 	DeleteObject(hPen);
 
-	m_pPlayerImage->FrameRender(g_hDC,
+	RectangleMakeCenter(m_pImgMapBuffer->GetMemDC(),
+		m_pPlayerImage->GetPosX() - m_pPlayerImage->GetFrameWidth() / 2,
+		m_pPlayerImage->GetPosY() - m_pPlayerImage->GetFrameHeight() / 2,
+		30, 30);
+	//cout << m_pPlayerImage->GetPosX() - m_pPlayerImage->GetFrameWidth() / 2 << " " << m_pPlayerImage->GetPosY() - m_pPlayerImage->GetFrameHeight() / 2  << endl;
+	
+	m_pPlayerImage->FrameRender(m_pImgMapBuffer->GetMemDC(),
 		m_pPlayerImage->GetPosX() - m_pPlayerImage->GetFrameWidth() / 2,
 		m_pPlayerImage->GetPosY() - m_pPlayerImage->GetFrameHeight() / 2,
 		0,0);

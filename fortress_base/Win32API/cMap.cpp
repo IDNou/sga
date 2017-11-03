@@ -18,10 +18,13 @@ void cMap::Setup()
 {
 	PosX = 0;
 	PosY = 0;
+	MapPosX = 0;
+	MapPosY = 0;
 }
 
 void cMap::Update()
 {
+
 	if (g_pKeyManager->isStayKeyDown(VK_RIGHT))
 	{
 		if(PosX+WINSIZEX < m_pImgBackgoround->GetWidth())
@@ -46,7 +49,10 @@ void cMap::Update()
 
 void cMap::Render()
 {
+	
+	m_pImgBackgoround->Render(g_hDC, 0, 0, MapPosX , MapPosY , WINSIZEX, WINSIZEY, WINSIZEX, WINSIZEY);
+	RectangleMake(g_hDC, PosX, PosY, 50, 50);
+	
 
-	m_pImgBackgoround->Render(g_hDC, 0, 0, PosX, PosY, WINSIZEX, WINSIZEY, WINSIZEX, WINSIZEY);
 //	m_pImgGround->Render(g_hDC, 0, 0, 0, 0, WINSIZEX, WINSIZEY, WINSIZEX, m_pImgGround->GetFrameHeight());
 }

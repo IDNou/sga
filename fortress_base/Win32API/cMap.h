@@ -16,6 +16,8 @@ private:
 
 	int PosX;
 	int PosY;
+	int	MapPosX;
+	int	MapPosY;
 
 public:
 	cMap();
@@ -32,7 +34,17 @@ public:
 #pragma region Set
 	void SetPlayer(cPlayer* player) { m_pPlayer = player; }
 	void SetObject(cObjects* object) { m_pObject = object; }
-	void SetPosXY(int x, int y) { PosX = x; PosY = y; }
+	void SetPosXY(int x, int y) {
+		PosX = x; PosY = y;
+		if (x > WINSIZEX / 2)
+			MapPosX = x - WINSIZEX / 2;
+		else
+			MapPosX = 0;
+		if (y > WINSIZEY / 2)
+			MapPosY = y - WINSIZEY / 2;
+		else
+			MapPosY = 0;
+	}
 #pragma endregion
 };
 
