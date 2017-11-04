@@ -19,6 +19,7 @@ private:
 	float			RprobeY;
 	float			LprobeX;
 	float			LprobeY;
+	bool			isDie;
 
 	cProgressBar*	m_pHpBar;
 	float			m_fMaxHp;

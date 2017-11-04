@@ -16,6 +16,11 @@ private:
 	cMap*			m_pMap;
 	cPlayer*		m_pPlayer;
 
+	int				PosX;
+	int				PosY;
+	int				savePosX;
+	int				savePosY;
+
 	void LoadImageFromFile();
 	void MiniMapRender();
 
@@ -26,4 +31,7 @@ public:
 	void Setup();
 	virtual void Update() override;
 	virtual void Render() override;
+
+	void SetPosX(int x) { PosX = x; }
+	void SetPosY(int y) { PosY = y; }
 };

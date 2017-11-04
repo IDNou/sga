@@ -26,6 +26,10 @@ void cMainGame::Setup()
 {
 	m_pMap->Setup();
 	m_pPlayer->Setup();
+	PosX = m_pPlayer->GetPosX();
+	PosY = m_pPlayer->GetPosY();
+	savePosX = 0;
+	savePosY = 0;
 }
 
 void cMainGame::Update()
@@ -36,6 +40,48 @@ void cMainGame::Update()
 	{
 		m_pMap->Update();
 		m_pPlayer->Update();
+
+		if (m_pPlayer->GetPosX() - WINSIZEX / 2 > 0 && m_pPlayer->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+			PosX = m_pPlayer->GetPosX();
+		if (m_pPlayer->GetPosY() - WINSIZEY / 2 > 0 && m_pPlayer->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+			PosY = m_pPlayer->GetPosY();
+
+		if (g_pKeyManager->isStayKeyDown('D') && m_pPlayer->GetPosX() + savePosX + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth()-3)
+		{
+				savePosX += 3;
+		}
+		if (g_pKeyManager->isOnceKeyUp('D'))
+		{
+			savePosX = 0;
+		}
+		if (g_pKeyManager->isStayKeyDown('A'))
+		{
+			if (m_pPlayer->GetPosX() + savePosX - WINSIZEX / 2 > 3)
+				savePosX -= 3;
+		}
+		if (g_pKeyManager->isOnceKeyUp('A'))
+		{
+			savePosX = 0;
+		}
+		if (g_pKeyManager->isStayKeyDown('W'))
+		{
+			if (m_pPlayer->GetPosY() + savePosY - WINSIZEY / 2 > 3)
+				savePosY -= 3;
+		}
+		if (g_pKeyManager->isOnceKeyUp('W'))
+		{
+			savePosY = 0;
+		}
+		if (g_pKeyManager->isStayKeyDown('S'))
+		{
+			if (m_pPlayer->GetPosY() + savePosY + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight() -3)
+				savePosY += 3;
+		}
+		if (g_pKeyManager->isOnceKeyUp('S'))
+		{
+			savePosY = 0;
+		}
+
 	}
 	else if (g_pKeyManager->isOnceKeyDown(VK_RETURN))
 	{
@@ -58,9 +104,9 @@ void cMainGame::Render()
 	{
 		m_pMap->Render();
 		m_pPlayer->Render();
-		m_pImgMapBuffer->Render(g_hDC, 0, 0, m_pPlayer->GetPosX() - WINSIZEX / 2, m_pPlayer->GetPosY() - WINSIZEY / 2, WINSIZEX, WINSIZEY);
+		m_pImgMapBuffer->Render(g_hDC, 0, 0, PosX + savePosX - WINSIZEX / 2, PosY + savePosY - WINSIZEY / 2, WINSIZEX, WINSIZEY);
 
-	//	MiniMapRender();
+		MiniMapRender();
 	}
 	else
 	{
@@ -112,5 +158,5 @@ void cMainGame::MiniMapRender()
 		(m_pPlayer->GetPosY() + m_pMap->GetPosY()) / 5,
 		m_pPlayer->GetSizeX() / 5, m_pPlayer->GetSizeY() / 5);*/
 
-	m_pImgMiniMap->Render(g_hDC, 0, 0, WINSIZEX, WINSIZEY / 5);
+	m_pImgMiniMap->Render(g_hDC, WINSIZEX - WINSIZEX/5, 0, WINSIZEX/5, WINSIZEY / 5);
 }

@@ -16,19 +16,22 @@ cMap::~cMap()
 
 void cMap::Setup()
 {
-	m_fPlayerX = m_pPlayer->GetPosX();
-	m_fPlayerY = m_pPlayer->GetPosY();
+	PosX = m_pPlayer->GetPosX();
+	PosY = m_pPlayer->GetPosY();
 }
 
 void cMap::Update()
 {
-	m_fPlayerX = m_pPlayer->GetPosX();
-	m_fPlayerY = m_pPlayer->GetPosY();
+	if (m_pPlayer->GetPosX() - WINSIZEX / 2 > 0 && m_pPlayer->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+		PosX = m_pPlayer->GetPosX();
+	//cout << m_pPlayer->GetPosX() + WINSIZEX / 2 << " " << m_pImgMapBuffer->GetWidth() << endl;
+	if (m_pPlayer->GetPosY() - WINSIZEY / 2 > 0 && m_pPlayer->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+		PosY = m_pPlayer->GetPosY();
 }
 
 void cMap::Render()
 {
-	m_pImgBackground->Render(g_hDC, 0, 0, 0, 0, m_pImgBackground->GetWidth(), m_pImgBackground->GetHeight());
+	m_pImgBackground->Render(g_hDC, 0, 0, PosX - WINSIZEX / 2, PosY - WINSIZEY / 2, m_pImgBackground->GetWidth(), m_pImgBackground->GetHeight());
 
 	// 픽셀 충돌 처리용 이미지 버퍼에 그림을 그린다.
 	m_pImgMap->Render(m_pImgMapBuffer->GetMemDC(), 0, 0);

@@ -11,10 +11,8 @@ private:
 
 	cPlayer*	m_pPlayer;
 
-	float		m_fPosX;			// ¸Ê ÀÌµ¿·®
-	float		m_fPosY;			// ¸Ê ÀÌµ¿·®
-	float		m_fPlayerX;
-	float		m_fPlayerY;
+	int			PosX;
+	int			PosY;
 
 public:
 	cMap();
@@ -31,7 +29,5 @@ public:
 #pragma region Get
 	int	GetMapWidth() { return m_pImgMap->GetWidth(); }
 	int	getMapHeight() { return m_pImgMap->GetHeight(); }
-	float GetPosX() { return m_fPosX; }
-	float GetPosY() { return m_fPosY; }
 #pragma endregion
 };
