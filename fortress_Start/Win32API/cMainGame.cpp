@@ -26,8 +26,8 @@ void cMainGame::Setup()
 {
 	m_pMap->Setup();
 	m_pPlayer->Setup();
-	PosX = m_pPlayer->GetPosX();
-	PosY = m_pPlayer->GetPosY();
+	PosX = 0;
+	PosY = 0;
 	savePosX = 0;
 	savePosY = 0;
 }
@@ -41,12 +41,29 @@ void cMainGame::Update()
 		m_pMap->Update();
 		m_pPlayer->Update();
 
-		if (m_pPlayer->GetPosX() - WINSIZEX / 2 > 0 && m_pPlayer->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
-			PosX = m_pPlayer->GetPosX();
-		if (m_pPlayer->GetPosY() - WINSIZEY / 2 > 0 && m_pPlayer->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
-			PosY = m_pPlayer->GetPosY();
+		switch (m_pPlayer->GetPlayerTurn())
+		{
+		case FirstPlayer:
+			if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
+				&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+				PosX = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX();
+			if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0
+				&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+				PosY = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY();
+			break;
+		case SecondPlayer:
+			if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
+				&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+				PosX = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX();
+			if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0 
+				&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+				PosY = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY();
+			break;
+		default:
+			break;
+		}
 
-		if (g_pKeyManager->isStayKeyDown('D') && m_pPlayer->GetPosX() + savePosX + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth()-3)
+		if (g_pKeyManager->isStayKeyDown('D') && PosX + savePosX + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth()-3)
 		{
 				savePosX += 3;
 		}
@@ -56,7 +73,7 @@ void cMainGame::Update()
 		}
 		if (g_pKeyManager->isStayKeyDown('A'))
 		{
-			if (m_pPlayer->GetPosX() + savePosX - WINSIZEX / 2 > 3)
+			if (PosX + savePosX - WINSIZEX / 2 > 3)
 				savePosX -= 3;
 		}
 		if (g_pKeyManager->isOnceKeyUp('A'))
@@ -65,7 +82,7 @@ void cMainGame::Update()
 		}
 		if (g_pKeyManager->isStayKeyDown('W'))
 		{
-			if (m_pPlayer->GetPosY() + savePosY - WINSIZEY / 2 > 3)
+			if (PosY + savePosY - WINSIZEY / 2 > 3)
 				savePosY -= 3;
 		}
 		if (g_pKeyManager->isOnceKeyUp('W'))
@@ -74,7 +91,7 @@ void cMainGame::Update()
 		}
 		if (g_pKeyManager->isStayKeyDown('S'))
 		{
-			if (m_pPlayer->GetPosY() + savePosY + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight() -3)
+			if (PosY + savePosY + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight() -3)
 				savePosY += 3;
 		}
 		if (g_pKeyManager->isOnceKeyUp('S'))
@@ -122,22 +139,26 @@ void cMainGame::Render()
 void cMainGame::LoadImageFromFile()
 {
 	/* 전체 배경 */
-	m_pImgBackground = g_pImageManager->AddImage("BackGround", "images/fortressBackGround.bmp", 3753, 2000);
+	m_pImgBackground = g_pImageManager->AddImage("BackGround", "images/fortressBackGround.bmp", 2814, 1500);
 
 	/* 맵 */
-	g_pImageManager->AddImage("Map", "images/fortressMagenta.bmp", 3753, 2000);
-	m_pImgMapBuffer = g_pImageManager->AddImage("MapBuffer", 3753, 2000);
+	g_pImageManager->AddImage("Map", "images/fortressMagenta.bmp", 2814, 1500);
+	m_pImgMapBuffer = g_pImageManager->AddImage("MapBuffer", 2814, 1500);
 	m_pImgMapBuffer->SetTransColor(true, RGB(255, 0, 255));
 
 	/* 미니맵(빈 비트맵) - 원본 맵 사이즈의 1/5 사이즈로 만든다. */ 
-	m_pImgMiniMap = g_pImageManager->AddImage("MiniMap", 3753 / 5, 2000 / 5);
+	m_pImgMiniMap = g_pImageManager->AddImage("MiniMap", 2814 / 5, 1500 / 5);
 
 	/* 프로그레스바 */
 	g_pImageManager->AddImage("ProgressBack", "images/progressBarBack.bmp", 50, 10);
 	g_pImageManager->AddImage("ProgressFront", "images/progressBarFront.bmp", 50, 10);
 
 	/* 플레이어 */
-	g_pImageManager->AddImage("Player", "images/tank_cannonRight.bmp", 60, 60, 1, 1, 1500, MAP1_Y, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Player", "images/tank_cannon.bmp", 60, 60, 1, 1, 2000, MAP1_Y, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Player2", "images/carrottankRight.bmp", 60, 60, 1, 1, 800, 300, true, RGB(255, 0, 255));
+
+	/* 폭탄 */
+	g_pImageManager->AddImage("Bomb", "images/bomb.bmp", 156, 39, 4, 1, true, RGB(255, 0, 255));
 }
 
 void cMainGame::MiniMapRender()

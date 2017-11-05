@@ -16,17 +16,35 @@ cMap::~cMap()
 
 void cMap::Setup()
 {
-	PosX = m_pPlayer->GetPosX();
-	PosY = m_pPlayer->GetPosY();
+	PosX = 0;
+	PosY = 0;
 }
 
 void cMap::Update()
 {
-	if (m_pPlayer->GetPosX() - WINSIZEX / 2 > 0 && m_pPlayer->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
-		PosX = m_pPlayer->GetPosX();
-	//cout << m_pPlayer->GetPosX() + WINSIZEX / 2 << " " << m_pImgMapBuffer->GetWidth() << endl;
-	if (m_pPlayer->GetPosY() - WINSIZEY / 2 > 0 && m_pPlayer->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
-		PosY = m_pPlayer->GetPosY();
+
+	switch (m_pPlayer->GetPlayerTurn())
+	{
+	case FirstPlayer:
+		if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0 
+			&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+			PosX = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX();
+		if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0 
+			&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+			PosY = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY();
+		break;
+	case SecondPlayer:
+		if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0 
+			&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+			PosX = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX();
+		if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0
+			&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+			PosY = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY();
+		break;
+	default:
+		break;
+	}
+
 }
 
 void cMap::Render()
