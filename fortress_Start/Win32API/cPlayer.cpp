@@ -116,7 +116,7 @@ void cPlayer::Render()
 		HPEN hSelectPen = (HPEN)SelectObject(m_pImgMapBuffer->GetMemDC(), hPen);
 
 		MoveToEx(m_pImgMapBuffer->GetMemDC(), iter->t_pPlayerImage->GetPosX(), iter->t_pPlayerImage->GetPosY(), NULL);
-		LineTo(m_pImgMapBuffer->GetMemDC(), iter->t_pPlayerImage->GetPosX()+bombPosX, iter->t_pPlayerImage->GetPosY()+bombPosY);
+		LineTo(m_pImgMapBuffer->GetMemDC(), iter->t_pPlayerImage->GetPosX() + bombPosX * 50, iter->t_pPlayerImage->GetPosY() + bombPosY * 50);
 
 		DeleteObject(hSelectPen);
 		DeleteObject(hPen);
@@ -152,78 +152,84 @@ void cPlayer::Render()
 
 void cPlayer::WhoUpdate(tagPlayer &t_pPlayer)
 {
-	bombPosX = (-sinf(PI / 180 * bombAngle) * 50);
-	bombPosY = (cosf(PI / 180 * bombAngle) * 50);
+	if (!isBombActivity)
+	{
+		bombPosX = cosf(PI / 180 * bombAngle);
+		bombPosY = -sinf(PI / 180 * bombAngle);
 
-	// 화면상에서의 움직임 범위 제한
-	if (g_pKeyManager->isStayKeyDown(VK_LEFT) 
-		&& t_pPlayer.t_pPlayerImage->GetPosX() - t_pPlayer.t_pPlayerImage->GetWidth()/2 > 0)
-	{
-		t_pPlayer.Dir = LEFT;
-		bombAngle = 135.0f;
-		t_pPlayer.t_pPlayerImage->SetPosX(t_pPlayer.t_pPlayerImage->GetPosX() - m_fMoveSpeed);
-	}
-	else if (g_pKeyManager->isStayKeyDown(VK_RIGHT)
-		&& t_pPlayer.t_pPlayerImage->GetPosX() + t_pPlayer.t_pPlayerImage->GetWidth() / 2 < m_pImgMapBuffer->GetWidth())
-	{
-		t_pPlayer.Dir = RIGHT;
-		bombAngle = 45.0f;
-		t_pPlayer.t_pPlayerImage->SetPosX(t_pPlayer.t_pPlayerImage->GetPosX() + m_fMoveSpeed);
-	}
-
-	if (g_pKeyManager->isStayKeyDown(VK_UP))
-	{
-		if (t_pPlayer.Dir == LEFT)
+		// 화면상에서의 움직임 범위 제한
+		if (g_pKeyManager->isStayKeyDown(VK_LEFT)
+			&& t_pPlayer.t_pPlayerImage->GetPosX() - t_pPlayer.t_pPlayerImage->GetWidth() / 2 > 0)
 		{
-			if (bombAngle < 90)
-				++bombAngle;
+			t_pPlayer.Dir = LEFT;
+			t_pPlayer.t_pPlayerImage->SetPosX(t_pPlayer.t_pPlayerImage->GetPosX() - m_fMoveSpeed);
 		}
-		else if (t_pPlayer.Dir == RIGHT)
+		else if (g_pKeyManager->isStayKeyDown(VK_RIGHT)
+			&& t_pPlayer.t_pPlayerImage->GetPosX() + t_pPlayer.t_pPlayerImage->GetWidth() / 2 < m_pImgMapBuffer->GetWidth())
 		{
-			if (bombAngle < 90)
-				--bombAngle;
+			t_pPlayer.Dir = RIGHT;
+			t_pPlayer.t_pPlayerImage->SetPosX(t_pPlayer.t_pPlayerImage->GetPosX() + m_fMoveSpeed);
 		}
-	}
-	if (g_pKeyManager->isStayKeyDown(VK_DOWN))
-	{
-		if (t_pPlayer.Dir == LEFT)
+
+		if (g_pKeyManager->isStayKeyDown(VK_UP))
 		{
-			if (bombAngle > 180)
-				--bombAngle;
+			if (t_pPlayer.Dir == LEFT)
+			{
+				if (bombAngle > 90)
+					--bombAngle;
+			}
+			else if (t_pPlayer.Dir == RIGHT)
+			{
+				if (bombAngle < 90)
+					++bombAngle;
+			}
 		}
-		else if (t_pPlayer.Dir == RIGHT)
+		if (g_pKeyManager->isStayKeyDown(VK_DOWN))
 		{
-			if (bombAngle > 0)
-				++bombAngle;
+			if (t_pPlayer.Dir == LEFT)
+			{
+				if (bombAngle < 180)
+					++bombAngle;
+			}
+			else if (t_pPlayer.Dir == RIGHT)
+			{
+				if (bombAngle > 0)
+					--bombAngle;
+			}
 		}
-	}
 
-	if (g_pKeyManager->isStayKeyDown(VK_SPACE))
-	{
-		++bombPower;
-	}
-
-	if (g_pKeyManager->isOnceKeyUp(VK_SPACE))
-	{
-		isBombActivity = true;
-
-		/*switch (checkTurn)
+		if (g_pKeyManager->isOnceKeyDown(VK_SPACE))
 		{
-		case FirstPlayer:
-			checkTurn = SecondPlayer;
-			break;
-		case SecondPlayer:
-			checkTurn = FirstPlayer;
-			break;
-		default:
-			break;
-		}*/
-	}
+			bombPower = 0;
+		}
+		if (g_pKeyManager->isStayKeyDown(VK_SPACE))
+		{
+			++bombPower;
+		}
+		if (g_pKeyManager->isOnceKeyUp(VK_SPACE))
+		{
+			isBombActivity = true;
+			m_pBomb->SetPosX(t_pPlayer.t_pPlayerImage->GetPosX() + bombPosX * 50);
+			m_pBomb->SetPosY(t_pPlayer.t_pPlayerImage->GetPosY() + bombPosY * 50);
 
-	//땅에 떨어지면 죽는다
-	if (t_pPlayer.t_pPlayerImage->GetPosY() + t_pPlayer.t_pPlayerImage->GetHeight() / 2 > m_pImgMapBuffer->GetHeight())
-	{
-		t_pPlayer.isDie = true;
+			/*switch (checkTurn)
+			{
+			case FirstPlayer:
+				checkTurn = SecondPlayer;
+				break;
+			case SecondPlayer:
+				checkTurn = FirstPlayer;
+				break;
+			default:
+				break;
+			}*/
+		}
+
+		//땅에 떨어지면 죽는다
+		if (t_pPlayer.t_pPlayerImage->GetPosY() + t_pPlayer.t_pPlayerImage->GetHeight() / 2 > m_pImgMapBuffer->GetHeight())
+		{
+			t_pPlayer.isDie = true;
+		}
 	}
 
 }
@@ -232,7 +238,8 @@ void cPlayer::WhoRender(tagPlayer &t_pPlayer)
 {
 	if (isBombActivity)
 	{
-		m_pBomb->FrameRender(m_pImgMapBuffer->GetMemDC(), t_pPlayer.t_pPlayerImage->GetPosX()+ bombPosX, t_pPlayer.t_pPlayerImage->GetPosY() + bombPosY, m_pBomb->GetFrameX(), 0);
+		m_pBomb->FrameRender(m_pImgMapBuffer->GetMemDC(),m_pBomb->GetPosX(),
+			m_pBomb->GetPosY(), m_pBomb->GetFrameX(), 0);
 		if (bombCount < 0)
 		{
 			bombCount = 10;
@@ -240,6 +247,18 @@ void cPlayer::WhoRender(tagPlayer &t_pPlayer)
 		}
 		if(m_pBomb->GetFrameX() >m_pBomb->GetMaxFrameX())
 			m_pBomb->SetFrameX(0);
+		
+		m_fGravity += GRAVITY;
+		m_pBomb->SetPosX(m_pBomb->GetPosX() + bombPosX*bombPower/4);
+		m_pBomb->SetPosY(m_pBomb->GetPosY() + bombPosY*bombPower/4 + m_fGravity);
+
+		if (m_fGravity > bombPosY*bombPower/4)
+		{
+			if (g_pPixelManager->CheckPixel(m_pImgMapBuffer, m_pBomb->GetPosX(), m_pBomb->GetPosY()) == false)
+			{// 여기다가 터지게 만들꺼야
+				cout << " 발견" << endl;
+			}
+		}
 
 		bombCount--;
 	}
