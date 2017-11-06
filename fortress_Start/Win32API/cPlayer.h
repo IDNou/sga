@@ -11,10 +11,18 @@ enum PlayerNum
 	SecondPlayer
 };
 
+enum PlayerDir
+{
+	LEFT =0,
+	RIGHT
+};
+
 struct tagPlayer
 {
 	PlayerNum		Number;
+	PlayerDir		Dir;
 	cImage*			t_pPlayerImage;
+	cProgressBar*	m_pHpBar;
 	float			m_fMaxHp;
 	float			m_fCurrHp;
 	float			m_fGravity;
@@ -37,12 +45,12 @@ private:
 	float			bombAngle;
 	float			bombPower;
 	bool			isBombActivity;
+	int				bombCount;
+
 	
 	tagPlayer		Player;
 	vector<tagPlayer> vecPlayer;
 	PlayerNum		checkTurn;
-
-	cProgressBar*	m_pHpBar;
 
 	cMap*			m_pMap;
 	cImage*			m_pImgMapBuffer;	// 배경 정보 이미지(마젠타가 들어 있는 픽셀 충돌용 맵)
@@ -55,7 +63,8 @@ public:
 	void Update();
 	void Render();
 
-	void WhoUpdate(tagPlayer t_pPlayer);
+	void WhoUpdate(tagPlayer &t_pPlayer);
+	void WhoRender(tagPlayer &t_pPlayer);
 
 #pragma region Set
 	void SetMap(cMap* map) { m_pMap = map; }

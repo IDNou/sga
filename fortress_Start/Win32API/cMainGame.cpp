@@ -43,24 +43,43 @@ void cMainGame::Update()
 
 		switch (m_pPlayer->GetPlayerTurn())
 		{
-		case FirstPlayer:
-			if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
-				&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
-				PosX = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX();
-			if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0
-				&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
-				PosY = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY();
-			break;
-		case SecondPlayer:
-			if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
-				&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
-				PosX = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX();
-			if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0 
-				&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
-				PosY = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY();
-			break;
-		default:
-			break;
+			case FirstPlayer:
+				if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
+					&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+					PosX = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX();
+				else if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 < 0)
+					PosX = WINSIZEX / 2;
+				else if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 > m_pImgMapBuffer->GetWidth())
+					PosX = m_pImgMapBuffer->GetWidth() - WINSIZEX / 2;
+
+				if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0
+					&& m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+					PosY = m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY();
+				else if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 < 0)
+					PosY = WINSIZEY / 2;
+				else if (m_pPlayer->GetVecPlayer()[FirstPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 > m_pImgMapBuffer->GetHeight())
+					PosY = m_pImgMapBuffer->GetHeight() - WINSIZEY / 2;
+				break;
+
+			case SecondPlayer:
+				if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 > 0
+					&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth())
+					PosX = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX();
+				else if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() - WINSIZEX / 2 < 0)
+					PosX = WINSIZEX / 2;
+				else if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosX() + WINSIZEX / 2 > m_pImgMapBuffer->GetWidth())
+					PosX = m_pImgMapBuffer->GetWidth() - WINSIZEX / 2;
+
+				if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 > 0
+					&& m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 < m_pImgMapBuffer->GetHeight())
+					PosY = m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY();
+				else if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() - WINSIZEY / 2 < 0)
+					PosY = WINSIZEY / 2;
+				else if (m_pPlayer->GetVecPlayer()[SecondPlayer].t_pPlayerImage->GetPosY() + WINSIZEY / 2 > m_pImgMapBuffer->GetHeight())
+					PosY = m_pImgMapBuffer->GetHeight() - WINSIZEY / 2;
+				break;
+			default:
+				break;
 		}
 
 		if (g_pKeyManager->isStayKeyDown('D') && PosX + savePosX + WINSIZEX / 2 < m_pImgMapBuffer->GetWidth()-3)
@@ -154,8 +173,8 @@ void cMainGame::LoadImageFromFile()
 	g_pImageManager->AddImage("ProgressFront", "images/progressBarFront.bmp", 50, 10);
 
 	/* ÇÃ·¹ÀÌ¾î */
-	g_pImageManager->AddImage("Player", "images/tank_cannon.bmp", 60, 60, 1, 1, 2000, MAP1_Y, true, RGB(255, 0, 255));
-	g_pImageManager->AddImage("Player2", "images/carrottankRight.bmp", 60, 60, 1, 1, 800, 300, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Player", "images/tank_cannon.bmp", 120, 60, 2, 1, 2000, MAP1_Y, true, RGB(255, 0, 255));
+	g_pImageManager->AddImage("Player2", "images/tank_carrottank.bmp", 120, 60, 2, 1, 800, 400, true, RGB(255, 0, 255));
 
 	/* ÆøÅº */
 	g_pImageManager->AddImage("Bomb", "images/bomb.bmp", 156, 39, 4, 1, true, RGB(255, 0, 255));

@@ -17,7 +17,7 @@ public:
 	~cProgressBar();
 
 	void Update();
-	void Render();
+	void Render(HDC hdc);
 
 	void SetGauge(float maxGauge, float currGauge);
 	void SetPosX(int x) { m_nPosX = x; }
