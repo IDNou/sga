@@ -54,6 +54,8 @@ private:
 
 	cMap*			m_pMap;
 	cImage*			m_pImgMapBuffer;	// 배경 정보 이미지(마젠타가 들어 있는 픽셀 충돌용 맵)
+	cImage*			m_pImgMap;
+	cImage*			m_pBackGround;
 
 public:
 	cPlayer();

@@ -8,6 +8,8 @@ cPlayer::cPlayer()
 {
 	/*m_pPlayerImage = g_pImageManager->FindImage("Player");
 	m_pPlayerSecondImage = g_pImageManager->FindImage("Player2");*/
+	m_pBackGround = g_pImageManager->FindImage("BackGround");
+	m_pImgMap = g_pImageManager->FindImage("Map");
 	m_pImgMapBuffer = g_pImageManager->FindImage("MapBuffer");
 }
 
@@ -231,7 +233,6 @@ void cPlayer::WhoUpdate(tagPlayer &t_pPlayer)
 			t_pPlayer.isDie = true;
 		}
 	}
-
 }
 
 void cPlayer::WhoRender(tagPlayer &t_pPlayer)
@@ -256,6 +257,8 @@ void cPlayer::WhoRender(tagPlayer &t_pPlayer)
 		{
 			if (g_pPixelManager->CheckPixel(m_pImgMapBuffer, m_pBomb->GetPosX(), m_pBomb->GetPosY()) == false)
 			{// 여기다가 터지게 만들꺼야
+				g_pPixelManager->RemoveBrush(m_pImgMap, m_pBomb->GetPosX(), m_pBomb->GetPosY(), 50);
+				//g_pPixelManager->RemoveBrush(m_pBackGround, m_pBomb->GetPosX(), m_pBomb->GetPosY(), 50);
 				cout << " 발견" << endl;
 			}
 		}
