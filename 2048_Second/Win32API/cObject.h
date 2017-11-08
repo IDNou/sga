@@ -28,6 +28,7 @@ private:
 	int			SetNum[16];
 	int			BlockWidth;
 	int			BlockHeight;
+	int			count;
 	bool		overRap;
 
 public:

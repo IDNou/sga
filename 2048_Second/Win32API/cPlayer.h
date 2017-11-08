@@ -15,6 +15,7 @@ private:
 	bool			isSame;
 	bool			isCreate;
 	bool			isExist;
+	bool			isMove;
 	int				count;
 	
 
