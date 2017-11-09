@@ -7,10 +7,11 @@
 
 cPlayer::cPlayer()
 {
-	isSame = false;
 	isCreate = false;
 	isExist = false;
-	isMove = true;;
+	isNotExist = false;
+	iterCount = 0;
+	lastCount = 0;
 }
 
 
@@ -26,74 +27,6 @@ void cPlayer::Update()
 {
 	if (g_pKeyManager->isOnceKeyDown(VK_RIGHT))
 	{
-#pragma region next
-		//isCreate = true;
-		
-		// 3번째부터 시작함
-		//for (int i = 3; i > 0; --i)
-		//{
-		//	for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
-		//	{
-		//		// 3번째인 벡터부터 차례대로 찾아냄
-		//		if (iter->uId % 4 == i) 
-		//		{
-		//			for (int j = 3; j >= i; --j)
-		//			{
-		//				for (auto iter2 = m_pObject->GetVecBlock().begin(); iter2 != m_pObject->GetVecBlock().end(); ++iter2)
-		//				{
-		//					if (iter->uId + (4 - j) == iter2->uId)
-		//					{
-		//						isExist = true;
-		//						if (iter->Number == iter2->Number)
-		//						{
-		//							char buffer[256];
-		//							iter->isExist = false;
-		//							iter2->Number *= 2;
-		//							sprintf(buffer, "%d", iter2->Number);
-		//							iter2->m_pImageBlock = g_pImageManager->FindImage(buffer);
-		//							break;
-		//						}
-		//						else
-		//						{
-		//							break;
-		//						}
-		//					}
-		//				}
-
-		//				if (!isExist)
-		//				{
-		//					iter->PosX += m_pObject->GetBlockWidth();
-		//					iter->uId += 1;
-		//				}
-
-		//				////앞에 벡터가 존재하는가. 검사함
-		//				//if (iter->uId + (4 - i) == iter2->uId) // 다 4번째 있는 블록만 검사해버림. 
-		//				//{
-		//				//	isExist = true;
-		//				//	if (iter->Number == iter2->Number)
-		//				//	{
-		//				//		isSame = true;
-		//				//		char buffer[256];
-		//				//		iter->isExist = false;
-		//				//		iter2->Number *= 2;
-		//				//		sprintf(buffer, "%d", iter2->Number);
-		//				//		iter2->m_pImageBlock = g_pImageManager->FindImage(buffer);
-		//				//	}
-		//				//}
-		//				
-		//			}
-
-		//			/*if (!isExist && !isSame)
-		//			{
-		//				iter->PosX += m_pObject->GetBlockWidth();
-		//				iter->uId += 1;
-		//			}
-		//			isSame = false;
-		//			isExist = false;*/
-		//		}
-		//	}
-		//}
-#pragma endregion
 		for (int i = 2; i >= 0; i--)
 		{
 			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
@@ -102,47 +35,60 @@ void cPlayer::Update()
 				{
 					for (int j = 1; j < 4 - i; j++)
 					{
-						for (auto iter2 = m_pObject->GetVecBlock().begin(); iter2 != m_pObject->GetVecBlock().end(); ++iter2)
+						if ((iter + j)->isExist) // 앞에 존재를 한다면
 						{
-							if (iter->uId + j == iter2->uId)
+							if ((iter + j)->Number == iter->Number)// 합치는거
 							{
-								if (iter2->isExist)
-								{
-									if (iter->Number == iter2->Number)
-									{
-										char buffer[256];
-										iter->isExist = false;
-										iter->Number = 0;
-										iter->m_pImageBlock = NULL;
-										iter2->Number *= 2;
-										sprintf(buffer, "%d", iter2->Number);
-										iter2->m_pImageBlock = g_pImageManager->FindImage(buffer);
-									}
-									else
-									{
-										isMove = false;
-									}
-								}
-								else
-								{
-									char buffer[256];
-									iter2->Number = iter->Number;
-									sprintf(buffer, "%d", iter2->Number);
-									iter2->m_pImageBlock = g_pImageManager->FindImage(buffer);
-									iter2->isExist = true;
+								char buffer[256];
+								(iter + j)->Number *= 2;
+								sprintf(buffer, "%d", (iter + j)->Number);
+								(iter + j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
 
-									iter->isExist = false;
-									iter->Number = 0;
-									iter->m_pImageBlock = NULL; // 여기서 오류가생긴다.
-								}
+								iter->Number = 0;
+								iter->isExist = false;
+								break;
+							}
+							else // 숫자가 같지않을때 앞으로 가지말아야함
+							{
+								isExist = true;
+								iterCount = j - 1;
+								break;
 							}
 						}
 
-						if (!isMove)
+						if (j == 3 - i)
 						{
-							isMove = true;
-							break;
+							isNotExist = true;
+							lastCount = j;
 						}
+					}
+
+					if (isExist)
+					{
+						isExist = false;
+						if (iterCount != 0)
+						{
+							(iter + iterCount)->isExist = true;
+							(iter + iterCount)->Number = iter->Number;
+							(iter+iterCount)->m_pImageBlock = iter->m_pImageBlock;
+
+							iter->Number = 0;
+							iter->isExist = false;
+							iter->m_pImageBlock = NULL;
+						}
+					}
+
+					if (isNotExist)
+					{
+						(iter + lastCount)->isExist = true;
+						(iter + lastCount)->Number = iter->Number;
+						(iter + lastCount)->m_pImageBlock = iter->m_pImageBlock;
+
+						iter->isExist = false;
+						iter->Number = 0;
+						iter->m_pImageBlock = NULL;
+						isNotExist = false;
+						lastCount = 0;
 					}
 				}
 			}
@@ -152,24 +98,221 @@ void cPlayer::Update()
 	}
 	else if (g_pKeyManager->isOnceKeyDown(VK_LEFT))
 	{
+		for (int i = 1; i <= 3; i++)
+		{
+			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
+			{
+				if (iter->isExist && iter->uId % 4 == i)
+				{
+					for (int j = 1; j < i+1; j++)
+					{
+						if ((iter - j)->isExist) // 앞에 존재를 한다면
+						{
+							if ((iter - j)->Number == iter->Number)// 합치는거
+							{
+								char buffer[256];
+								(iter - j)->Number *= 2;
+								sprintf(buffer, "%d", (iter - j)->Number);
+								(iter - j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
 
+								iter->Number = 0;
+								iter->isExist = false;
+								break;
+							}
+							else // 숫자가 같지않을때 앞으로 가지말아야함
+							{
+								isExist = true;
+								iterCount = j - 1;
+								break;
+							}
+						}
+
+						if (j == i)
+						{
+							isNotExist = true;
+							lastCount = -j;
+						}
+					}
+
+					if (isExist)
+					{
+						isExist = false;
+						if (iterCount != 0)
+						{
+							(iter - iterCount)->isExist = true;
+							(iter - iterCount)->Number = iter->Number;
+							(iter - iterCount)->m_pImageBlock = iter->m_pImageBlock;
+
+							iter->Number = 0;
+							iter->isExist = false;
+							iter->m_pImageBlock = NULL;
+
+							iterCount = 0;
+						}
+					}
+
+					if (isNotExist)
+					{
+						(iter + lastCount)->isExist = true;
+						(iter + lastCount)->Number = iter->Number;
+						(iter + lastCount)->m_pImageBlock = iter->m_pImageBlock;
+
+						iter->isExist = false;
+						iter->Number = 0;
+						iter->m_pImageBlock = NULL;
+						isNotExist = false;
+						lastCount = 0;
+					}
+				}
+			}
+		}
+
+		isCreate = true;
 	}
 	else if (g_pKeyManager->isOnceKeyDown(VK_UP))
 	{
+		for (int i = 1; i < 4; i++)
+		{
+			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
+			{
+				if (iter->uId / 4 == i && iter->isExist)
+				{
+					for (int j = 1; j < i + 1; j++)
+					{
+						if ((iter - (j * 4))->isExist) // 앞에 존재를 한다면
+						{
+							if ((iter - (j * 4))->Number == iter->Number)// 합치는거
+							{
+								char buffer[256];
+								(iter - (j * 4))->Number *= 2;
+								sprintf(buffer, "%d", (iter - (j * 4))->Number);
+								(iter - (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
 
+								iter->Number = 0;
+								iter->isExist = false;
+								break;
+							}
+							else // 숫자가 같지않을때 앞으로 가지말아야함
+							{
+								isExist = true;
+								iterCount = (j - 1)*4;
+								break;
+							}
+						}
+
+						if (j == i)
+						{
+							isNotExist = true;
+							lastCount = j * 4;
+						}
+					}
+
+					if (isExist)
+					{
+						isExist = false;
+						if (iterCount != 0)
+						{
+							(iter - iterCount)->isExist = true;
+							(iter - iterCount)->Number = iter->Number;
+							(iter - iterCount)->m_pImageBlock = iter->m_pImageBlock;
+
+							iter->Number = 0;
+							iter->isExist = false;
+							iter->m_pImageBlock = NULL;
+
+							iterCount = 0;
+						}
+					}
+
+					if (isNotExist)
+					{
+						(iter - lastCount)->isExist = true;
+						(iter - lastCount)->Number = iter->Number;
+						(iter - lastCount)->m_pImageBlock = iter->m_pImageBlock;
+
+						iter->isExist = false;
+						iter->Number = 0;
+						iter->m_pImageBlock = NULL;
+						isNotExist = false;
+						lastCount = 0;
+					}
+				}
+			}
+		}
+		isCreate = true;
 	}
+
 	else if (g_pKeyManager->isOnceKeyDown(VK_DOWN))
 	{
+		for (int i = 2; i >= 0; i--)
+		{
+			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
+			{
+				if (iter->isExist && iter->uId / 4 == i)
+				{
+					for (int j = 1; j < 4 - i; j++)
+					{
+						if ((iter + (j * 4))->isExist) // 앞에 존재를 한다면
+						{
+							if ((iter + (j * 4))->Number == iter->Number)// 합치는거
+							{
+								char buffer[256];
+								(iter + (j * 4))->Number *= 2;
+								sprintf(buffer, "%d", (iter + (j * 4))->Number);
+								(iter + (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
 
+								iter->Number = 0;
+								iter->isExist = false;
+								break;
+							}
+							else // 숫자가 같지않을때 앞으로 가지말아야함
+							{
+								isExist = true;
+								iterCount = (j - 1)*4;
+								break;
+							}
+						}
+
+						if (j == 3 - i)
+						{
+							isNotExist = true;
+							lastCount = j * 4;
+						}
+					}
+
+					if (isExist)
+					{
+						isExist = false;
+						if (iterCount != 0)
+						{
+							(iter + iterCount)->isExist = true;
+							(iter + iterCount)->Number = iter->Number;
+							(iter + iterCount)->m_pImageBlock = iter->m_pImageBlock;
+
+							iter->Number = 0;
+							iter->isExist = false;
+							iter->m_pImageBlock = NULL;
+						}
+					}
+
+					if (isNotExist)
+					{
+						(iter + lastCount)->isExist = true;
+						(iter + lastCount)->Number = iter->Number;
+						(iter + lastCount)->m_pImageBlock = iter->m_pImageBlock;
+
+						iter->isExist = false;
+						iter->Number = 0;
+						iter->m_pImageBlock = NULL;
+						isNotExist = false;
+						lastCount = 0;
+					}
+				}
+			}
+		}
+
+		isCreate = true;
 	}
-
-	/*for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end();)
-	{
-		if (iter->isExist == false)
-			iter = m_pObject->GetVecBlock().erase(iter);
-		else
-			++iter;
-	}*/
 }
 
 void cPlayer::Render()

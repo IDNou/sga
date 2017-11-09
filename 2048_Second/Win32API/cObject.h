@@ -25,11 +25,10 @@ private:
 	tagBlock	block;
 	vector<tagBlock> vecBlock;
 
-	int			SetNum[16];
 	int			BlockWidth;
 	int			BlockHeight;
 	int			count;
-	bool		overRap;
+	int			FullCount;
 
 public:
 	cObject();

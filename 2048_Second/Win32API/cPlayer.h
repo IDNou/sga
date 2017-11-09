@@ -12,11 +12,11 @@ private:
 	cMap*			m_pMap;
 	cObject*		m_pObject;
 
-	bool			isSame;
 	bool			isCreate;
 	bool			isExist;
-	bool			isMove;
-	int				count;
+	bool			isNotExist;
+	int				iterCount;
+	int				lastCount;
 	
 
 public:
