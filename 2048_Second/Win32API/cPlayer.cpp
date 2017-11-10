@@ -12,6 +12,8 @@ cPlayer::cPlayer()
 	isNotExist = false;
 	iterCount = 0;
 	lastCount = 0;
+	SumCount = 0;
+	SumCount2 = 0;
 }
 
 
@@ -27,6 +29,17 @@ void cPlayer::Update()
 {
 	if (g_pKeyManager->isOnceKeyDown(VK_RIGHT))
 	{
+		m_pObject->SetVecEqual(m_pObject->GetVecBlock());
+
+		SumCount = 0;
+
+		for (auto iter = m_pObject->GetVecEqual().begin(); iter != m_pObject->GetVecEqual().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount += iter->uId;
+		}
+		cout << SumCount << endl;
+
 		for (int i = 2; i >= 0; i--)
 		{
 			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
@@ -42,7 +55,8 @@ void cPlayer::Update()
 								char buffer[256];
 								(iter + j)->Number *= 2;
 								sprintf(buffer, "%d", (iter + j)->Number);
-								(iter + j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								//(iter + j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								(iter + j)->m_pImageBlock = g_pImageManager->FindImage("Number");
 
 								iter->Number = 0;
 								iter->isExist = false;
@@ -94,10 +108,30 @@ void cPlayer::Update()
 			}
 		}
 
-		isCreate = true;
+		SumCount2 = 0;
+		for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount2 += iter->uId;
+		}
+		cout << SumCount2 << endl;
+		
+		if(SumCount != SumCount2)
+			isCreate = true;
 	}
 	else if (g_pKeyManager->isOnceKeyDown(VK_LEFT))
 	{
+		m_pObject->SetVecEqual(m_pObject->GetVecBlock());
+
+		SumCount = 0;
+
+		for (auto iter = m_pObject->GetVecEqual().begin(); iter != m_pObject->GetVecEqual().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount += iter->uId;
+		}
+		cout << SumCount << endl;
+
 		for (int i = 1; i <= 3; i++)
 		{
 			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
@@ -113,7 +147,8 @@ void cPlayer::Update()
 								char buffer[256];
 								(iter - j)->Number *= 2;
 								sprintf(buffer, "%d", (iter - j)->Number);
-								(iter - j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								//(iter - j)->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								(iter - j)->m_pImageBlock = g_pImageManager->FindImage("Number");
 
 								iter->Number = 0;
 								iter->isExist = false;
@@ -167,10 +202,30 @@ void cPlayer::Update()
 			}
 		}
 
-		isCreate = true;
+		SumCount2 = 0;
+		for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount2 += iter->uId;
+		}
+		cout << SumCount2 << endl;
+
+		if (SumCount != SumCount2)
+			isCreate = true;
 	}
 	else if (g_pKeyManager->isOnceKeyDown(VK_UP))
 	{
+		m_pObject->SetVecEqual(m_pObject->GetVecBlock());
+
+		SumCount = 0;
+
+		for (auto iter = m_pObject->GetVecEqual().begin(); iter != m_pObject->GetVecEqual().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount += iter->uId;
+		}
+		cout << SumCount << endl;
+
 		for (int i = 1; i < 4; i++)
 		{
 			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
@@ -186,7 +241,8 @@ void cPlayer::Update()
 								char buffer[256];
 								(iter - (j * 4))->Number *= 2;
 								sprintf(buffer, "%d", (iter - (j * 4))->Number);
-								(iter - (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								//(iter - (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								(iter - (j * 4))->m_pImageBlock = g_pImageManager->FindImage("Number");
 
 								iter->Number = 0;
 								iter->isExist = false;
@@ -239,11 +295,32 @@ void cPlayer::Update()
 				}
 			}
 		}
-		isCreate = true;
+
+		SumCount2 = 0;
+		for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount2 += iter->uId;
+		}
+		cout << SumCount2 << endl;
+
+		if (SumCount != SumCount2)
+			isCreate = true;
 	}
 
 	else if (g_pKeyManager->isOnceKeyDown(VK_DOWN))
 	{
+		m_pObject->SetVecEqual(m_pObject->GetVecBlock());
+
+		SumCount = 0;
+
+		for (auto iter = m_pObject->GetVecEqual().begin(); iter != m_pObject->GetVecEqual().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount += iter->uId;
+		}
+		cout << SumCount << endl;
+
 		for (int i = 2; i >= 0; i--)
 		{
 			for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); ++iter)
@@ -259,7 +336,8 @@ void cPlayer::Update()
 								char buffer[256];
 								(iter + (j * 4))->Number *= 2;
 								sprintf(buffer, "%d", (iter + (j * 4))->Number);
-								(iter + (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								//(iter + (j * 4))->m_pImageBlock = g_pImageManager->FindImage(buffer);
+								(iter + (j * 4))->m_pImageBlock = g_pImageManager->FindImage("Number");
 
 								iter->Number = 0;
 								iter->isExist = false;
@@ -311,7 +389,16 @@ void cPlayer::Update()
 			}
 		}
 
-		isCreate = true;
+		SumCount2 = 0;
+		for (auto iter = m_pObject->GetVecBlock().begin(); iter != m_pObject->GetVecBlock().end(); iter++)
+		{
+			if (iter->isExist)
+				SumCount2 += iter->uId;
+		}
+		cout << SumCount2 << endl;
+
+		if (SumCount != SumCount2)
+			isCreate = true;
 	}
 }
 

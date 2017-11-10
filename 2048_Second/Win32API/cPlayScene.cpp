@@ -94,6 +94,7 @@ void cPlayScene::LoadImageFromFile()
 	g_pImageManager->AddImage("512", "images/512.bmp", 100, 100);
 	g_pImageManager->AddImage("1024", "images/1024.bmp", 100, 100);
 	g_pImageManager->AddImage("2048", "images/2048.bmp", 100, 100);
+	g_pImageManager->AddImage("Number", "images/numbers.bmp", 1100, 100, 11, 1, true, RGB(255, 0, 255));
 
 	/* 플레이어 */
 }

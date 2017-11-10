@@ -45,12 +45,14 @@ void cObject::Setup()
 				if (rand() % 10 < 9)
 				{
 					iter->Number = 2;
-					iter->m_pImageBlock = g_pImageManager->FindImage("2");
+					//iter->m_pImageBlock = g_pImageManager->FindImage("2");
+					iter->m_pImageBlock = g_pImageManager->FindImage("Number");
 				}
 				else
 				{
 					iter->Number = 4;
-					iter->m_pImageBlock = g_pImageManager->FindImage("4");
+					//iter->m_pImageBlock = g_pImageManager->FindImage("4");
+					iter->m_pImageBlock = g_pImageManager->FindImage("Number");
 				}
 			}
 		}
@@ -78,7 +80,7 @@ void cObject::Update()
 					FullCount++;
 				}
 			}
-			cout << FullCount << endl;
+			//cout << FullCount << endl;
 
 			if (FullCount >= 16)
 			{
@@ -95,12 +97,14 @@ void cObject::Update()
 					if (rand() % 10 < 9)
 					{
 						iter->Number = 2;
-						iter->m_pImageBlock = g_pImageManager->FindImage("2");
+						//iter->m_pImageBlock = g_pImageManager->FindImage("2");
+						iter->m_pImageBlock = g_pImageManager->FindImage("Number");
 					}
 					else
 					{
 						iter->Number = 4;
-						iter->m_pImageBlock = g_pImageManager->FindImage("4");
+						//iter->m_pImageBlock = g_pImageManager->FindImage("4");
+						iter->m_pImageBlock = g_pImageManager->FindImage("Number");
 					}
 				}
 			}
@@ -130,8 +134,45 @@ void cObject::Render()
 	{
 		if (iter->isExist)
 		{
-			iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 0, 0, 100, 100);
-
+			//iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 0, 0, 100, 100);
+			switch (iter->Number)
+			{
+			case 2:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 0, 0, 100, 100);
+				break;
+			case 4:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 100, 0, 100, 100);
+				break;
+			case 8:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 200, 0, 100, 100);
+				break;
+			case 16:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 300, 0, 100, 100);
+				break;
+			case 32:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 400, 0, 100, 100);
+				break;
+			case 64:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 500, 0, 100, 100);
+				break;
+			case 128:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 600, 0, 100, 100);
+				break;
+			case 256:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 700, 0, 100, 100);
+				break;
+			case 512:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 800, 0, 100, 100);
+				break;
+			case 1024:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 900, 0, 100, 100);
+				break;
+			case 2048:
+				iter->m_pImageBlock->Render(g_hDC, iter->PosX - 50, iter->PosY - 50, 1000, 0, 100, 100);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }

@@ -24,6 +24,7 @@ private:
 
 	tagBlock	block;
 	vector<tagBlock> vecBlock;
+	vector<tagBlock> vecEqual;
 
 	int			BlockWidth;
 	int			BlockHeight;
@@ -39,10 +40,12 @@ public:
 	void Render();
 
 	vector<tagBlock> &GetVecBlock() { return vecBlock; }
+	vector<tagBlock> &GetVecEqual() { return vecEqual; }
 	int	GetBlockWidth() { return BlockWidth; }
 	int	GetBlockHeight() { return BlockHeight; }
 
 	void SetPlayer(cPlayer* player) { m_pPlayer = player; }
 	void SetMap(cMap* map) { m_pMap = map; }
+	void SetVecEqual(vector<tagBlock> equal) { vecEqual = equal; }
 };
 

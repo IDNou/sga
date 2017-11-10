@@ -17,6 +17,8 @@ private:
 	bool			isNotExist;
 	int				iterCount;
 	int				lastCount;
+	int				SumCount;
+	int				SumCount2;
 	
 
 public:
