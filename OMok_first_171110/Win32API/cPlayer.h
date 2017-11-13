@@ -20,6 +20,12 @@ private:
 	tagStone		Stone;
 	vector<tagStone> vecStone;
 	int				alretColor;
+	int				saveUID;
+	int				rowCount;
+	int				colCount;
+	int				LdiagoCount;
+	int				RdiagoCount;
+	int				victoryCount;
 
 public:
 	cPlayer();
@@ -30,8 +36,10 @@ public:
 	void Render();
 
 	vector<tagStone> &GetVecStone() { return vecStone; }
+	int	GetAlretColor() { return alretColor; }
 
 	void SetMap(cMap* map) { m_pMap = map; }
+	void SetAlretColor(int Color) { alretColor = Color; }
 
 };
 

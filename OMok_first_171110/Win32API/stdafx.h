@@ -32,7 +32,7 @@ using namespace std;
 #define WINNAME (LPCWSTR)(TEXT("코딩 지옥에 오신걸 환영 합니다."))
 #define WINSTARTX		0
 #define WINSTARTY		0
-#define WINSIZEX		800
+#define WINSIZEX		1000
 #define WINSIZEY		800
 #define WINSTYLE		WS_CAPTION | WS_SYSMENU
 #define PURE			= 0

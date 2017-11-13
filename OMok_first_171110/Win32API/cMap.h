@@ -10,6 +10,8 @@ private:
 
 	cImage* alphaStone;
 
+	float			time;
+
 public:
 	cMap();
 	~cMap();
@@ -18,6 +20,9 @@ public:
 	void Update();
 	void Render();
 
+	float GetTime() { return time; }
+
 	void SetPlayer(cPlayer* player) { m_pPlayer = player; }
+	void SetTime(float getTime) { time = getTime; }
 
 };

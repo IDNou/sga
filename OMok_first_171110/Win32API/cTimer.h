@@ -31,5 +31,7 @@ public:
 	float GetElapsedTime() const { return m_fFPSTimeElapsed; }
 	// 전체 경과 시간 가져오기
 	float GetWorldTime() const { return m_fWorldTime; }
+	// 일정한 시간을 받고싶음
+	float GetTime() const { return m_fTimeElapsed; }
 };
 

@@ -17,6 +17,7 @@ public:
 	void Render();
 
 	float GetElapsedTime() const { return m_pTimer->GetElapsedTime(); }
+	float GetEualTime()	const { return m_pTimer->GetTime(); }
 	float GetWorldTime() const { return m_pTimer->GetWorldTime(); }
 	float GetDeltaTime() const { return 60.0f / m_pTimer->GetFPS(); }
 };

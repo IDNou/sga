@@ -55,7 +55,7 @@ void cPlayScene::Release()
 void cPlayScene::LoadImageFromFile()
 {
 	/* ÀüÃ¼ ¹è°æ */
-	m_pImgBackground = g_pImageManager->AddImage("OmokPan", "images/omokbg.bmp", 800, 800, true, RGB(255, 0, 255));
+	m_pImgBackground = g_pImageManager->AddImage("OmokPan", "images/omokbg.bmp", 1000, 800, true, RGB(255, 0, 255));
 
 	/* ¸Ê */
 	
