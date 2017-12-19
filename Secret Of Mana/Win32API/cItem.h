@@ -16,6 +16,7 @@ private:
 	int ATK;
 	int DEF;
 	int HP;
+	int amount;
 	int Price;
 
 public:
@@ -36,6 +37,7 @@ public:
 	int GetDEF() { return DEF; }
 	int GetHP() { return HP; }
 	int GetPrice() { return Price; }
+	int GetAmount() { return amount; }
 
 	void SetName(string item_name) { name = item_name; }
 	void SetImage(cImage* item_image) { Image = item_image; }
@@ -44,5 +46,6 @@ public:
 	void SetDEF(int item_def) { DEF = item_def; }
 	void SetHP(int item_hp) { HP = item_hp; }
 	void SetPrice(int item_price) { Price = item_price; }
+	void SetAmount(int item_amount) { amount = item_amount; }
 };
 

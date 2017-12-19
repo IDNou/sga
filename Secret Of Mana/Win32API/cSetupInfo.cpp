@@ -25,7 +25,7 @@ void cSetupInfo::Update()
 
 void cSetupInfo::Render()
 {
-	char buffer[255];
+	char ch_buffer[255];
 	InvenHeight = 150;
 
 	for (int i = 0; i < 25; i++)
@@ -86,23 +86,23 @@ void cSetupInfo::Render()
 	HFONT OldFont = (HFONT)SelectObject(g_hDC, hFont);
 	SetTextColor(g_hDC, RGB(240, 240, 240));
 
-	sprintf(buffer, "L V : %d", Player->GetLV());
-	TextOut(g_hDC, 150, 150, buffer, strlen(buffer));
+	sprintf(ch_buffer, "L V : %d", Player->GetLV());
+	TextOut(g_hDC, 150, 150, ch_buffer, strlen(ch_buffer));
 
-	sprintf(buffer, "H P : %d", Player->GetHP());
-	TextOut(g_hDC, 150, 200, buffer, strlen(buffer));
+	sprintf(ch_buffer, "H P : %d", Player->GetHP());
+	TextOut(g_hDC, 150, 200, ch_buffer, strlen(ch_buffer));
 
-	sprintf(buffer, "ATK : %d", Player->GetATK());
-	TextOut(g_hDC, 150, 250, buffer, strlen(buffer));
+	sprintf(ch_buffer, "ATK : %d", Player->GetATK());
+	TextOut(g_hDC, 150, 250, ch_buffer, strlen(ch_buffer));
 
-	sprintf(buffer, "DEF : %d", Player->GetDEF());
-	TextOut(g_hDC, 150, 300, buffer, strlen(buffer));
+	sprintf(ch_buffer, "DEF : %d", Player->GetDEF());
+	TextOut(g_hDC, 150, 300, ch_buffer, strlen(ch_buffer));
 
-	sprintf(buffer, "EXP : %d", Player->GetEXP());
-	TextOut(g_hDC, 150, 350, buffer, strlen(buffer));
+	sprintf(ch_buffer, "EXP : %d", Player->GetEXP());
+	TextOut(g_hDC, 150, 350, ch_buffer, strlen(ch_buffer));
 
-	sprintf(buffer, "M O N E Y : %d 风农", Player->GetMoney());
-	TextOut(g_hDC, 150, 400, buffer, strlen(buffer));
+	sprintf(ch_buffer, "M O N E Y : %d 风农", Player->GetMoney());
+	TextOut(g_hDC, 150, 400, ch_buffer, strlen(ch_buffer));
 
 	DeleteObject(SelectObject(g_hDC, hFont));
 	DeleteObject(OldFont);
@@ -113,15 +113,10 @@ void cSetupInfo::Render()
 		string buffer = (*iter)->GetName();
 		(*iter)->GetImage()->Render(g_hDC, 600, InvenHeight, 40, 40);
 		TextOut(g_hDC, 650, InvenHeight, buffer.c_str(), strlen(buffer.c_str()));
+		sprintf_s(ch_buffer, "%d 俺", (*iter)->GetAmount());
+		TextOut(g_hDC, 900, InvenHeight, ch_buffer, strlen(ch_buffer));
 		InvenHeight += 50;
 	}
-
-	//g_pItemManager->FindItem("格八")->GetATK();
-	/*g_pItemManager->FindItem("ManaSword")->GetImage()->Render(g_hDC, 600, 150, 40, 40);
-	TextOut(g_hDC, 650, 150, "ManaSword", strlen("ManaSword"));
-	g_pItemManager->FindItem("Candy")->GetImage()->Render(g_hDC, 600, 200, 40, 40);
-	sprintf(buffer, "%s", Player->GetMoney());
-	TextOut(g_hDC, 650, 200, "Candy", strlen("Candy"));*/
 
 }
 

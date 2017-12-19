@@ -33,6 +33,8 @@ void cStore::Setup()
 	count = 1;
 	isSell = false;
 	isNotBuy = false;
+	isOwn = false;
+	isConsumOwn = false;
 }
 
 void cStore::Update()
@@ -45,6 +47,8 @@ void cStore::Update()
 	if (g_pKeyManager->isOnceKeyDown(VK_SPACE))
 	{
 		isNotBuy = false;
+		isOwn = false;
+		isConsumOwn = false;
 		// 판매
 		if (isSell && Player->GetPlayerInven().size() > 0)
 		{
@@ -64,13 +68,43 @@ void cStore::Update()
 		//구매
 		else if(!isSell)
 		{
-			if (Player->GetMoney() >= vec_Item[count - 1]->GetPrice())
+			for (auto iter = Player->GetPlayerInven().begin(); iter != Player->GetPlayerInven().end(); iter++)
+			{
+				if ((*iter)->GetName() == vec_Item[count - 1]->GetName() && (*iter)->GetType() == (ItemType)1)
+				{
+					//아이템을 가지고있습니다.
+					isOwn = true;
+					break;
+				}
+				else if ((*iter)->GetName() == vec_Item[count - 1]->GetName() 
+					&& (*iter)->GetType() == (ItemType)0 
+					&& Player->GetMoney() >= vec_Item[count - 1]->GetPrice())
+				{
+					// 회복템을 가지고 있습니다. 돈도있구
+					(*iter)->SetAmount((*iter)->GetAmount() + 1);
+					Player->SetMONEY(Player->GetMoney() - vec_Item[count - 1]->GetPrice());
+					isConsumOwn = true;
+					break;
+				}
+				else if ((*iter)->GetName() == vec_Item[count - 1]->GetName() 
+					&& (*iter)->GetType() == (ItemType)0 
+					&& Player->GetMoney() < vec_Item[count - 1]->GetPrice())
+				{
+					// 회복템을 가지고 있습니다. 돈은 없구
+					isNotBuy = true;
+					isConsumOwn = true;
+					break;
+				}
+			}
+	
+			if (!isOwn && !isConsumOwn && Player->GetMoney() >= vec_Item[count - 1]->GetPrice())
 			{
 				Player->GetPlayerInven().push_back(vec_Item[count - 1]);
 				Player->SetMONEY(Player->GetMoney() - vec_Item[count - 1]->GetPrice());
 			}
-			else
+			else if(!isOwn && isConsumOwn && Player->GetMoney() < vec_Item[count - 1]->GetPrice())
 			{
+				//메세지 출력
 				isNotBuy = true;
 			}
 		}
@@ -224,6 +258,8 @@ void cStore::Render(HDC hdc)
 		(*iter)->GetImage()->Render(hdc, Player->GetViewPort().left + 305, Player->GetViewPort().top + InvenMagin);
 		sprintf_s(Buffer, "%d 루크", (*iter)->GetPrice());
 		TextOut(hdc, Player->GetViewPort().left + 345, Player->GetViewPort().top + InvenMagin, Buffer, strlen(Buffer));
+		sprintf_s(Buffer, "%d 개", (*iter)->GetAmount());
+		TextOut(hdc, Player->GetViewPort().left + 425, Player->GetViewPort().top + InvenMagin, Buffer, strlen(Buffer));
 		InvenMagin += 20;
 	}
 
@@ -231,5 +267,10 @@ void cStore::Render(HDC hdc)
 	{
 		SetBkMode(hdc, OPAQUE);
 		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "돈이 부족합니다.", strlen("돈이 부족합니다."));
+	}
+	else if (isOwn)
+	{
+		SetBkMode(hdc, OPAQUE);
+		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "이미 가지고 있습니다.", strlen("이미 가지고 있습니다."));
 	}
 }

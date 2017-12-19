@@ -8,10 +8,12 @@
 class cStore
 {
 private:
+	//플레이어가 가진 아이템
 	cPlayer* Player;
 	cImage* EmptyBuffer;
 	cImage* CommunicationBox;
 	cImage* Finger;
+	//진열된 아이템
 	vector<cItem*> vec_Item;
 
 	int InvenMagin;
@@ -20,6 +22,8 @@ private:
 
 	bool isSell;
 	bool isNotBuy;
+	bool isOwn;
+	bool isConsumOwn;
 
 public:
 	cStore();
