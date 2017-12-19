@@ -1,0 +1,16 @@
+{
+	"Image":[
+		{
+			"NAME":"ManaSword",
+			"ROUTE":"images/ManaSword.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"Candy",
+			"ROUTE":"images/Candy.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		}
+	]
+}

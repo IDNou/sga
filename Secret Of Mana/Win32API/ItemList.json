@@ -1,0 +1,20 @@
+{
+	"Item":[
+		{
+			"NAME":"ManaSword",
+			"TYPE":1,
+			"HP":0,
+			"ATK":10,
+			"DEF":0,
+			"PRICE":50
+		},
+		{
+			"NAME":"Candy",
+			"TYPE":0,
+			"HP":100,
+			"ATK":0,
+			"DEF":0,
+			"PRICE":50
+		}
+	]
+}

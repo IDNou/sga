@@ -1,0 +1,12 @@
+{
+	"Player":{
+			"LV":1,
+			"HP":44,
+			"MAXHP":44,
+			"ATK":10,
+			"DEF":1,
+			"EXP":0,
+			"MAXEXP":100,
+			"MONEY":0
+	}
+}
