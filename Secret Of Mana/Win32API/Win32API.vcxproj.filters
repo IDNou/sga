@@ -147,9 +147,6 @@
     <ClInclude Include="cPlayer.h">
       <Filter>GameFramework2D\5. 게임 소스\플레이어</Filter>
     </ClInclude>
-    <ClInclude Include="cDijkstraTest.h">
-      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
-    </ClInclude>
     <ClInclude Include="cMapTool.h">
       <Filter>GameFramework2D\5. 게임 소스\맵툴</Filter>
     </ClInclude>
@@ -179,6 +176,15 @@
     </ClInclude>
     <ClInclude Include="cStore.h">
       <Filter>GameFramework2D\5. 게임 소스\플레이어</Filter>
+    </ClInclude>
+    <ClInclude Include="cBossScene.h">
+      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
+    </ClInclude>
+    <ClInclude Include="cDijkstraTest.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cEndingScene.h">
+      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +248,6 @@
     <ClCompile Include="cPlayer.cpp">
       <Filter>GameFramework2D\5. 게임 소스\플레이어</Filter>
     </ClCompile>
-    <ClCompile Include="cDijkstraTest.cpp">
-      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
-    </ClCompile>
     <ClCompile Include="cMapTool.cpp">
       <Filter>GameFramework2D\5. 게임 소스\맵툴</Filter>
     </ClCompile>
@@ -271,6 +274,15 @@
     </ClCompile>
     <ClCompile Include="cStore.cpp">
       <Filter>GameFramework2D\5. 게임 소스\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="cBossScene.cpp">
+      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
+    </ClCompile>
+    <ClCompile Include="cDijkstraTest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cEndingScene.cpp">
+      <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

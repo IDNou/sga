@@ -43,8 +43,6 @@ void cStore::Update()
 	InvenMagin = 70;
 	StoreMagin = 70;
 
-	cout << count  << " " << Player->GetPlayerInven().size() << endl;
-
 	if (g_pKeyManager->isOnceKeyDown(VK_SPACE))
 	{
 		isNotBuy = false;
@@ -53,11 +51,11 @@ void cStore::Update()
 		isWear = false;
 
 		// 판매
-		if (isSell && Player->GetPlayerInven()[count - 1]->GetIsWear() && Player->GetPlayerInven().size() > 0)
+		if (isSell && Player->GetPlayerInven().size() > 0 && Player->GetPlayerInven()[count - 1]->GetIsWear())
 		{
 			isWear = true;
 		}
-		else if (isSell && !Player->GetPlayerInven()[count - 1]->GetIsWear() && Player->GetPlayerInven().size() > 0)
+		else if (isSell && Player->GetPlayerInven().size() > 0&& !Player->GetPlayerInven()[count - 1]->GetIsWear())
 		{
 			Player->SetMONEY(Player->GetMoney() + Player->GetPlayerInven()[count-1]->GetPrice());
 
@@ -253,6 +251,7 @@ void cStore::Render(HDC hdc)
 	sprintf_s(Buffer, "%d 루크", Player->GetMoney());
 	//SetBkColor(hdc, SRCCOPY);
 	SetBkMode(hdc, TRANSPARENT);
+	SetTextColor(hdc, RGB(255, 255, 255));
 	TextOut(hdc, Player->GetViewPort().left+ 420, Player->GetViewPort().top+17, Buffer, strlen(Buffer));
 
 	Finger->Render(hdc, Finger->GetPosX(), Finger->GetPosY());
@@ -261,6 +260,7 @@ void cStore::Render(HDC hdc)
 	{
 		(*iter)->GetImage()->Render(hdc, Player->GetViewPort().left + 60, Player->GetViewPort().top + StoreMagin);
 		sprintf_s(Buffer, "%d 루크", (*iter)->GetPrice());
+		SetTextColor(hdc, RGB(255, 255, 255));
 		TextOut(hdc, Player->GetViewPort().left + 100, Player->GetViewPort().top + StoreMagin, Buffer, strlen(Buffer));
 		StoreMagin += 20;
 	}
@@ -269,25 +269,24 @@ void cStore::Render(HDC hdc)
 	{
 		(*iter)->GetImage()->Render(hdc, Player->GetViewPort().left + 305, Player->GetViewPort().top + InvenMagin);
 		sprintf_s(Buffer, "%d 루크", (*iter)->GetPrice());
+		SetTextColor(hdc, RGB(255, 255, 255));
 		TextOut(hdc, Player->GetViewPort().left + 345, Player->GetViewPort().top + InvenMagin, Buffer, strlen(Buffer));
 		sprintf_s(Buffer, "%d 개", (*iter)->GetAmount());
+		SetTextColor(hdc, RGB(255, 255, 255));
 		TextOut(hdc, Player->GetViewPort().left + 425, Player->GetViewPort().top + InvenMagin, Buffer, strlen(Buffer));
 		InvenMagin += 20;
 	}
 
 	if (isNotBuy)
 	{
-		SetBkMode(hdc, OPAQUE);
 		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "돈이 부족합니다.", strlen("돈이 부족합니다."));
 	}
 	else if (isOwn)
 	{
-		SetBkMode(hdc, OPAQUE);
 		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "이미 가지고 있습니다.", strlen("이미 가지고 있습니다."));
 	}
 	else if (isWear)
 	{
-		SetBkMode(hdc, OPAQUE);
 		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "착용 중 입니다.", strlen("착용 중 입니다."));
 	}
 }

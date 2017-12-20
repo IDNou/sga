@@ -160,31 +160,29 @@ void cSetupInfo::Render()
 		}
 	}
 
-	/*HFONT hFont = CreateFont(25, 0, 0, 0, FW_EXTRABOLD, 0, HANGUL_CHARSET, 0, 0, 0, 0, 0, 0, TEXT("³»²¨"));
-	HFONT OldFont = (HFONT)SelectObject(g_hDC, hFont);
-	SetTextColor(g_hDC, RGB(240, 240, 240));*/
-
 	sprintf(ch_buffer, "L V : %d", Player->GetLV());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 150, ch_buffer, strlen(ch_buffer));
 
 	sprintf(ch_buffer, "H P : %d", Player->GetHP());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 200, ch_buffer, strlen(ch_buffer));
 
 	sprintf(ch_buffer, "ATK : %d", Player->GetATK());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 250, ch_buffer, strlen(ch_buffer));
 
 	sprintf(ch_buffer, "DEF : %d", Player->GetDEF());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 300, ch_buffer, strlen(ch_buffer));
 
 	sprintf(ch_buffer, "EXP : %d", Player->GetEXP());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 350, ch_buffer, strlen(ch_buffer));
 
 	sprintf(ch_buffer, "M O N E Y : %d ·çÅ©", Player->GetMoney());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 400, ch_buffer, strlen(ch_buffer));
-
-	/*DeleteObject(SelectObject(g_hDC, hFont));
-	DeleteObject(OldFont);
-	DeleteObject(hFont);*/
 
 	Finger->Render(g_hDC, Finger->GetPosX(), Finger->GetPosY(),30,30);
 
@@ -195,13 +193,16 @@ void cSetupInfo::Render()
 		if ((*iter)->GetIsWear())
 		{
 			buffer += " (Âø¿ëÁß)";
+			SetTextColor(g_hDC, RGB(255, 255, 255));
 			TextOut(g_hDC, 650, InvenHeight, buffer.c_str(), strlen(buffer.c_str()));
 		}
 		else
 		{
+			SetTextColor(g_hDC, RGB(255, 255, 255));
 			TextOut(g_hDC, 650, InvenHeight, buffer.c_str(), strlen(buffer.c_str()));
 		}
 		sprintf_s(ch_buffer, "%d °³", (*iter)->GetAmount());
+		SetTextColor(g_hDC, RGB(255, 255, 255));
 		TextOut(g_hDC, 900, InvenHeight, ch_buffer, strlen(ch_buffer));
 		InvenHeight += 50;
 		

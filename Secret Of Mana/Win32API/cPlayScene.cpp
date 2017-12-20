@@ -127,7 +127,8 @@ void cPlayScene::Update()
 
 	RECT ct;
 	if (IntersectRect(&ct,
-		&RectMake(Player->GetPosX(),Player->GetPosY(),Player->GetPlayerImage()->GetFrameWidth(),Player->GetPlayerImage()->GetFrameHeight()),
+		&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2,
+			Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10,10,10),
 		&RectMake(1180,1430,35,25)))
 	{
 		m_vMonster.clear();
@@ -135,7 +136,8 @@ void cPlayScene::Update()
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
 	else if (IntersectRect(&ct,
-		&RectMake(Player->GetPosX(), Player->GetPosY(),30,30),
+		&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2,
+			Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10, 10),
 		&RectMake(1085, 1110, 15, 15)))
 	{
 		m_vMonster.clear();

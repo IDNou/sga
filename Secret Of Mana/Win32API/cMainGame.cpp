@@ -10,6 +10,7 @@
 #include "cWaterPathScene.h"
 #include "cSetupInfo.h"
 #include "cHouseScene.h"
+#include "cBossScene.h"
 
 cMainGame::cMainGame()
 {
@@ -68,6 +69,7 @@ void cMainGame::Setup()
 	g_pSceneManager->AddScene(SLIST_PLAY2, new cDijkstraTest);
 	g_pSceneManager->AddScene(SLIST_WATERPATH, new cWaterPathScene);
 	g_pSceneManager->AddScene(SLIST_HOUSE, new cHouseScene);
+	g_pSceneManager->AddScene(SLIST_BOSSMAP, new cBossScene);
 
 	// 처음 시작 씬 셋팅
 	g_pSceneManager->ChangeScene(SLIST_LOADING);

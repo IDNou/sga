@@ -35,10 +35,10 @@ void cHouseScene::Update()
 
 		if (count < 0)
 		{
+			count = 5;
 			StoreNPC->SetFrameX(StoreNPC->GetFrameX() + 1);
 			if (StoreNPC->GetMaxFrameX() < StoreNPC->GetFrameX())
 			{
-				count = 5;
 				StoreNPC->SetFrameX(0);
 			}
 		}

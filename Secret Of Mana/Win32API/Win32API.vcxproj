@@ -144,7 +144,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cBossScene.h" />
     <ClInclude Include="cDijkstraTest.h" />
+    <ClInclude Include="cEndingScene.h" />
     <ClInclude Include="cFileData.h" />
     <ClInclude Include="cGameNode.h" />
     <ClInclude Include="cHouseScene.h" />
@@ -181,7 +183,9 @@
     <ClInclude Include="Win32API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cBossScene.cpp" />
     <ClCompile Include="cDijkstraTest.cpp" />
+    <ClCompile Include="cEndingScene.cpp" />
     <ClCompile Include="cFileData.cpp" />
     <ClCompile Include="cGameNode.cpp" />
     <ClCompile Include="cHouseScene.cpp" />
