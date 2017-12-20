@@ -22,8 +22,6 @@ cMainGame::~cMainGame()
 void cMainGame::Setup()
 {
 
-
-	json ItemList;
 	ifstream File_Item;
 	File_Item.open("ItemList.json");
 	File_Item >> ItemList;
@@ -81,8 +79,9 @@ void cMainGame::Setup()
 	g_pPlayerManager->GetPlayer()->GetPlayerInven().push_back(g_pItemManager->FindItem("Candy"));
 
 
+	// 이전에 미리등록
+	
 	SetupInfo = new cSetupInfo;
-	SetupInfo->Setup();
 
 
 }
@@ -99,9 +98,15 @@ void cMainGame::Update()
 	if (g_pKeyManager->isOnceKeyDown('P'))
 	{
 		if (!isPause)
+		{
 			isPause = true;
+			SetupInfo->Setup();
+		}
 		else
+		{
 			isPause = false;
+			SetupInfo->Release();
+		}
 	}
 }
 

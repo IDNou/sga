@@ -7,6 +7,7 @@ class cMainGame : public cGameNode
 {
 private:
 	cSetupInfo * SetupInfo;
+	json ItemList;
 	bool isPause;
 
 public:

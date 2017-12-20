@@ -6,7 +6,31 @@
 			"HP":0,
 			"ATK":10,
 			"DEF":0,
-			"PRICE":50
+			"PRICE":200
+		},
+		{
+			"NAME":"RustySword",
+			"TYPE":1,
+			"HP":0,
+			"ATK":30,
+			"DEF":0,
+			"PRICE":800
+		},
+		{
+			"NAME":"BroadSword",
+			"TYPE":1,
+			"HP":0,
+			"ATK":5,
+			"DEF":0,
+			"PRICE":100
+		},
+		{
+			"NAME":"Excalibur",
+			"TYPE":1,
+			"HP":0,
+			"ATK":50,
+			"DEF":0,
+			"PRICE":1500
 		},
 		{
 			"NAME":"Candy",
@@ -14,7 +38,31 @@
 			"HP":100,
 			"ATK":0,
 			"DEF":0,
-			"PRICE":50
+			"PRICE":20
+		},
+		{
+			"NAME":"Vestguard",
+			"TYPE":1,
+			"HP":0,
+			"ATK":0,
+			"DEF":4,
+			"PRICE":150
+		},
+		{
+			"NAME":"GoldenVest",
+			"TYPE":1,
+			"HP":0,
+			"ATK":0,
+			"DEF":10,
+			"PRICE":500
+		},
+		{
+			"NAME":"RubyVest",
+			"TYPE":1,
+			"HP":0,
+			"ATK":0,
+			"DEF":20,
+			"PRICE":1000
 		}
 	]
 }

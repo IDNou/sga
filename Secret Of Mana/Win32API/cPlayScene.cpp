@@ -94,7 +94,6 @@ void cPlayScene::Update()
 			&RectMakeCenter((*iter)->GetPosX() + (*iter)->GetMonster()->GetFrameWidth() / 2, (*iter)->GetPosY() + (*iter)->GetMonster()->GetFrameHeight() / 2, 20, 20))
 			&& !(*iter)->GetIsDivain())
 		{
-			cout << "¸ÂÀ½" << endl;
 			if (!(*iter)->GetIsHit())
 			{
 				(*iter)->SetIsHit(true);
@@ -136,7 +135,7 @@ void cPlayScene::Update()
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
 	else if (IntersectRect(&ct,
-		&RectMake(Player->GetPosX(), Player->GetPosY(), Player->GetPlayerImage()->GetFrameWidth(), Player->GetPlayerImage()->GetFrameHeight()),
+		&RectMake(Player->GetPosX(), Player->GetPosY(),30,30),
 		&RectMake(1085, 1110, 15, 15)))
 	{
 		m_vMonster.clear();
@@ -161,6 +160,7 @@ void cPlayScene::Render()
 	{
 		(*iter)->Render(EmptyBuffer->GetMemDC());
 	}
+	RectangleMakeCenter(EmptyBuffer->GetMemDC(), Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth()/2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10,10);
 	RectangleMake(EmptyBuffer->GetMemDC(), 1180, 1430, 35, 25);
 	RectangleMake(EmptyBuffer->GetMemDC(), 1085, 1110, 15, 15);
 	EmptyBuffer->ViewPortRender(g_hDC, ViewPort, WINSIZEX, WINSIZEY);

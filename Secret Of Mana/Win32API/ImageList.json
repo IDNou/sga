@@ -7,6 +7,42 @@
 			"HEIGHT":16
 		},
 		{
+			"NAME":"RustySword",
+			"ROUTE":"images/RustySword.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"BroadSword",
+			"ROUTE":"images/BroadSword.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"Excalibur",
+			"ROUTE":"images/Excalibur.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"Vestguard",
+			"ROUTE":"images/Vestguard.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"GoldenVest",
+			"ROUTE":"images/GoldenVest.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
+			"NAME":"RubyVest",
+			"ROUTE":"images/RubyVest.png",
+			"WIDTH":16,
+			"HEIGHT":16
+		},
+		{
 			"NAME":"Candy",
 			"ROUTE":"images/Candy.png",
 			"WIDTH":16,

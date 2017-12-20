@@ -43,6 +43,15 @@ void cLoadingScene::LoadingImage()
 	g_pImageManager->ReleaseImage("PlayerMoveAction");
 	g_pImageManager->ReleaseImage("PlayerAttackAction");
 	g_pImageManager->ReleaseImage("EmptyBuffer");
+	g_pImageManager->ReleaseImage("Rabit");
+	g_pImageManager->ReleaseImage("WaterAndPandoraPath");
+	g_pImageManager->ReleaseImage("WaterAndPandoraPath_Magenta");
+	g_pImageManager->ReleaseImage("House");
+	g_pImageManager->ReleaseImage("House_Magenta");
+	g_pImageManager->ReleaseImage("Store_Empty");
+	g_pImageManager->ReleaseImage("CommunicationBox");
+	g_pImageManager->ReleaseImage("Finger2");
+	g_pImageManager->ReleaseImage("StoreNPC");
 	g_pSoundManager->ReleaseSound("TitleSound");
 	g_pSoundManager->ReleaseSound("FieldSound");
 	/* ====================== */
@@ -75,6 +84,10 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("House_Magenta", "images/house_Magenta.png", 705, 432, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadFrameImage("StoreNPC", "images/StoreNPC.png", 120, 45, 4, 1, true, RGB(255, 0, 255));
+		m_pLoading->LoadEmpty("Store_Empty", WINSIZEX / 2, WINSIZEY / 2);
+		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
+		m_pLoading->LoadImageFile("Finger2", "images/Finger.png", 16, 16, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1600, 1456);
 		break;
 	}

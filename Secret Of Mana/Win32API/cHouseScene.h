@@ -9,6 +9,7 @@ class cHouseScene : public cGameNode
 private:
 	cPlayer* Player;
 	cStore* Store;
+	cImage* StoreNPC;
 	cImage* BackGround;
 	cImage* BackGround_Magenta;
 	cImage* EmptyBuffer;
@@ -16,6 +17,7 @@ private:
 	 
 	//ªÛ¡°
 	bool isBuy;
+	int count;
 
 public:
 	cHouseScene() {};

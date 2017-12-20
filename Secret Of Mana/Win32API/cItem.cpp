@@ -33,4 +33,5 @@ void cItem::SetupItem(string s_name, cImage * s_img, ItemType s_type, int s_atk,
 	HP = s_hp;
 	Price = s_price;
 	amount = 1;
+	isWear = false;
 }

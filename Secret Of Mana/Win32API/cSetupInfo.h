@@ -13,10 +13,13 @@ private:
 	cPlayer* Player;
 	cImage* BackGround;
 	cImage* StatMessegeBox;
+	cImage* Finger;
 	int boxSize;
 	int count;
 	int InvenWidth;
 	int InvenHeight;
+
+	bool isFullHP;
 	vector<cImage*> vecImage;
 public:
 	cSetupInfo() {};

@@ -24,6 +24,7 @@ private:
 	bool isNotBuy;
 	bool isOwn;
 	bool isConsumOwn;
+	bool isWear;
 
 public:
 	cStore();

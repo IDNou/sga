@@ -73,6 +73,7 @@ public:
 	int GetPosY() { return PosY; }
 	RECT GetAttackRange() { return AttackRect; }
 	int GetHP() { return HP; }
+	int GetMAXHP() { return MAXHP; }
 	int GetEXP() { return EXP; }
 	int GetDEF() { return DEF; }
 	int GetATK() { return ATK; }

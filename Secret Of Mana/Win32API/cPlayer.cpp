@@ -303,6 +303,7 @@ void cPlayer::Update()
 	//인벤토리
 	if (g_pKeyManager->isOnceKeyDown('I'))
 	{
+		HP -= 5;
 		MONEY += 50;
 	}
 

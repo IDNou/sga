@@ -13,9 +13,9 @@ cStore::~cStore()
 void cStore::Setup()
 {
 	Player = g_pPlayerManager->GetPlayer();
-	EmptyBuffer = g_pImageManager->AddEmptyImage("Store_Empty", WINSIZEX / 2, WINSIZEY / 2);
-	CommunicationBox = g_pImageManager->AddFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
-	Finger = g_pImageManager->AddImage("Finger", "images/Finger.png", 16, 16, true, RGB(255, 0, 255));
+	EmptyBuffer = g_pImageManager->FindImage("Store_Empty");
+	CommunicationBox = g_pImageManager->FindImage("CommunicationBox");
+	Finger = g_pImageManager->FindImage("Finger2");
 	Finger->SetPosX(Player->GetViewPort().left + 40);
 	Finger->SetPosY(Player->GetViewPort().top + 70);
 
@@ -35,6 +35,7 @@ void cStore::Setup()
 	isNotBuy = false;
 	isOwn = false;
 	isConsumOwn = false;
+	isWear = false;
 }
 
 void cStore::Update()
@@ -49,8 +50,14 @@ void cStore::Update()
 		isNotBuy = false;
 		isOwn = false;
 		isConsumOwn = false;
+		isWear = false;
+
 		// 판매
-		if (isSell && Player->GetPlayerInven().size() > 0)
+		if (isSell && Player->GetPlayerInven()[count - 1]->GetIsWear() && Player->GetPlayerInven().size() > 0)
+		{
+			isWear = true;
+		}
+		else if (isSell && !Player->GetPlayerInven()[count - 1]->GetIsWear() && Player->GetPlayerInven().size() > 0)
 		{
 			Player->SetMONEY(Player->GetMoney() + Player->GetPlayerInven()[count-1]->GetPrice());
 
@@ -99,12 +106,17 @@ void cStore::Update()
 	
 			if (!isOwn && !isConsumOwn && Player->GetMoney() >= vec_Item[count - 1]->GetPrice())
 			{
+				vec_Item[count - 1]->SetAmount(1);
 				Player->GetPlayerInven().push_back(vec_Item[count - 1]);
 				Player->SetMONEY(Player->GetMoney() - vec_Item[count - 1]->GetPrice());
 			}
 			else if(!isOwn && isConsumOwn && Player->GetMoney() < vec_Item[count - 1]->GetPrice())
 			{
 				//메세지 출력
+				isNotBuy = true;
+			}
+			else if (!isOwn && !isConsumOwn && Player->GetMoney() < vec_Item[count - 1]->GetPrice())
+			{
 				isNotBuy = true;
 			}
 		}
@@ -272,5 +284,10 @@ void cStore::Render(HDC hdc)
 	{
 		SetBkMode(hdc, OPAQUE);
 		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "이미 가지고 있습니다.", strlen("이미 가지고 있습니다."));
+	}
+	else if (isWear)
+	{
+		SetBkMode(hdc, OPAQUE);
+		TextOut(hdc, Player->GetViewPort().left + 200, Player->GetViewPort().top + 17, "착용 중 입니다.", strlen("착용 중 입니다."));
 	}
 }
