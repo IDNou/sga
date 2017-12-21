@@ -13,11 +13,9 @@ cMonster::~cMonster()
 
 void cMonster::Setup()
 {
-	ATK = 4;
-	HP = 20;
-	DEF = 0;
-	EXP = 10;
-	MONEY = 50;
+	PosX = 0;
+	PosY = 0;
+
 	isDie = false;
 	isHit = false;
 	isDivain = false;
@@ -29,7 +27,10 @@ void cMonster::Setup()
 	Direction = MON_END;
 	isMoveStart = false;
 	AlpghPlag = false;
+}
 
+void cMonster::Update()
+{
 	LProve.x = PosX + MonsterImage->GetFrameWidth() / 2 - 10;
 	RProve.x = PosX + MonsterImage->GetFrameWidth() / 2 + 10;
 	TProve.x = PosX + MonsterImage->GetFrameWidth() / 2;
@@ -39,10 +40,8 @@ void cMonster::Setup()
 	RProve.y = PosY + MonsterImage->GetFrameHeight() / 2;
 	TProve.y = PosY + MonsterImage->GetFrameHeight() / 2 - 10;
 	BProve.y = PosY + MonsterImage->GetFrameHeight() / 2 + 10;
-}
 
-void cMonster::Update()
-{
+	// 공격 받았을때 뒤로밀리는거
 	if (isHit)
 	{
 		switch (PushDir)
@@ -64,15 +63,6 @@ void cMonster::Update()
 				PosY += 1;
 			break;
 		}
-		LProve.x = PosX + MonsterImage->GetFrameWidth() / 2 - 10;
-		RProve.x = PosX + MonsterImage->GetFrameWidth() / 2 + 10;
-		TProve.x = PosX + MonsterImage->GetFrameWidth() / 2;
-		BProve.x = PosX + MonsterImage->GetFrameWidth() / 2;
-
-		LProve.y = PosY + MonsterImage->GetFrameHeight() / 2;
-		RProve.y = PosY + MonsterImage->GetFrameHeight() / 2;
-		TProve.y = PosY + MonsterImage->GetFrameHeight() / 2 - 10;
-		BProve.y = PosY + MonsterImage->GetFrameHeight() / 2 + 10;
 	}
 
 	if (!isDivain)
@@ -83,7 +73,7 @@ void cMonster::Update()
 			Direction = (MoveDir)GetRandom(0, 3);
 			isMoveStart = true;
 		}
-
+		// 움직이는거
 		if (isMoveStart)
 		{
 			if (DirDelay < 0)
@@ -92,60 +82,50 @@ void cMonster::Update()
 				switch (Direction)
 				{
 				case MON_LEFT:
-					MonsterImage->SetFrameY(1);
+					SetFrameY(1);
 					if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
 						PosX -= 5;
-					MonsterImage->SetFrameX(MonsterImage->GetFrameX() + 1);
-					if (MonsterImage->GetFrameX() > MonsterImage->GetMaxFrameX())
+					SetFrameX(GetFrameX() + 1);
+					if(GetFrameX() > MonsterImage->GetMaxFrameX())
 					{
-						MonsterImage->SetFrameX(0);
+						SetFrameX(0);
 						isMoveStart = false;
 					}
 					break;
 				case MON_RIGHT:
-					MonsterImage->SetFrameY(0);
+					SetFrameY(0);
 					if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
 						PosX += 5;
-					MonsterImage->SetFrameX(MonsterImage->GetFrameX() + 1);
-					if (MonsterImage->GetFrameX() > MonsterImage->GetMaxFrameX())
+					SetFrameX(GetFrameX() + 1);
+					if (GetFrameX() > MonsterImage->GetMaxFrameX())
 					{
-						MonsterImage->SetFrameX(0);
+						SetFrameX(0);
 						isMoveStart = false;
 					}
 					break;
 				case MON_UP:
-					MonsterImage->SetFrameY(1);
+					SetFrameY(1);
 					if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
 						PosY -= 5;
-					MonsterImage->SetFrameX(MonsterImage->GetFrameX() + 1);
-					if (MonsterImage->GetFrameX() > MonsterImage->GetMaxFrameX())
+					SetFrameX(GetFrameX() + 1);
+					if (GetFrameX() > MonsterImage->GetMaxFrameX())
 					{
-						MonsterImage->SetFrameX(0);
+						SetFrameX(0);
 						isMoveStart = false;
 					}
 					break;
 				case MON_DOWN:
-					MonsterImage->SetFrameY(0);
+					SetFrameY(0);
 					if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
 						PosY += 5;
-					MonsterImage->SetFrameX(MonsterImage->GetFrameX() + 1);
-					if (MonsterImage->GetFrameX() > MonsterImage->GetMaxFrameX())
+					SetFrameX(GetFrameX() + 1);
+					if (GetFrameX() > MonsterImage->GetMaxFrameX())
 					{
-						MonsterImage->SetFrameX(0);
+						SetFrameX(0);
 						isMoveStart = false;
 					}
 					break;
 				}
-
-				LProve.x = PosX + MonsterImage->GetFrameWidth() / 2 - 10;
-				RProve.x = PosX + MonsterImage->GetFrameWidth() / 2 + 10;
-				TProve.x = PosX + MonsterImage->GetFrameWidth() / 2;
-				BProve.x = PosX + MonsterImage->GetFrameWidth() / 2;
-
-				LProve.y = PosY + MonsterImage->GetFrameHeight() / 2;
-				RProve.y = PosY + MonsterImage->GetFrameHeight() / 2;
-				TProve.y = PosY + MonsterImage->GetFrameHeight() / 2 - 10;
-				BProve.y = PosY + MonsterImage->GetFrameHeight() / 2 + 10;
 			}
 		}
 	}
@@ -165,12 +145,14 @@ void cMonster::Update()
 
 void cMonster::Render(HDC hdc)
 {
-	RectangleMakeCenter(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY + MonsterImage->GetFrameHeight() / 2, 20, 20);
+	//RectangleMakeCenter(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY + MonsterImage->GetFrameHeight() / 2, 20, 20);
 	if (!isDivain)
-		MonsterImage->FrameRender(hdc, PosX, PosY, MonsterImage->GetFrameX(), MonsterImage->GetFrameY(), MonsterImage->GetFrameWidth(), MonsterImage->GetFrameHeight(), 120 * 4);
+	{
+		MonsterImage->FrameRender(hdc, PosX, PosY, GetFrameX(), GetFrameY(), MonsterImage->GetFrameWidth(), MonsterImage->GetFrameHeight());
+	}
 	else
 	{
-		MonsterImage->AlphaRender(hdc, PosX, PosY, MonsterImage->GetFrameX(), MonsterImage->GetFrameY(), AlphaValue);
+		MonsterImage->AlphaRender(hdc, PosX, PosY, GetFrameX(), GetFrameY(), AlphaValue);
 
 		if (AlphaValue < 65)
 			AlpghPlag = true;

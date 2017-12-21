@@ -4,6 +4,14 @@
 class cPlayer;
 class cMonster;
 
+enum tagVillageArea
+{
+	Village_One = 1,
+	Village_Two,
+	Village_Three,
+	Village_Four
+};
+
 class cPlayScene : public cGameNode
 {
 private:
@@ -12,7 +20,13 @@ private:
 	cImage*	EmptyBuffer;
 	cPlayer* Player;
 	cMonster* Monster;
+	tagVillageArea Area;
+	map<tagVillageArea,cMonster*> map_Monster;
+	map<tagVillageArea, cMonster*>::iterator map_IterMonster;
 	vector<cMonster*> m_vMonster;
+
+	int CreateTime;
+	bool CreateAria[4];
 
 	RECT ViewPort;
 

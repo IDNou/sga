@@ -1,26 +1,37 @@
 {
 	"Rabit":{
-			"HP":20,
+			"TYPE":0,
+			"HP":30,
 			"ATK":5,
 			"DEF":1,
-			"EXP":20
+			"EXP":20,
+			"MINMONEY":10,
+			"MAXMONEY":20
 	},
-	"Mushroom":{
+	"Bee":{
+			"TYPE":0,
 			"HP":80,
 			"ATK":10,
 			"DEF":3,
-			"EXP":40
+			"EXP":40,
+			"MINMONEY":30,
+			"MAXMONEY":40
 	},
-	"Bee":{
+	"Cobolt":{
+			"TYPE":1,
 			"HP":120,
 			"ATK":20,
 			"DEF":5,
-			"EXP":60
+			"EXP":60,
+			"MINMONEY":50,
+			"MAXMONEY":70
 	},
 	"matis":{
 			"HP":500,
 			"ATK":25,
 			"DEF":10,
-			"EXP":100
+			"EXP":100,
+			"MINMONEY":100,
+			"MAXMONEY":200
 	}
 }

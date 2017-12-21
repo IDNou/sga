@@ -13,9 +13,17 @@ cPlayer::~cPlayer()
 
 void cPlayer::Setup()
 {
+	ifstream jsoninfo;
+	jsoninfo.open("LevelInfo.json");
+	jsoninfo >> LevelInfo;
+	jsoninfo.close();
+
 	PlayerImage = g_pImageManager->FindImage("PlayerMoveAction");
+	CommunicationBox = g_pImageManager->FindImage("CommunicationBox");
 	MoveCount = 0;
 	BuyCount = 1;
+	ItemATK = 0;
+	ItemDEF = 0;
 
 	LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize/3;
 	RProveX = PosX + PlayerImage->GetFrameWidth() / 2 + PlayerSize/3;
@@ -33,6 +41,7 @@ void cPlayer::Setup()
 	isDown = false;
 	isAttack = false;
 	isBuy = false;
+	isLevelUp = false;
 	Direction = DOWN;
 }
 
@@ -259,6 +268,7 @@ void cPlayer::Update()
 	//공격
 	if (g_pKeyManager->isOnceKeyDown(VK_SPACE) && !isAttack)
 	{
+		isLevelUp = false;
 		if (Terrain == g_pImageManager->FindImage("House_Magenta"))
 		{
 			isBuy = true;
@@ -300,6 +310,19 @@ void cPlayer::Update()
 		}
 	}
 
+	//레벨업
+	if (LV < 19 && EXP >= MAXEXP)
+	{
+		isLevelUp = true;
+		LV++;
+		EXP = EXP - MAXEXP;
+		HP = LevelInfo["Level"][LV - 1]["HP"];
+		MAXHP = LevelInfo["Level"][LV - 1]["MAXHP"];
+		ATK = LevelInfo["Level"][LV - 1]["ATK"];
+		DEF = LevelInfo["Level"][LV - 1]["DEF"];
+		MAXEXP = LevelInfo["Level"][LV - 1]["MAXEXP"];
+	}
+
 	//인벤토리
 	if (g_pKeyManager->isOnceKeyDown('I'))
 	{
@@ -324,6 +347,8 @@ void cPlayer::Update()
 
 void cPlayer::Render(HDC hdc)
 {
+	char buffer[255];
+
 	RectangleMake(hdc, AttackRect);
 	PlayerImage->FrameRender(hdc, PosX, PosY, PlayerImage->GetFrameX(), PlayerImage->GetFrameY(), PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
 	RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()-10, 10, 10);
@@ -331,4 +356,40 @@ void cPlayer::Render(HDC hdc)
 	RectangleMakeCenter(hdc, RProveX, RProveY, 5, 5);
 	RectangleMakeCenter(hdc, TProveX, TProveY, 5, 5);
 	RectangleMakeCenter(hdc, BProveX, BProveY, 5, 5);
+
+	if (isLevelUp)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 20; j++)
+			{
+				if (i == 0 && j == 0)
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 0, 0);
+				else if (i == 0 && j == 20 - 1)
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 2, 0);
+				else if (i == 3 - 1 && j == 0)													  
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 0, 2);
+				else if (i == 3 - 1 && j == 20 - 1)
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 2, 2);
+				else if (i == 0 && (j != 0 || j != 20 - 1))
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 1, 0);
+				else if ((i != 0 || i != 3 - 1) && j == 0)									 
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 0, 1);
+				else if ((i != 0 || i != 3 - 1) && j == 20 - 1)
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 2, 1);
+				else if (i == 3 - 1 && (j != 0 || j != 20 - 1))
+					CommunicationBox->FrameRender(hdc, ViewPort.left + 140 + j * 15, ViewPort.top + 20 + i * 15, 1, 2);
+			}
+		}
+
+		sprintf_s(buffer, "레벨업 하셨습니다. LV%d -> LV%d", LV - 1, LV);
+		SetBkMode(hdc, TRANSPARENT);
+		//SetTextColor(hdc, RGB(255, 255, 255));
+		
+		HFONT myFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "궁서체");
+		HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
+		TextOut(hdc, ViewPort.left + 150, ViewPort.top + 30, buffer, strlen(buffer));
+		SelectObject(hdc, oldFont);
+		DeleteObject(myFont);
+	}
 }

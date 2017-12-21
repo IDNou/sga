@@ -186,6 +186,12 @@
     <ClInclude Include="cEndingScene.h">
       <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
     </ClInclude>
+    <ClInclude Include="cBoss.h">
+      <Filter>GameFramework2D\5. 게임 소스\몬스터</Filter>
+    </ClInclude>
+    <ClInclude Include="cMonsterManager.h">
+      <Filter>GameFramework2D\5. 게임 소스\몬스터</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -283,6 +289,12 @@
     </ClCompile>
     <ClCompile Include="cEndingScene.cpp">
       <Filter>GameFramework2D\5. 게임 소스\플레이씬</Filter>
+    </ClCompile>
+    <ClCompile Include="cBoss.cpp">
+      <Filter>GameFramework2D\5. 게임 소스\몬스터</Filter>
+    </ClCompile>
+    <ClCompile Include="cMonsterManager.cpp">
+      <Filter>GameFramework2D\5. 게임 소스\몬스터</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

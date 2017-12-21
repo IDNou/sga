@@ -36,6 +36,7 @@ void cSetupInfo::Update()
 	if (g_pKeyManager->isOnceKeyDown(VK_SPACE))
 	{
 		isFullHP = false;
+		//물약류 사용
 		if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)0)
 		{
 			if (Player->GetHP() == Player->GetMAXHP())
@@ -67,17 +68,33 @@ void cSetupInfo::Update()
 				}
 			}
 		}
-		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && !Player->GetPlayerInven()[count - 1]->GetIsWear())
+		// 아이템 착용
+		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && !Player->GetPlayerInven()[count - 1]->GetIsWearSword())
 		{
-			Player->GetPlayerInven()[count - 1]->SetIsWear(true);
-			Player->SetATK(Player->GetATK() + Player->GetPlayerInven()[count - 1]->GetATK());
-			Player->SetDEF(Player->GetDEF() + Player->GetPlayerInven()[count - 1]->GetDEF());
+			Player->GetPlayerInven()[count - 1]->SetIsWearSword(true);
+			Player->SetItemATK(Player->GetPlayerInven()[count - 1]->GetATK());
+			//Player->SetATK(Player->GetATK() + Player->GetPlayerInven()[count - 1]->GetATK());
+			//Player->SetDEF(Player->GetDEF() + Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
-		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && Player->GetPlayerInven()[count - 1]->GetIsWear())
+		// 아이템 해제
+		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && Player->GetPlayerInven()[count - 1]->GetIsWearSword())
 		{
-			Player->GetPlayerInven()[count - 1]->SetIsWear(false);
-			Player->SetATK(Player->GetATK() - Player->GetPlayerInven()[count - 1]->GetATK());
-			Player->SetDEF(Player->GetDEF() - Player->GetPlayerInven()[count - 1]->GetDEF());
+			Player->GetPlayerInven()[count - 1]->SetIsWearSword(false);
+			Player->SetItemATK(0);
+			//Player->SetATK(Player->GetATK() - Player->GetPlayerInven()[count - 1]->GetATK());
+			//Player->SetDEF(Player->GetDEF() - Player->GetPlayerInven()[count - 1]->GetDEF());
+		}
+		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)2 && !Player->GetPlayerInven()[count - 1]->GetIsWearAmor())
+		{
+			Player->GetPlayerInven()[count - 1]->SetIsWearAmor(true);
+			Player->SetItemDEF(Player->GetPlayerInven()[count - 1]->GetDEF());
+			//Player->SetDEF(Player->GetDEF() + Player->GetPlayerInven()[count - 1]->GetDEF());
+		}
+		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)2 && Player->GetPlayerInven()[count - 1]->GetIsWearAmor())
+		{
+			Player->GetPlayerInven()[count - 1]->SetIsWearAmor(false);
+			Player->SetItemDEF(0);
+			//Player->SetDEF(Player->GetDEF() - Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
 	}
 
@@ -168,11 +185,11 @@ void cSetupInfo::Render()
 	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 200, ch_buffer, strlen(ch_buffer));
 
-	sprintf(ch_buffer, "ATK : %d", Player->GetATK());
+	sprintf(ch_buffer, "ATK : %d + (%d)", Player->GetATK(),Player->GetItemATK());
 	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 250, ch_buffer, strlen(ch_buffer));
 
-	sprintf(ch_buffer, "DEF : %d", Player->GetDEF());
+	sprintf(ch_buffer, "DEF : %d + (%d)", Player->GetDEF(),Player->GetItemDEF());
 	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 300, ch_buffer, strlen(ch_buffer));
 
@@ -180,9 +197,13 @@ void cSetupInfo::Render()
 	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 350, ch_buffer, strlen(ch_buffer));
 
-	sprintf(ch_buffer, "M O N E Y : %d 루크", Player->GetMoney());
+	sprintf(ch_buffer, "MAXEXP : %d", Player->GetMAXEXP());
 	SetTextColor(g_hDC, RGB(255, 255, 255));
 	TextOut(g_hDC, 150, 400, ch_buffer, strlen(ch_buffer));
+
+	sprintf(ch_buffer, "M O N E Y : %d 루크", Player->GetMoney());
+	SetTextColor(g_hDC, RGB(255, 255, 255));
+	TextOut(g_hDC, 150, 450, ch_buffer, strlen(ch_buffer));
 
 	Finger->Render(g_hDC, Finger->GetPosX(), Finger->GetPosY(),30,30);
 
@@ -190,7 +211,7 @@ void cSetupInfo::Render()
 	{
 		string buffer = (*iter)->GetName();
 		(*iter)->GetImage()->Render(g_hDC, 600, InvenHeight, 40, 40);
-		if ((*iter)->GetIsWear())
+		if ((*iter)->GetIsWearSword() || (*iter)->GetIsWearAmor())
 		{
 			buffer += " (착용중)";
 			SetTextColor(g_hDC, RGB(255, 255, 255));

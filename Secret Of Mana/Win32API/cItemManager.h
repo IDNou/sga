@@ -9,6 +9,7 @@ class cItemManager : public cSingletonBase<cItemManager>
 private:
 	map<string, cItem*>			m_mapItem;
 	map<string, cItem*>::iterator	m_mapIter;
+	json ItemList;
 
 public:
 	cItemManager();

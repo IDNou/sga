@@ -10,7 +10,7 @@ void cBossScene::Setup()
 	EmptyBuffer = g_pImageManager->FindImage("EmptyBuffer");
 
 	Player = g_pPlayerManager->GetPlayer();
-	Player->SetPosX(100);
+	Player->SetPosX(200);
 	Player->SetPosY(100);
 	Player->Setup();
 	Player->SetTerrain(BackGround_Magenta);

@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cBoss.h" />
     <ClInclude Include="cBossScene.h" />
     <ClInclude Include="cDijkstraTest.h" />
     <ClInclude Include="cEndingScene.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="cMainGame.h" />
     <ClInclude Include="cMapTool.h" />
     <ClInclude Include="cMonster.h" />
+    <ClInclude Include="cMonsterManager.h" />
     <ClInclude Include="cPixelCollision.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cPlayerManager.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Win32API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cBoss.cpp" />
     <ClCompile Include="cBossScene.cpp" />
     <ClCompile Include="cDijkstraTest.cpp" />
     <ClCompile Include="cEndingScene.cpp" />
@@ -200,6 +203,7 @@
     <ClCompile Include="cMainGame.cpp" />
     <ClCompile Include="cMapTool.cpp" />
     <ClCompile Include="cMonster.cpp" />
+    <ClCompile Include="cMonsterManager.cpp" />
     <ClCompile Include="cPixelCollision.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cPlayerManager.cpp" />

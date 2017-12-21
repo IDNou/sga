@@ -67,6 +67,7 @@ using namespace std;
 #include "cSoundManager.h"
 #include "cPlayerManager.h"
 #include "cItemManager.h"
+#include "cMonsterManager.h"
 
 //==================================================================
 //		## 전역변수 ##

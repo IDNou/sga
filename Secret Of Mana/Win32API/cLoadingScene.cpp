@@ -52,6 +52,8 @@ void cLoadingScene::LoadingImage()
 	g_pImageManager->ReleaseImage("CommunicationBox");
 	g_pImageManager->ReleaseImage("Finger2");
 	g_pImageManager->ReleaseImage("StoreNPC");
+	g_pImageManager->ReleaseImage("BossMap");
+	g_pImageManager->ReleaseImage("BossMap_Magenta");
 	g_pSoundManager->ReleaseSound("TitleSound");
 	g_pSoundManager->ReleaseSound("FieldSound");
 	g_pSoundManager->ReleaseSound("WaterPath");
@@ -69,6 +71,7 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("StartVillage_Magenta", "images/StartVillage_Magenta.bmp", 1600, 1456, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 80, 5, 2, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1600, 1456);
 		break;
@@ -77,6 +80,7 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("WaterAndPandoraPath_Magenta", "images/WaterAndPandoraPath_Magenta.png", 1120, 1664, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 80, 5, 2, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1120, 1664);
 		break;
@@ -92,11 +96,12 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadEmpty("EmptyBuffer", 705, 432);
 		break;
 	case SLIST_BOSSMAP:
-		m_pLoading->LoadImageFile("BossMap", "images/BossMap.png", 300, 300, true, RGB(255, 0, 255));
-		m_pLoading->LoadImageFile("BossMap_Magenta", "images/BossMap_Magenta.png", 300, 300, true, RGB(255, 0, 255));
+		m_pLoading->LoadImageFile("BossMap", "images/BossMap.png", 540, 360, true, RGB(255, 0, 255));
+		m_pLoading->LoadImageFile("BossMap_Magenta", "images/BossMap_Magenta.png", 540, 360, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
-		m_pLoading->LoadEmpty("EmptyBuffer", 300, 300);
+		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
+		m_pLoading->LoadEmpty("EmptyBuffer", 540, 360);
 		break;
 	}
 }

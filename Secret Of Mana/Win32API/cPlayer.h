@@ -19,7 +19,9 @@ class cPlayer
 private:
 	cImage* PlayerImage;
 	cImage* Terrain;
+	cImage* CommunicationBox;
 	vector<cItem*> PlayerInven;
+	json	LevelInfo;
 
 	RECT	ViewPort;
 	RECT	AttackRect;
@@ -32,6 +34,8 @@ private:
 	int EXP;
 	int MAXEXP;
 	int MONEY;
+	int ItemATK;
+	int ItemDEF;
 
 	int MoveCount;
 	int BuyCount;
@@ -55,6 +59,7 @@ private:
 	bool isDown;
 	bool isAttack;
 	bool isBuy;
+	bool isLevelUp;
 
 	PlayerDir Direction;
 
@@ -75,10 +80,13 @@ public:
 	int GetHP() { return HP; }
 	int GetMAXHP() { return MAXHP; }
 	int GetEXP() { return EXP; }
+	int GetMAXEXP() { return MAXEXP; }
 	int GetDEF() { return DEF; }
 	int GetATK() { return ATK; }
 	int GetLV() { return LV; }
 	int GetMoney() { return MONEY; }
+	int GetItemATK() { return ItemATK; }
+	int GetItemDEF() { return ItemDEF; }
 	bool GetIsAttack() { return isAttack; }
 	bool GetIsBuy() { return isBuy; }
 	PlayerDir GetPlayerDir() { return Direction; }
@@ -100,6 +108,8 @@ public:
 	void SetEXP(int pl_exp) { EXP = pl_exp; }
 	void SetMAXEXP(int pl_maxexp) { MAXEXP = pl_maxexp; }
 	void SetMONEY(int pl_money) { MONEY = pl_money; }
+	void SetItemATK(int pl_itematk) { ItemATK = pl_itematk; }
+	void SetItemDEF(int pl_itemdef) { ItemDEF = pl_itemdef; }
 	void SetPlayerInven(vector<cItem*> inven) { PlayerInven = inven; }
 	void SetIsBuy(bool buy) { isBuy = buy; }
 #pragma endregion

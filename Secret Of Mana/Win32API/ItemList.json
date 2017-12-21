@@ -42,7 +42,7 @@
 		},
 		{
 			"NAME":"Vestguard",
-			"TYPE":1,
+			"TYPE":2,
 			"HP":0,
 			"ATK":0,
 			"DEF":4,
@@ -50,7 +50,7 @@
 		},
 		{
 			"NAME":"GoldenVest",
-			"TYPE":1,
+			"TYPE":2,
 			"HP":0,
 			"ATK":0,
 			"DEF":10,
@@ -58,7 +58,7 @@
 		},
 		{
 			"NAME":"RubyVest",
-			"TYPE":1,
+			"TYPE":2,
 			"HP":0,
 			"ATK":0,
 			"DEF":20,

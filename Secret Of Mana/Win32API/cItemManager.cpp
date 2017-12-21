@@ -13,6 +13,41 @@ cItemManager::~cItemManager()
 
 void cItemManager::Start()
 {
+	ifstream File_Item;
+	File_Item.open("ItemList.json");
+	File_Item >> ItemList;
+	File_Item.close();
+
+	json ImageList;
+	ifstream File_Image;
+	File_Image.open("ImageList.json");
+	File_Image >> ImageList;
+	File_Image.close();
+
+	//아이템 이미지 추가
+	for (int j = 0; j < ImageList["Image"].size(); j++)
+	{
+		string RouteName = ImageList["Image"][j]["ROUTE"];
+
+		g_pImageManager->AddImage(ImageList["Image"][j]["NAME"],
+			RouteName.c_str(),
+			ImageList["Image"][j]["WIDTH"],
+			ImageList["Image"][j]["HEIGHT"],
+			true,
+			RGB(255, 0, 255));
+	}
+
+	//아이템 추가
+	for (int i = 0; i < ItemList["Item"].size(); i++)
+	{
+		g_pItemManager->ItemAdd(ItemList["Item"][i]["NAME"],
+			g_pImageManager->FindImage(ItemList["Item"][i]["NAME"]),
+			(ItemType)ItemList["Item"][i]["TYPE"],
+			ItemList["Item"][i]["ATK"],
+			ItemList["Item"][i]["DEF"],
+			ItemList["Item"][i]["HP"],
+			ItemList["Item"][i]["PRICE"]);
+	}
 }
 
 void cItemManager::Update()

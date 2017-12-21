@@ -1,34 +1,165 @@
 {
-	"Player":{
-		"LV":1,
-		"HP":44,
-		"MAXHP":44,
-		"ATK":10,
-		"DEF":1,
-		"EXP":0,
-		"MAXEXP":100,
-		"MONEY":0
-	},
-	"level":[
+	"Level":[
 		{
 			"LV":1,
 			"HP":44,
 			"MAXHP":44,
 			"ATK":10,
 			"DEF":1,
-			"EXP":0,
-			"MAXEXP":100,
-			"MONEY":0
+			"MAXEXP":16
 		},
 		{
-			"LV":1,
-			"HP":44,
-			"MAXHP":44,
-			"ATK":10,
+			"LV":2,
+			"HP":50,
+			"MAXHP":50,
+			"ATK":12,
+			"DEF":2,
+			"MAXEXP":47
+		},
+		{
+			"LV":3,
+			"HP":59,
+			"MAXHP":59,
+			"ATK":14,
+			"DEF":2,
+			"MAXEXP":105
+		},
+		{
+			"LV":4,
+			"HP":69,
+			"MAXHP":69,
+			"ATK":16,
+			"DEF":2,
+			"MAXEXP":204
+		},
+		{
+			"LV":5,
+			"HP":79,
+			"MAXHP":79,
+			"ATK":18,
+			"DEF":3,
+			"MAXEXP":363
+		},
+		{
+			"LV":6,
+			"HP":88,
+			"MAXHP":88,
+			"ATK":20,
+			"DEF":3,
+			"MAXEXP":602
+		},
+		{
+			"LV":7,
+			"HP":98,
+			"MAXHP":98,
+			"ATK":22,
 			"DEF":1,
-			"EXP":0,
-			"MAXEXP":100,
-			"MONEY":0
+			"MAXEXP":945
+		},
+		{
+			"LV":8,
+			"HP":108,
+			"MAXHP":108,
+			"ATK":24,
+			"DEF":3,
+			"MAXEXP":1418
+		},
+		{
+			"LV":9,
+			"HP":117,
+			"MAXHP":117,
+			"ATK":26,
+			"DEF":4,
+			"MAXEXP":2049
+		},
+		{
+			"LV":10,
+			"HP":127,
+			"MAXHP":127,
+			"ATK":28,
+			"DEF":4,
+			"MAXEXP":2870
+			
+		},
+		{
+			"LV":11,
+			"HP":137,
+			"MAXHP":137,
+			"ATK":30,
+			"DEF":5,
+			"MAXEXP":3914
+		},
+		{
+			"LV":12,
+			"HP":146,
+			"MAXHP":146,
+			"ATK":32,
+			"DEF":5,
+			"MAXEXP":5218
+			
+		},
+		{
+			"LV":13,
+			"HP":156,
+			"MAXHP":156,
+			"ATK":34,
+			"DEF":6,
+			"MAXEXP":6819
+			
+		},
+		{
+			"LV":14,
+			"HP":166,
+			"MAXHP":166,
+			"ATK":36,
+			"DEF":6,
+			"MAXEXP":8759
+			
+		},
+		{
+			"LV":15,
+			"HP":175,
+			"MAXHP":175,
+			"ATK":38,
+			"DEF":6,
+			"MAXEXP":11080
+			
+		},
+		{
+			"LV":16,
+			"HP":185,
+			"MAXHP":185,
+			"ATK":40,
+			"DEF":7,
+			"MAXEXP":13827
+			
+		},
+		{
+			"LV":17,
+			"HP":195,
+			"MAXHP":195,
+			"ATK":42,
+			"DEF":7,
+			"MAXEXP":17049
+			
+		},
+		{
+			"LV":18,
+			"HP":205,
+			"MAXHP":205,
+			"ATK":46,
+			"DEF":8,
+			"MAXEXP":20749
+			
+		},
+		{
+			"LV":19,
+			"HP":214,
+			"MAXHP":214,
+			"ATK":48,
+			"DEF":9,
+			"MAXEXP":25115
+			
 		}
 	]
 }

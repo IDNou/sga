@@ -3,7 +3,8 @@
 enum ItemType
 {
 	Type_Consum = 0,
-	Type_Wear,
+	Type_Sword,
+	Type_Amor,
 	Type_End
 };
 
@@ -18,7 +19,8 @@ private:
 	int HP;
 	int amount;
 	int Price;
-	bool isWear;
+	bool isWearSword;
+	bool isWearAmor;
 
 public:
 	cItem();
@@ -39,7 +41,8 @@ public:
 	int GetHP() { return HP; }
 	int GetPrice() { return Price; }
 	int GetAmount() { return amount; }
-	bool GetIsWear() { return isWear; }
+	bool GetIsWearSword() { return isWearSword; }
+	bool GetIsWearAmor() { return isWearAmor; }
 
 	void SetName(string item_name) { name = item_name; }
 	void SetImage(cImage* item_image) { Image = item_image; }
@@ -49,6 +52,7 @@ public:
 	void SetHP(int item_hp) { HP = item_hp; }
 	void SetPrice(int item_price) { Price = item_price; }
 	void SetAmount(int item_amount) { amount = item_amount; }
-	void SetIsWear(bool item_isWear) { isWear = item_isWear; }
+	void SetIsWearSword(bool item_isWearSword) { isWearSword = item_isWearSword; }
+	void SetIsWearAmor(bool item_isWearAmor) { isWearAmor = item_isWearAmor; }
 };
 

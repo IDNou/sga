@@ -51,11 +51,11 @@ void cStore::Update()
 		isWear = false;
 
 		// ÆÇ¸Å
-		if (isSell && Player->GetPlayerInven().size() > 0 && Player->GetPlayerInven()[count - 1]->GetIsWear())
+		if (isSell && Player->GetPlayerInven().size() > 0 && (Player->GetPlayerInven()[count - 1]->GetIsWearSword() || Player->GetPlayerInven()[count - 1]->GetIsWearAmor()))
 		{
 			isWear = true;
 		}
-		else if (isSell && Player->GetPlayerInven().size() > 0&& !Player->GetPlayerInven()[count - 1]->GetIsWear())
+		else if (isSell && Player->GetPlayerInven().size() > 0&& !Player->GetPlayerInven()[count - 1]->GetIsWearSword() && !Player->GetPlayerInven()[count - 1]->GetIsWearAmor())
 		{
 			Player->SetMONEY(Player->GetMoney() + Player->GetPlayerInven()[count-1]->GetPrice());
 
