@@ -1,5 +1,6 @@
 {
 	"Rabit":{
+			"NAME":"Rabit",
 			"TYPE":0,
 			"HP":30,
 			"ATK":5,
@@ -9,6 +10,7 @@
 			"MAXMONEY":20
 	},
 	"Bee":{
+			"NAME":"Bee",
 			"TYPE":0,
 			"HP":80,
 			"ATK":10,
@@ -18,6 +20,7 @@
 			"MAXMONEY":40
 	},
 	"Cobolt":{
+			"NAME":"Cobolt",
 			"TYPE":1,
 			"HP":120,
 			"ATK":20,

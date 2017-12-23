@@ -72,7 +72,7 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
-		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 80, 5, 2, true, RGB(255, 0, 255));
+		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 160, 5, 4, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1600, 1456);
 		break;
 	case SLIST_WATERPATH:
@@ -81,7 +81,7 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
-		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 80, 5, 2, true, RGB(255, 0, 255));
+		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 160, 5, 4, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1120, 1664);
 		break;
 	case SLIST_HOUSE:

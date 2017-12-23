@@ -31,8 +31,11 @@ void cMonsterManager::Render()
 cMonster * cMonsterManager::GetRabit()
 {
 	Monster = new cMonster;
-	//Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+	Monster->SetFrameX(0);
+	Monster->SetFrameY(0);
 	Monster->Setup();
+	Monster->SetName(MonsterList["Rabit"]["NAME"]);
 	Monster->SetType(MonsterList["Rabit"]["TYPE"]);
 	Monster->SetHP(MonsterList["Rabit"]["HP"]);
 	Monster->SetATK(MonsterList["Rabit"]["ATK"]);
@@ -46,7 +49,7 @@ cMonster * cMonsterManager::GetRabit()
 cMonster * cMonsterManager::GetBee()
 {
 	Monster = new cMonster;
-	//Monster->SetMonsterImage(g_pImageManager->FindImage("Bee"));
+	Monster->SetMonsterImage(g_pImageManager->FindImage("Bee"));
 	Monster->Setup();
 	Monster->SetType(MonsterList["Bee"]["TYPE"]);
 	Monster->SetHP(MonsterList["Bee"]["HP"]);
@@ -61,7 +64,7 @@ cMonster * cMonsterManager::GetBee()
 cMonster * cMonsterManager::GetCobolt()
 {
 	Monster = new cMonster;
-	//Monster->SetMonsterImage(g_pImageManager->FindImage("Cobolt"));
+	Monster->SetMonsterImage(g_pImageManager->FindImage("Cobolt"));
 	Monster->Setup();
 	Monster->SetType(MonsterList["Cobolt"]["TYPE"]);
 	Monster->SetHP(MonsterList["Cobolt"]["HP"]);

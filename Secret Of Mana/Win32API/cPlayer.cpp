@@ -24,6 +24,8 @@ void cPlayer::Setup()
 	BuyCount = 1;
 	ItemATK = 0;
 	ItemDEF = 0;
+	DivainCount = 100;
+	AlphaValue = 255;
 
 	LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize/3;
 	RProveX = PosX + PlayerImage->GetFrameWidth() / 2 + PlayerSize/3;
@@ -43,11 +45,37 @@ void cPlayer::Setup()
 	isBuy = false;
 	isLevelUp = false;
 	Direction = DOWN;
+	isHit = false;
+	isDivain = false;
+	AlphaPlag = false;
 }
 
 void cPlayer::Update()
 {
-	if (!isAttack)
+	if (isHit)
+	{
+		switch (Direction)
+		{
+		case 0:
+			if (!g_pPixelManager->CheckPixel(Terrain, LProveX, LProveY))
+				PosX -= 1;
+			break;
+		case 1:
+			if (!g_pPixelManager->CheckPixel(Terrain, RProveX, RProveY))
+				PosX += 1;
+			break;
+		case 2:
+			if (!g_pPixelManager->CheckPixel(Terrain, TProveX, TProveY))
+				PosY -= 1;
+			break;
+		case 3:
+			if (!g_pPixelManager->CheckPixel(Terrain, BProveX, BProveY))
+				PosY += 1;
+			break;
+		}
+	}
+
+	if (!isAttack && !isDivain)
 	{
 		//Left
 		if (g_pKeyManager->isOnceKeyDown(VK_LEFT) && !g_pPixelManager->CheckPixel(Terrain, LProveX, LProveY))
@@ -264,9 +292,19 @@ void cPlayer::Update()
 
 		MoveCount--;
 	}
+	else if (isDivain)
+	{
+		if (DivainCount < 0)
+		{
+			DivainCount = 200;
+			isDivain = false;
+			isHit = false;
+		}
+		DivainCount--;
+	}
 
 	//АјАн
-	if (g_pKeyManager->isOnceKeyDown(VK_SPACE) && !isAttack)
+	if (g_pKeyManager->isOnceKeyDown(VK_SPACE) && !isAttack && !isDivain)
 	{
 		isLevelUp = false;
 		if (Terrain == g_pImageManager->FindImage("House_Magenta"))
@@ -350,8 +388,23 @@ void cPlayer::Render(HDC hdc)
 	char buffer[255];
 
 	RectangleMake(hdc, AttackRect);
-	PlayerImage->FrameRender(hdc, PosX, PosY, PlayerImage->GetFrameX(), PlayerImage->GetFrameY(), PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
-	RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()-10, 10, 10);
+	if(!isDivain)
+		PlayerImage->FrameRender(hdc, PosX, PosY, PlayerImage->GetFrameX(), PlayerImage->GetFrameY(), PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
+	else
+	{
+		PlayerImage->AlphaRender(hdc, PosX, PosY, PlayerImage->GetFrameX(), PlayerImage->GetFrameY(), AlphaValue);
+
+		if (AlphaValue < 65)
+			AlphaPlag = true;
+		else if (AlphaValue > 250)
+			AlphaPlag = false;
+
+		if (!AlphaPlag)
+			AlphaValue -= 10;
+		else
+			AlphaValue += 10;
+	}
+	RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()/2 +10, 10, 10);
 	RectangleMakeCenter(hdc, LProveX, LProveY, 5, 5);
 	RectangleMakeCenter(hdc, RProveX, RProveY, 5, 5);
 	RectangleMakeCenter(hdc, TProveX, TProveY, 5, 5);

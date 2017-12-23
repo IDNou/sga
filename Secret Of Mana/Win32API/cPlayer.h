@@ -51,6 +51,8 @@ private:
 	int TProveY;
 	int BProveX;
 	int BProveY;
+	int DivainCount;
+	int AlphaValue;
 	
 
 	bool isLeft;
@@ -60,6 +62,9 @@ private:
 	bool isAttack;
 	bool isBuy;
 	bool isLevelUp;
+	bool isHit;
+	bool isDivain;
+	bool AlphaPlag;
 
 	PlayerDir Direction;
 
@@ -91,6 +96,8 @@ public:
 	bool GetIsBuy() { return isBuy; }
 	PlayerDir GetPlayerDir() { return Direction; }
 	vector<cItem*> &GetPlayerInven() { return PlayerInven; }
+	bool GetIsHit() { return isHit; }
+	bool GetIsDivain() { return isDivain; }
 #pragma endregion
 #pragma regiom Set
 	void SetPlayerImage(cImage* Image) { PlayerImage = Image; }
@@ -98,6 +105,7 @@ public:
 	void SetTerrainHeight(int Height) { TerrainHeight = Height; }
 	void SetTerrain(cImage* img) { Terrain = img; }
 	void SetViewPort(RECT rt) { ViewPort = rt; }
+	void SetPlayerDir(PlayerDir dir) { Direction = dir; }
 	void SetPosX(int X) { PosX = X;}
 	void SetPosY(int Y) { PosY = Y;}
 	void SetLV(int pl_lv) { LV = pl_lv; }
@@ -112,6 +120,8 @@ public:
 	void SetItemDEF(int pl_itemdef) { ItemDEF = pl_itemdef; }
 	void SetPlayerInven(vector<cItem*> inven) { PlayerInven = inven; }
 	void SetIsBuy(bool buy) { isBuy = buy; }
+	void SetIsHit(bool pl_ishit) { isHit = pl_ishit; }
+	void SetisDivain(bool pl_isdivain) { isDivain = pl_isdivain; }
 #pragma endregion
 };
 

@@ -44,7 +44,7 @@ void cMainGame::Setup()
 	g_pMonsterManager->Start();
 
 	//인벤에 아이템을 강제로 삽입
-	g_pPlayerManager->GetPlayer()->GetPlayerInven().push_back(g_pItemManager->FindItem("ManaSword"));
+	g_pPlayerManager->GetPlayer()->GetPlayerInven().push_back(g_pItemManager->FindItem("Excalibur"));
 	g_pPlayerManager->GetPlayer()->GetPlayerInven().push_back(g_pItemManager->FindItem("Candy"));
 
 

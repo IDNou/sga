@@ -210,7 +210,7 @@ void cSetupInfo::Render()
 	for (auto iter = Player->GetPlayerInven().begin(); iter != Player->GetPlayerInven().end(); iter++)
 	{
 		string buffer = (*iter)->GetName();
-		(*iter)->GetImage()->Render(g_hDC, 600, InvenHeight, 40, 40);
+		(*iter)->GetImage()->Render(g_hDC, 600, InvenHeight - 10, 40, 40);
 		if ((*iter)->GetIsWearSword() || (*iter)->GetIsWearAmor())
 		{
 			buffer += " (ТјПыСп)";

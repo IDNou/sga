@@ -13,17 +13,12 @@ void cPlayScene::Setup()
 	CreateTime = 500;
 
 	Player = g_pPlayerManager->GetPlayer();
-	Player->SetPosX(800);
-	Player->SetPosY(350);
+	Player->SetPosX(350);
+	Player->SetPosY(100);
 	Player->Setup();
 	Player->SetTerrain(BackGround_Magenta);
-	Player->SetTerrainWidth(BackGround->GetWidth());
-	Player->SetTerrainHeight(BackGround->GetHeight());
 
 	Monster = g_pMonsterManager->GetRabit();
-	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
-	Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
-	Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 	Monster->SetPosX(810);
 	Monster->SetPosY(380);
 	Monster->SetArea((int)Village_One);
@@ -32,9 +27,6 @@ void cPlayScene::Setup()
 	//m_vMonster.push_back(Monster);
 
 	Monster = g_pMonsterManager->GetRabit();
-	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
-	Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
-	Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 	Monster->SetPosX(1030);
 	Monster->SetPosY(460);
 	Monster->SetArea((int)Village_Two);
@@ -43,9 +35,6 @@ void cPlayScene::Setup()
 	//m_vMonster.push_back(Monster);
 
 	Monster = g_pMonsterManager->GetRabit();
-	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
-	Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
-	Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 	Monster->SetPosX(1200);
 	Monster->SetPosY(270);
 	Monster->SetArea((int)Village_Three);
@@ -54,9 +43,6 @@ void cPlayScene::Setup()
 	//m_vMonster.push_back(Monster);
 
 	Monster = g_pMonsterManager->GetRabit();
-	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
-	Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
-	Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 	Monster->SetPosX(1030);
 	Monster->SetPosY(730);
 	Monster->SetArea((int)Village_Four);
@@ -81,9 +67,10 @@ void cPlayScene::Update()
 			if (map_Monster.find(Village_One) == map_Monster.end())
 			{
 				Monster = g_pMonsterManager->GetRabit();
-				Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
-				Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
-				Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
+			//	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+			//	Monster->getMon
+			//	Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
+			//	Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 				Monster->SetPosX(810);
 				Monster->SetPosY(380);
 				Monster->SetArea((int)Village_One);
@@ -93,7 +80,7 @@ void cPlayScene::Update()
 			if (map_Monster.find(Village_Two) == map_Monster.end())
 			{
 				Monster = g_pMonsterManager->GetRabit();
-				Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+			//	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
 				Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
 				Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 				Monster->SetPosX(1030);
@@ -105,7 +92,7 @@ void cPlayScene::Update()
 			if (map_Monster.find(Village_Three) == map_Monster.end())
 			{
 				Monster = g_pMonsterManager->GetRabit();
-				Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+			//	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
 				Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
 				Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 				Monster->SetPosX(1200);
@@ -117,7 +104,7 @@ void cPlayScene::Update()
 			if (map_Monster.find(Village_Four) == map_Monster.end())
 			{
 				Monster = g_pMonsterManager->GetRabit();
-				Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
+			//	Monster->SetMonsterImage(g_pImageManager->FindImage("Rabit"));
 				Monster->SetFrameX(g_pImageManager->FindImage("Rabit")->GetFrameX());
 				Monster->SetFrameY(g_pImageManager->FindImage("Rabit")->GetFrameY());
 				Monster->SetPosX(1030);
@@ -135,12 +122,107 @@ void cPlayScene::Update()
 		//(*iter)->Update();
 	}
 
+	// 몬스터 범위안에 들어왔을때
+
+	RECT at;
+	for (auto iter = map_Monster.begin(); iter != map_Monster.end(); iter++)
+	{
+		//추적 및 공격
+		if (!iter->second->GetIsDivain()) {
+
+			// 공격렉트에 닿아있고 마지막 공격모션일때 있다면
+			if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetLProve().x - 10, iter->second->GetLProve().y, 15, 30)) && iter->second->GetIsShowAttackRect() && !Player->GetIsDivain())
+			{
+				Player->SetHp(Player->GetHP() - iter->second->GetATK() + Player->GetDEF());
+				Player->SetisDivain(true);
+				Player->SetIsHit(true);
+				Player->SetPlayerDir((PlayerDir) 0);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetRProve().x + 10, iter->second->GetRProve().y, 15, 30)) && iter->second->GetIsShowAttackRect() && !Player->GetIsDivain())
+			{
+				Player->SetHp(Player->GetHP() - iter->second->GetATK() + Player->GetDEF());
+				Player->SetisDivain(true);
+				Player->SetIsHit(true);
+				Player->SetPlayerDir((PlayerDir)1);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetTProve().x, iter->second->GetTProve().y - 10, 15, 30)) && iter->second->GetIsShowAttackRect() && !Player->GetIsDivain())
+			{
+				Player->SetHp(Player->GetHP() - iter->second->GetATK() + Player->GetDEF());
+				Player->SetisDivain(true);
+				Player->SetIsHit(true);
+				Player->SetPlayerDir((PlayerDir)2);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetBProve().x, iter->second->GetBProve().y + 10, 15, 30)) && iter->second->GetIsShowAttackRect() && !Player->GetIsDivain())
+			{
+				Player->SetHp(Player->GetHP() - iter->second->GetATK() + Player->GetDEF());
+				Player->SetisDivain(true);
+				Player->SetIsHit(true);
+				Player->SetPlayerDir((PlayerDir)3);
+			}
+			
+
+			//공격모션을 취해라
+			if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetLProve().x - 10, iter->second->GetLProve().y, 15, 30)) && !iter->second->GetIsAttackMode())
+			{
+				iter->second->SetDir(MON_LEFT);
+				iter->second->SetFrameX(0);
+				iter->second->SetIsAttacking(true);
+				iter->second->SetIsAttackMode(true);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetRProve().x + 10, iter->second->GetRProve().y, 15, 30)) && !iter->second->GetIsAttackMode())
+			{
+				iter->second->SetDir(MON_RIGHT);
+				iter->second->SetFrameX(0);
+				iter->second->SetIsAttacking(true);
+				iter->second->SetIsAttackMode(true);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetTProve().x, iter->second->GetTProve().y - 10, 15, 30)) && !iter->second->GetIsAttackMode())
+			{
+				iter->second->SetDir(MON_UP);
+				iter->second->SetFrameX(0);
+				iter->second->SetIsAttacking(true);
+				iter->second->SetIsAttackMode(true);
+			}
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2, 20, 34),
+				&RectMakeCenter(iter->second->GetBProve().x, iter->second->GetBProve().y + 10, 15, 30)) && !iter->second->GetIsAttackMode())
+			{
+				iter->second->SetDir(MON_DOWN);
+				iter->second->SetFrameX(0);
+				iter->second->SetIsAttacking(true);
+				iter->second->SetIsAttackMode(true);
+			}
+			// 추적
+			else if (IntersectRect(&at,
+				&RectMakeCenter(Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth() / 2,
+					Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10, 10),
+				&iter->second->GetSeachRect()))
+			{
+				iter->second->SetIsSeachMode(true);
+			}
+		}
+	}
+
 	//공격시
 	RECT rt;
 	for (auto iter = map_Monster.begin(); iter != map_Monster.end(); iter++)
 	{
 		if (IntersectRect(&rt, &Player->GetAttackRange(),
-			&RectMakeCenter(iter->second->GetPosX() + iter->second->GetMonster()->GetFrameWidth() / 2, iter->second->GetPosY() + iter->second->GetMonster()->GetFrameHeight() / 2, 20, 20))
+			&RectMakeCenter(iter->second->GetPosX() + iter->second->GetMonsterImage()->GetFrameWidth() / 2, iter->second->GetPosY() + iter->second->GetMonsterImage()->GetFrameHeight() / 2, 20, 20))
 			&& !iter->second->GetIsDivain())
 		{
 			if (!iter->second->GetIsHit())
@@ -148,6 +230,8 @@ void cPlayScene::Update()
 				iter->second->SetIsHit(true);
 				iter->second->SetPushDir((int)Player->GetPlayerDir());
 				iter->second->SetIsDivain(true);
+				iter->second->SetIsAttackMode(false);
+				iter->second->SetIsAttacking(false);
 				iter->second->SetHP(iter->second->GetHP() - (Player->GetATK() + Player->GetItemATK() - iter->second->GetDEF()));
 				if (iter->second->GetHP() <= 0)
 				{
@@ -211,13 +295,13 @@ void cPlayScene::Update()
 void cPlayScene::Render()
 {
 	BackGround->Render(EmptyBuffer->GetMemDC());
-	Player->Render(EmptyBuffer->GetMemDC());
 	for (auto iter = map_Monster.begin(); iter != map_Monster.end(); iter++)
 	{
 		iter->second->Render(EmptyBuffer->GetMemDC());
 		//(*iter)->Render(EmptyBuffer->GetMemDC());
 	}
-	RectangleMakeCenter(EmptyBuffer->GetMemDC(), Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth()/2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10,10);
+	Player->Render(EmptyBuffer->GetMemDC());
+	//RectangleMakeCenter(EmptyBuffer->GetMemDC(), Player->GetPosX() + Player->GetPlayerImage()->GetFrameWidth()/2, Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10,10);
 	RectangleMake(EmptyBuffer->GetMemDC(), 1180, 1430, 35, 25);
 	RectangleMake(EmptyBuffer->GetMemDC(), 1085, 1110, 15, 15);
 	EmptyBuffer->ViewPortRender(g_hDC, ViewPort, WINSIZEX, WINSIZEY);
