@@ -50,7 +50,10 @@ cMonster * cMonsterManager::GetBee()
 {
 	Monster = new cMonster;
 	Monster->SetMonsterImage(g_pImageManager->FindImage("Bee"));
+	Monster->SetFrameX(0);
+	Monster->SetFrameY(0);
 	Monster->Setup();
+	Monster->SetName(MonsterList["Bee"]["NAME"]);
 	Monster->SetType(MonsterList["Bee"]["TYPE"]);
 	Monster->SetHP(MonsterList["Bee"]["HP"]);
 	Monster->SetATK(MonsterList["Bee"]["ATK"]);
@@ -65,7 +68,10 @@ cMonster * cMonsterManager::GetCobolt()
 {
 	Monster = new cMonster;
 	Monster->SetMonsterImage(g_pImageManager->FindImage("Cobolt"));
+	Monster->SetFrameX(0);
+	Monster->SetFrameY(0);
 	Monster->Setup();
+	Monster->SetName(MonsterList["Cobolt"]["NAME"]);
 	Monster->SetType(MonsterList["Cobolt"]["TYPE"]);
 	Monster->SetHP(MonsterList["Cobolt"]["HP"]);
 	Monster->SetATK(MonsterList["Cobolt"]["ATK"]);

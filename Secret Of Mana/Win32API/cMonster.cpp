@@ -28,6 +28,7 @@ void cMonster::Setup()
 	DirDelay = 10;
 	AttackCount = 20;
 	AttackDelay = 0;
+	DamageBuffer = 0;
 	Direction = MON_END;
 	isMoveStart = false;
 	AlphaPlag = false;
@@ -347,6 +348,7 @@ void cMonster::Update()
 		if (DivainCount < 0)
 		{
 			DivainCount = 200;
+			DamageBuffer = 0;
 			isDivain = false;
 		}
 		DivainCount--;
@@ -362,8 +364,14 @@ void cMonster::Update()
 
 void cMonster::Render(HDC hdc)
 {
+	char buffer[255];
 	//RectangleMakeCenter(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY + MonsterImage->GetFrameHeight() / 2, 20, 20);
+	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 	RectangleMake(hdc, SeachRect);
+	SelectObject(hdc, oldBrush);
+	DeleteObject(myBrush);
+
 	RectangleMakeCenter(hdc, LProve.x - 10, LProve.y, 15, 30);
 	RectangleMakeCenter(hdc, RProve.x + 10, RProve.y, 15, 30);
 	RectangleMakeCenter(hdc, TProve.x , TProve.y - 10, 30, 15);
@@ -385,6 +393,9 @@ void cMonster::Render(HDC hdc)
 			AlphaValue -= 10;
 		else
 			AlphaValue += 10;
+
+		sprintf(buffer, "%d", DamageBuffer);
+		TextOut(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY - 10, buffer, strlen(buffer));
 	}
 	RectangleMakeCenter(hdc, LProve.x, LProve.y, 5, 5);
 	RectangleMakeCenter(hdc, RProve.x, RProve.y, 5, 5);

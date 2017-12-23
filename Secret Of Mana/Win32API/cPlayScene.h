@@ -22,10 +22,10 @@ private:
 	cMonster* Monster;
 	tagVillageArea Area;
 	map<tagVillageArea,cMonster*> map_Monster;
-	map<tagVillageArea, cMonster*>::iterator map_IterMonster;
 	vector<cMonster*> m_vMonster;
 
 	int CreateTime;
+	int SeachTime;
 	bool CreateAria[4];
 
 	RECT ViewPort;

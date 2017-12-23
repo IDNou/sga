@@ -57,6 +57,7 @@ private:
 	int PushDir;
 	int AttackCount;
 	int AttackDelay;
+	int DamageBuffer;
 	float Angle;
 
 	MoveDir Direction;
@@ -102,6 +103,7 @@ public:
 	bool GetIsSeachMode() { return isSeachMode; }
 	bool GetIsAttacking() { return isAttacking; }
 	bool GetIsShowAttackRect() { return isShowAttackRect; }
+	int GetDamageBuffer() { return DamageBuffer; }
 #pragma endregion
 
 #pragma region Set
@@ -133,6 +135,7 @@ public:
 	void SetIsAttacking(bool mon_attacking) { isAttacking = mon_attacking; }
 	void SetIsSeachMode(bool mon_seachmode) { isSeachMode = mon_seachmode; }
 	void SetIsShowAttackRect(bool mon_showattackrect) { isShowAttackRect = mon_showattackrect; }
+	void SetDamageBuffer(int mon_damagebuffer) { DamageBuffer = mon_damagebuffer; }
 #pragma endregion
 };
 

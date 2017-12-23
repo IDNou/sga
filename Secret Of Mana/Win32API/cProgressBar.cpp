@@ -21,10 +21,10 @@ void cProgressBar::Update()
 	m_rt = RectMakeCenter(m_nPosX, m_nPosY, m_nWidth, m_nHeight);
 }
 
-void cProgressBar::Render()
+void cProgressBar::Render(HDC hdc)
 {
-	m_imgBack->Render(g_hDC, m_rt.left, m_rt.top, m_nWidth, m_nHeight);
-	m_imgFront->Render(g_hDC, m_rt.left, m_rt.top, m_nCurrWidth, m_nHeight);
+	m_imgBack->Render(hdc, m_rt.left, m_rt.top, m_nWidth, m_nHeight);
+	m_imgFront->Render(hdc, m_rt.left, m_rt.top, m_nCurrWidth, m_nHeight);
 }
 
 void cProgressBar::SetGauge(float currGauge, float maxGauge)

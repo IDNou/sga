@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "cPlayer.h"
-
+#include "cProgressBar.h"
 
 cPlayer::cPlayer()
 {
@@ -20,12 +20,14 @@ void cPlayer::Setup()
 
 	PlayerImage = g_pImageManager->FindImage("PlayerMoveAction");
 	CommunicationBox = g_pImageManager->FindImage("CommunicationBox");
+	HPBar = new cProgressBar("HpBarBack", "HpBarFront", 70, 10);
 	MoveCount = 0;
 	BuyCount = 1;
 	ItemATK = 0;
 	ItemDEF = 0;
 	DivainCount = 100;
 	AlphaValue = 255;
+	DamageBuffer = 0;
 
 	LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize/3;
 	RProveX = PosX + PlayerImage->GetFrameWidth() / 2 + PlayerSize/3;
@@ -47,11 +49,13 @@ void cPlayer::Setup()
 	Direction = DOWN;
 	isHit = false;
 	isDivain = false;
+	isPush = false;
 	AlphaPlag = false;
 }
 
 void cPlayer::Update()
 {
+	// Ã³¸ÂÀ¸¸é
 	if (isHit)
 	{
 		switch (Direction)
@@ -73,6 +77,15 @@ void cPlayer::Update()
 				PosY += 1;
 			break;
 		}
+
+		LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize / 3;
+		RProveX = PosX + PlayerImage->GetFrameWidth() / 2 + PlayerSize / 3;
+		TProveX = PosX + PlayerImage->GetFrameWidth() / 2;
+		BProveX = PosX + PlayerImage->GetFrameWidth() / 2;
+		LProveY = PosY + PlayerImage->GetFrameHeight() / 2 + 10;
+		RProveY = PosY + PlayerImage->GetFrameHeight() / 2 + 10;
+		TProveY = PosY + PlayerImage->GetFrameHeight() / 2 + 5;
+		BProveY = PosY + PlayerImage->GetFrameHeight() / 2 + PlayerSize / 2 + 5;
 	}
 
 	if (!isAttack && !isDivain)
@@ -90,8 +103,16 @@ void cPlayer::Update()
 		{
 			if (PosX > 0)
 			{
-				//PlayerImage->SetPosX(PlayerImage->GetPosX() - MoveSpeed);
-				PosX -= 2;
+				if (isPush)
+				{
+					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetLProve().x, Monster->GetLProve().y))
+					{
+						Monster->SetPosX(Monster->GetPosX() - 2);
+						PosX -= 2;
+					}
+				}
+				else
+					PosX -= 2;
 			}
 
 			LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize / 3;
@@ -126,8 +147,16 @@ void cPlayer::Update()
 		{
 			if (PosX + PlayerImage->GetFrameWidth() < Terrain->GetWidth())
 			{
-				//PlayerImage->SetPosX(PlayerImage->GetPosX() + MoveSpeed);
-				PosX += 2;
+				if (isPush)
+				{
+					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetRProve().x, Monster->GetRProve().y))
+					{
+						Monster->SetPosX(Monster->GetPosX() + 2);
+						PosX += 2;
+					}
+				}
+				else
+					PosX += 2;
 			}
 
 			LProveX = PosX + PlayerImage->GetFrameWidth() / 2 - PlayerSize / 3;
@@ -163,8 +192,18 @@ void cPlayer::Update()
 		{
 			if (PosY > 0)
 			{
-			//	PlayerImage->SetPosY(PlayerImage->GetPosY() - MoveSpeed);
-				PosY -= 2;
+				if (isPush)
+				{
+					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetTProve().x, Monster->GetTProve().y))
+					{
+						Monster->SetPosY(Monster->GetPosY() - 2);
+						PosY -= 2;
+					}
+				}
+				else
+				{
+					PosY -= 2;
+				}
 			}
 
 			LProveY = PosY + PlayerImage->GetFrameHeight() / 2 + 10;
@@ -200,8 +239,16 @@ void cPlayer::Update()
 		{
 			if (PosY + PlayerImage->GetFrameHeight() < Terrain->GetHeight())
 			{
-			//	PlayerImage->SetPosY(PlayerImage->GetPosY() + MoveSpeed);
-				PosY += 2;
+				if (isPush)
+				{
+					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetBProve().x, Monster->GetBProve().y))
+					{
+						Monster->SetPosY(Monster->GetPosY() + 2);
+						PosY += 2;
+					}
+				}
+				else
+					PosY += 2;
 			}
 
 			LProveY = PosY + PlayerImage->GetFrameHeight() / 2 + 10;
@@ -222,19 +269,27 @@ void cPlayer::Update()
 			MoveCount--;
 		}
 
-
+		//Å° ¶ª¶§
 		if (g_pKeyManager->isOnceKeyUp(VK_LEFT))
 		{
 			PlayerImage->SetFrameX(0);
 			if (isUp)
 			{
 				PlayerImage->SetFrameY(2);
+				Direction = UP;
 			}
 			if (isDown)
 			{
+				Direction = DOWN;
 				PlayerImage->SetFrameY(3);
 			}
+			if (isRight)
+			{
+				Direction = RIGHT;
+				PlayerImage->SetFrameY(1);
+			}
 			isLeft = false;
+			isPush = false;
 		}
 		else if (g_pKeyManager->isOnceKeyUp(VK_RIGHT))
 		{
@@ -242,38 +297,62 @@ void cPlayer::Update()
 			if (isUp)
 			{
 				PlayerImage->SetFrameY(2);
+				Direction = UP;
 			}
 			if (isDown)
 			{
+				Direction = DOWN;
 				PlayerImage->SetFrameY(3);
 			}
+			if (isLeft)
+			{
+				Direction = LEFT;
+				PlayerImage->SetFrameY(0);
+			}
 			isRight = false;
+			isPush = false;
 		}
 		else if (g_pKeyManager->isOnceKeyUp(VK_UP))
 		{
 			PlayerImage->SetFrameX(0);
 			if (isLeft)
 			{
+				Direction = LEFT;
 				PlayerImage->SetFrameY(0);
 			}
 			if (isRight)
 			{
+				Direction = RIGHT;
 				PlayerImage->SetFrameY(1);
 			}
+			if (isDown)
+			{
+				Direction = DOWN;
+				PlayerImage->SetFrameY(3);
+			}
 			isUp = false;
+			isPush = false;
 		}
 		else if (g_pKeyManager->isOnceKeyUp(VK_DOWN))
 		{
 			PlayerImage->SetFrameX(0);
 			if (isLeft)
 			{
+				Direction = LEFT;
 				PlayerImage->SetFrameY(0);
 			}
 			if (isRight)
 			{
+				Direction = RIGHT;
 				PlayerImage->SetFrameY(1);
 			}
+			if (isUp)
+			{
+				Direction = UP;
+				PlayerImage->SetFrameY(2);
+			}
 			isDown = false;
+			isPush = false;
 		}
 	}
 	else if (isAttack)
@@ -296,7 +375,8 @@ void cPlayer::Update()
 	{
 		if (DivainCount < 0)
 		{
-			DivainCount = 200;
+			DivainCount = 100;
+			DamageBuffer = 0;
 			isDivain = false;
 			isHit = false;
 		}
@@ -381,6 +461,11 @@ void cPlayer::Update()
 		g_pItemManager->ItemRelease("ManaSword");
 	}
 
+	HPBar->SetPosX(ViewPort.left + (ViewPort.right- ViewPort.left)/2 + 20);
+	HPBar->SetPosY(ViewPort.bottom - 20);
+	HPBar->SetGauge(HP, MAXHP);
+	HPBar->Update();
+
 }
 
 void cPlayer::Render(HDC hdc)
@@ -403,12 +488,18 @@ void cPlayer::Render(HDC hdc)
 			AlphaValue -= 10;
 		else
 			AlphaValue += 10;
+
+		//¸Â¾ÒÀ»¶§ µ¥¹ÌÁö
+		sprintf(buffer, "%d", DamageBuffer);
+		TextOut(hdc, PosX + PlayerImage->GetFrameWidth()/2 , PosY - 10, buffer, strlen(buffer));
 	}
 	RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()/2 +10, 10, 10);
 	RectangleMakeCenter(hdc, LProveX, LProveY, 5, 5);
 	RectangleMakeCenter(hdc, RProveX, RProveY, 5, 5);
 	RectangleMakeCenter(hdc, TProveX, TProveY, 5, 5);
 	RectangleMakeCenter(hdc, BProveX, BProveY, 5, 5);
+
+
 
 	if (isLevelUp)
 	{
@@ -441,8 +532,20 @@ void cPlayer::Render(HDC hdc)
 		
 		HFONT myFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "±Ã¼­Ã¼");
 		HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
+		SetTextColor(hdc, RGB(0, 0, 0));
 		TextOut(hdc, ViewPort.left + 150, ViewPort.top + 30, buffer, strlen(buffer));
 		SelectObject(hdc, oldFont);
 		DeleteObject(myFont);
 	}
+
+	//ÇÃ·¹ÀÌ¾î HP ·»´õ
+	sprintf(buffer, "%d / %d", HP, MAXHP);
+	HFONT myFont = CreateFont(14, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "±Ã¼­Ã¼");
+	HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
+	SetBkMode(hdc, TRANSPARENT);
+	SetTextColor(hdc, RGB(230, 160, 10));
+	TextOut(hdc, HPBar->GetPosX() - 25, HPBar->GetPosY() - 20, buffer, strlen(buffer));
+	SelectObject(hdc, oldFont);
+	DeleteObject(myFont);
+	HPBar->Render(hdc);
 }

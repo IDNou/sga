@@ -109,4 +109,7 @@ void cMainGame::Release()
 	g_pImageManager->ReleaseInstance();
 	g_pSceneManager->ReleaseInstance();
 	g_pSoundManager->ReleaseInstance();
+	g_pPlayerManager->ReleaseInstance();
+	g_pItemManager->ReleaseInstance();
+	g_pMonsterManager->ReleaseInstance();
 }

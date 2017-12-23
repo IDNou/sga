@@ -4,6 +4,19 @@
 class cMonster;
 class cPlayer;
 
+enum tagWaterArea
+{
+	Water_One = 1,
+	Water_Two,
+	Water_Three,
+	Water_Four,
+	Water_Five,
+	Water_SiX,
+	Water_Seven,
+	Water_eight
+};
+
+
 class cWaterPathScene : public cGameNode
 {
 private:
@@ -12,7 +25,13 @@ private:
 	cImage*	EmptyBuffer;
 	cPlayer* Player;
 	cMonster* Monster;
+	tagWaterArea Area;
+	map<tagWaterArea, cMonster*> map_Monster;
 	vector<cMonster*> m_vMonster;
+
+	int CreateTime;
+	int SeachTime;
+	bool CreateAria[4];
 
 	RECT ViewPort;
 

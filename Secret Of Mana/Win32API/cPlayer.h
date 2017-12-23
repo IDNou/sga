@@ -1,9 +1,15 @@
 #pragma once
 #include "cItem.h"
+#include "cMonster.h"
+#include "cBoss.h"
+#include "cProgressBar.h"
 
 #define MOVECOUNT 5
 #define MoveSpeed 2
 #define PlayerSize 30
+
+class cMonster;
+class cProgressBar;
 
 enum PlayerDir
 {
@@ -17,11 +23,13 @@ enum PlayerDir
 class cPlayer
 {
 private:
+	cMonster* Monster;
 	cImage* PlayerImage;
 	cImage* Terrain;
 	cImage* CommunicationBox;
 	vector<cItem*> PlayerInven;
 	json	LevelInfo;
+	cProgressBar* HPBar;
 
 	RECT	ViewPort;
 	RECT	AttackRect;
@@ -53,6 +61,7 @@ private:
 	int BProveY;
 	int DivainCount;
 	int AlphaValue;
+	int DamageBuffer;
 	
 
 	bool isLeft;
@@ -64,6 +73,7 @@ private:
 	bool isLevelUp;
 	bool isHit;
 	bool isDivain;
+	bool isPush;
 	bool AlphaPlag;
 
 	PlayerDir Direction;
@@ -98,6 +108,9 @@ public:
 	vector<cItem*> &GetPlayerInven() { return PlayerInven; }
 	bool GetIsHit() { return isHit; }
 	bool GetIsDivain() { return isDivain; }
+	bool GetIsPush() { return isPush; }
+	cMonster* GetMonnster() { return Monster; }
+	int GetDamageBuffer() { return DamageBuffer; }
 #pragma endregion
 #pragma regiom Set
 	void SetPlayerImage(cImage* Image) { PlayerImage = Image; }
@@ -122,6 +135,9 @@ public:
 	void SetIsBuy(bool buy) { isBuy = buy; }
 	void SetIsHit(bool pl_ishit) { isHit = pl_ishit; }
 	void SetisDivain(bool pl_isdivain) { isDivain = pl_isdivain; }
+	void SetMonster(cMonster* pl_monster) { Monster = pl_monster; }
+	void SetIsPush(bool pl_push) { isPush = pl_push; }
+	void SetDamageBuffer(int pl_damagebuffer) { DamageBuffer = pl_damagebuffer; }
 #pragma endregion
 };
 

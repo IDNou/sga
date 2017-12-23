@@ -101,7 +101,7 @@ void cLoading::Render()
 	// 백그라운드
 	m_pImgBackground->Render(g_hDC);
 	// 로딩바
-	m_pLoadingBar->Render();
+	m_pLoadingBar->Render(g_hDC);
 
 	/* 로딩 데이터 */
 	// 폰트 설정

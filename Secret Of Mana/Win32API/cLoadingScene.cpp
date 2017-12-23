@@ -38,14 +38,14 @@ void cLoadingScene::LoadingImage()
 	/* ==== 리소스 해제 ===== */
 	g_pImageManager->ReleaseImage("TitleBG");
 	g_pImageManager->ReleaseImage("Start");
-	g_pImageManager->ReleaseImage("StartVillage");
-	g_pImageManager->ReleaseImage("StartVillage_Magenta");
+	//g_pImageManager->ReleaseImage("StartVillage");
+	//g_pImageManager->ReleaseImage("StartVillage_Magenta");
 	g_pImageManager->ReleaseImage("PlayerMoveAction");
 	g_pImageManager->ReleaseImage("PlayerAttackAction");
 	g_pImageManager->ReleaseImage("EmptyBuffer");
-	g_pImageManager->ReleaseImage("Rabit");
-	g_pImageManager->ReleaseImage("WaterAndPandoraPath");
-	g_pImageManager->ReleaseImage("WaterAndPandoraPath_Magenta");
+	//g_pImageManager->ReleaseImage("Rabit");
+	//g_pImageManager->ReleaseImage("WaterAndPandoraPath");
+	//g_pImageManager->ReleaseImage("WaterAndPandoraPath_Magenta");
 	g_pImageManager->ReleaseImage("House");
 	g_pImageManager->ReleaseImage("House_Magenta");
 	g_pImageManager->ReleaseImage("Store_Empty");
@@ -57,6 +57,9 @@ void cLoadingScene::LoadingImage()
 	g_pSoundManager->ReleaseSound("TitleSound");
 	g_pSoundManager->ReleaseSound("FieldSound");
 	g_pSoundManager->ReleaseSound("WaterPath");
+	
+	g_pImageManager->ReleaseImage("HpBarBack");
+	g_pImageManager->ReleaseImage("HpBarFront");
 	/* ====================== */
 
 	// 게임 전체에서 필요한 리소스는 타이틀 씬 로딩에서 전부 로드한다.
@@ -71,6 +74,8 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("StartVillage_Magenta", "images/StartVillage_Magenta.bmp", 1600, 1456, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
+		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 160, 5, 4, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1600, 1456);
@@ -80,6 +85,8 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("WaterAndPandoraPath_Magenta", "images/WaterAndPandoraPath_Magenta.png", 1120, 1664, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
+		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 160, 5, 4, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1120, 1664);
@@ -89,6 +96,8 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("House_Magenta", "images/house_Magenta.png", 705, 432, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
+		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("StoreNPC", "images/StoreNPC.png", 120, 45, 4, 1, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("Store_Empty", WINSIZEX / 2, WINSIZEY / 2);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
@@ -100,6 +109,8 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("BossMap_Magenta", "images/BossMap_Magenta.png", 540, 360, true, RGB(255, 0, 255));
 		m_pLoading->LoadFrameImage("PlayerMoveAction", "images/MoveMotion.png", 280, 160, 7, 4, true, RGB(0, 128, 0));
 		m_pLoading->LoadFrameImage("PlayerAttackAction", "images/AttackMotion.png", 200, 160, 5, 4, true, RGB(0, 128, 0));
+		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
+		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 540, 360);
 		break;
