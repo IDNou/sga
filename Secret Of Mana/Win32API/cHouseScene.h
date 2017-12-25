@@ -14,6 +14,8 @@ private:
 	cImage* BackGround_Magenta;
 	cImage* EmptyBuffer;
 	RECT ViewPort;
+
+	json Place;
 	 
 	//ªÛ¡°
 	bool isBuy;

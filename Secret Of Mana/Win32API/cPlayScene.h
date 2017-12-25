@@ -24,6 +24,8 @@ private:
 	map<tagVillageArea,cMonster*> map_Monster;
 	vector<cMonster*> m_vMonster;
 
+	json Place;
+
 	int CreateTime;
 	int SeachTime;
 	bool CreateAria[4];

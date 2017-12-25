@@ -66,6 +66,11 @@ void cHouseScene::Update()
 			Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() - 10, 10, 10),
 		&RectMake(250, 370, 140, 50)))
 	{
+		Place["Place"]["NAME"] = "STORE";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
 		g_pSceneManager->SetNextScene(SLIST_PLAY);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}

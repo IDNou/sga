@@ -6,6 +6,11 @@
 
 void cPlayScene::Setup()
 {
+	ifstream PlayerPlace;
+	PlayerPlace.open("PlayerPlace.json");
+	PlayerPlace >> Place;
+	PlayerPlace.close();
+
 	BackGround = g_pImageManager->FindImage("StartVillage");
 	BackGround_Magenta = g_pImageManager->FindImage("StartVillage_Magenta");
 	EmptyBuffer = g_pImageManager->FindImage("EmptyBuffer");
@@ -13,8 +18,21 @@ void cPlayScene::Setup()
 	CreateTime = 500;
 
 	Player = g_pPlayerManager->GetPlayer();
-	Player->SetPosX(1130);
-	Player->SetPosY(1050);
+	if (Place["Place"]["NAME"] == "STORE")
+	{
+		Player->SetPosX(1085);
+		Player->SetPosY(1150);
+	}
+	else if (Place["Place"]["NAME"] == "WATER")
+	{
+		Player->SetPosX(1180);
+		Player->SetPosY(1390);
+	}
+	else
+	{
+		Player->SetPosX(330);
+		Player->SetPosY(50);
+	}
 	Player->Setup();
 	Player->SetTerrain(BackGround_Magenta);
 

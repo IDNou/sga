@@ -576,7 +576,7 @@ void cPlayer::Render(HDC hdc)
 		
 		HFONT myFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "±Ã¼­Ã¼");
 		HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
-		SetTextColor(hdc, RGB(128, 128, 128));
+		SetTextColor(hdc, RGB(128, 0, 0));
 		TextOut(hdc, ViewPort.left + 150, ViewPort.top + 30, buffer, strlen(buffer));
 		SelectObject(hdc, oldFont);
 		DeleteObject(myFont);

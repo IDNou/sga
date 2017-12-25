@@ -5,7 +5,6 @@
 
 void cWaterPathScene::Setup()
 {
-
 	BackGround = g_pImageManager->FindImage("WaterAndPandoraPath");
 	BackGround_Magenta = g_pImageManager->FindImage("WaterAndPandoraPath_Magenta");
 	EmptyBuffer = g_pImageManager->FindImage("EmptyBuffer");
@@ -525,7 +524,12 @@ void cWaterPathScene::Update()
 			Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10, 10), 
 		&RectMake(670, 1650, 35, 25)))
 	{
-		m_vMonster.clear();
+		Place["Place"]["NAME"] = "WATER";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
+
 		g_pSceneManager->SetNextScene(SLIST_BOSSMAP);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
@@ -534,14 +538,18 @@ void cWaterPathScene::Update()
 			Player->GetPosY() + Player->GetPlayerImage()->GetFrameHeight() / 2 + 10, 10, 10),
 		&RectMake(810, 0, 40, 30)))
 	{
-		m_vMonster.clear();
+		Place["Place"]["NAME"] = "WATER";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
+
 		g_pSceneManager->SetNextScene(SLIST_PLAY);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
 
 	if (g_pKeyManager->isStayKeyDown(VK_ESCAPE))
 	{
-		m_vMonster.clear();
 		g_pSceneManager->SetNextScene(SLIST_TITLE);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
