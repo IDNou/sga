@@ -88,7 +88,8 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
 		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
-		m_pLoading->LoadFrameImage("Rabit", "images/monster01.png", 200, 160, 5, 4, true, RGB(255, 0, 255));
+		m_pLoading->LoadFrameImage("Cobolt", "images/Cobolt.png", 120, 320, 3, 8, true, RGB(255, 0, 255));
+		m_pLoading->LoadFrameImage("Bee", "images/Bee.png", 80, 240, 2, 6, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 1120, 1664);
 		break;
 	case SLIST_HOUSE:
@@ -112,6 +113,7 @@ void cLoadingScene::LoadingImage()
 		m_pLoading->LoadImageFile("HpBarBack", "images/progressBarBack.bmp", 50, 10);
 		m_pLoading->LoadImageFile("HpBarFront", "images/progressBarFront.bmp", 50, 10);
 		m_pLoading->LoadFrameImage("CommunicationBox", "images/CommunicationBox.png", 45, 45, 3, 3, true, RGB(255, 0, 255));
+		m_pLoading->LoadFrameImage("Boss", "images/Boss.png", 540, 150, 6, 2, true, RGB(255, 0, 255));
 		m_pLoading->LoadEmpty("EmptyBuffer", 540, 360);
 		break;
 	}

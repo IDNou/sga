@@ -68,33 +68,29 @@ void cSetupInfo::Update()
 				}
 			}
 		}
-		// 아이템 착용
+		// 무기 착용
 		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && !Player->GetPlayerInven()[count - 1]->GetIsWearSword())
 		{
 			Player->GetPlayerInven()[count - 1]->SetIsWearSword(true);
 			Player->SetItemATK(Player->GetPlayerInven()[count - 1]->GetATK());
-			//Player->SetATK(Player->GetATK() + Player->GetPlayerInven()[count - 1]->GetATK());
-			//Player->SetDEF(Player->GetDEF() + Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
-		// 아이템 해제
+		// 무기 해제
 		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)1 && Player->GetPlayerInven()[count - 1]->GetIsWearSword())
 		{
 			Player->GetPlayerInven()[count - 1]->SetIsWearSword(false);
 			Player->SetItemATK(0);
-			//Player->SetATK(Player->GetATK() - Player->GetPlayerInven()[count - 1]->GetATK());
-			//Player->SetDEF(Player->GetDEF() - Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
+		//방어구 착용
 		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)2 && !Player->GetPlayerInven()[count - 1]->GetIsWearAmor())
 		{
 			Player->GetPlayerInven()[count - 1]->SetIsWearAmor(true);
 			Player->SetItemDEF(Player->GetPlayerInven()[count - 1]->GetDEF());
-			//Player->SetDEF(Player->GetDEF() + Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
+		//방어구 해제
 		else if (Player->GetPlayerInven()[count - 1]->GetType() == (ItemType)2 && Player->GetPlayerInven()[count - 1]->GetIsWearAmor())
 		{
 			Player->GetPlayerInven()[count - 1]->SetIsWearAmor(false);
 			Player->SetItemDEF(0);
-			//Player->SetDEF(Player->GetDEF() - Player->GetPlayerInven()[count - 1]->GetDEF());
 		}
 	}
 

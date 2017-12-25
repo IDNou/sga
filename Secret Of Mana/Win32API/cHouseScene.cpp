@@ -83,7 +83,7 @@ void cHouseScene::Render()
 	Player->Render(EmptyBuffer->GetMemDC());
 	StoreNPC->FrameRender(EmptyBuffer->GetMemDC(),StoreNPC->GetPosX(),StoreNPC->GetPosY(),StoreNPC->GetFrameX(),StoreNPC->GetFrameY());
 	//RectangleMake(EmptyBuffer->GetMemDC(), 450, 50, 200, 200);
-	RectangleMake(EmptyBuffer->GetMemDC(), 250, 370, 140, 50);
+	//RectangleMake(EmptyBuffer->GetMemDC(), 250, 370, 140, 50);
 	if (isBuy)
 		Store->Render(EmptyBuffer->GetMemDC());
 	EmptyBuffer->ViewPortRender(g_hDC, ViewPort);

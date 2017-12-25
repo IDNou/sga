@@ -11,6 +11,7 @@
 #include "cSetupInfo.h"
 #include "cHouseScene.h"
 #include "cBossScene.h"
+#include "cEndingScene.h"
 
 cMainGame::cMainGame()
 {
@@ -33,6 +34,7 @@ void cMainGame::Setup()
 	g_pSceneManager->AddScene(SLIST_WATERPATH, new cWaterPathScene);
 	g_pSceneManager->AddScene(SLIST_HOUSE, new cHouseScene);
 	g_pSceneManager->AddScene(SLIST_BOSSMAP, new cBossScene);
+	g_pSceneManager->AddScene(SLIST_ENDING, new cEndingScene);
 
 	// 처음 시작 씬 셋팅
 	g_pSceneManager->ChangeScene(SLIST_LOADING);

@@ -13,7 +13,7 @@ enum tagWaterArea
 	Water_Five,
 	Water_SiX,
 	Water_Seven,
-	Water_eight
+	Water_Eight
 };
 
 

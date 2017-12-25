@@ -4,6 +4,8 @@
 
 cPlayer::cPlayer()
 {
+	ItemATK = 0;
+	ItemDEF = 0;
 }
 
 
@@ -13,6 +15,8 @@ cPlayer::~cPlayer()
 
 void cPlayer::Setup()
 {
+	Monster = NULL;
+	Boss = NULL;
 	ifstream jsoninfo;
 	jsoninfo.open("LevelInfo.json");
 	jsoninfo >> LevelInfo;
@@ -23,8 +27,6 @@ void cPlayer::Setup()
 	HPBar = new cProgressBar("HpBarBack", "HpBarFront", 70, 10);
 	MoveCount = 0;
 	BuyCount = 1;
-	ItemATK = 0;
-	ItemDEF = 0;
 	DivainCount = 100;
 	AlphaValue = 255;
 	DamageBuffer = 0;
@@ -46,7 +48,7 @@ void cPlayer::Setup()
 	isAttack = false;
 	isBuy = false;
 	isLevelUp = false;
-	Direction = DOWN;
+	Direction = DIREND;
 	isHit = false;
 	isDivain = false;
 	isPush = false;
@@ -58,23 +60,24 @@ void cPlayer::Update()
 	// 처맞으면
 	if (isHit)
 	{
+		isPush = false;
 		switch (Direction)
 		{
 		case 0:
-			if (!g_pPixelManager->CheckPixel(Terrain, LProveX, LProveY))
-				PosX -= 1;
-			break;
-		case 1:
 			if (!g_pPixelManager->CheckPixel(Terrain, RProveX, RProveY))
 				PosX += 1;
 			break;
-		case 2:
-			if (!g_pPixelManager->CheckPixel(Terrain, TProveX, TProveY))
-				PosY -= 1;
+		case 1:
+			if (!g_pPixelManager->CheckPixel(Terrain, LProveX, LProveY))
+				PosX -= 1;
 			break;
-		case 3:
+		case 2:
 			if (!g_pPixelManager->CheckPixel(Terrain, BProveX, BProveY))
 				PosY += 1;
+			break;
+		case 3:
+			if (!g_pPixelManager->CheckPixel(Terrain, TProveX, TProveY))
+				PosY -= 1;
 			break;
 		}
 
@@ -105,10 +108,20 @@ void cPlayer::Update()
 			{
 				if (isPush)
 				{
-					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetLProve().x, Monster->GetLProve().y))
+					if (Monster != NULL) {
+						if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetLProve().x, Monster->GetLProve().y))
+						{
+							Monster->SetPosX(Monster->GetPosX() - 2);
+							PosX -= 2;
+						}
+					}
+					else if (Boss != NULL)
 					{
-						Monster->SetPosX(Monster->GetPosX() - 2);
-						PosX -= 2;
+						if (!g_pPixelManager->CheckPixel(Terrain, Boss->GetLProve().x, Boss->GetLProve().y))
+						{
+							Boss->SetPosX(Boss->GetPosX() - 2);
+							PosX -= 2;
+						}
 					}
 				}
 				else
@@ -149,10 +162,20 @@ void cPlayer::Update()
 			{
 				if (isPush)
 				{
-					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetRProve().x, Monster->GetRProve().y))
+					if (Monster != NULL) {
+						if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetRProve().x, Monster->GetRProve().y))
+						{
+							Monster->SetPosX(Monster->GetPosX() + 2);
+							PosX += 2;
+						}
+					}
+					else if (Boss != NULL)
 					{
-						Monster->SetPosX(Monster->GetPosX() + 2);
-						PosX += 2;
+						if (!g_pPixelManager->CheckPixel(Terrain, Boss->GetRProve().x, Boss->GetRProve().y))
+						{
+							Boss->SetPosX(Boss->GetPosX() + 2);
+							PosX += 2;
+						}
 					}
 				}
 				else
@@ -194,10 +217,20 @@ void cPlayer::Update()
 			{
 				if (isPush)
 				{
-					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetTProve().x, Monster->GetTProve().y))
+					if (Monster != NULL) {
+						if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetTProve().x, Monster->GetTProve().y))
+						{
+							Monster->SetPosY(Monster->GetPosY() - 2);
+							PosY -= 2;
+						}
+					}
+					else if (Boss != NULL)
 					{
-						Monster->SetPosY(Monster->GetPosY() - 2);
-						PosY -= 2;
+						if (!g_pPixelManager->CheckPixel(Terrain, Boss->GetTProve().x, Boss->GetTProve().y))
+						{
+							Boss->SetPosY(Boss->GetPosY() - 2);
+							PosY -= 2;
+						}
 					}
 				}
 				else
@@ -241,10 +274,20 @@ void cPlayer::Update()
 			{
 				if (isPush)
 				{
-					if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetBProve().x, Monster->GetBProve().y))
+					if (Monster != NULL) {
+						if (!g_pPixelManager->CheckPixel(Terrain, Monster->GetBProve().x, Monster->GetBProve().y))
+						{
+							Monster->SetPosY(Monster->GetPosY() + 2);
+							PosY += 2;
+						}
+					}
+					else if (Boss != NULL)
 					{
-						Monster->SetPosY(Monster->GetPosY() + 2);
-						PosY += 2;
+						if (!g_pPixelManager->CheckPixel(Terrain, Boss->GetBProve().x, Boss->GetBProve().y))
+						{
+							Boss->SetPosY(Boss->GetPosY() + 2);
+							PosY += 2;
+						}
 					}
 				}
 				else
@@ -387,6 +430,7 @@ void cPlayer::Update()
 	if (g_pKeyManager->isOnceKeyDown(VK_SPACE) && !isAttack && !isDivain)
 	{
 		isLevelUp = false;
+		isPush = false;
 		if (Terrain == g_pImageManager->FindImage("House_Magenta"))
 		{
 			isBuy = true;
@@ -413,7 +457,7 @@ void cPlayer::Update()
 			case UP:
 				PlayerImage->SetFrameY(0);
 				PlayerImage->SetFrameX(0);
-				AttackRect = RectMakeCenter(TProveX, TProveY, PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
+				AttackRect = RectMakeCenter(TProveX, TProveY-20, PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
 				break;
 			case DOWN:
 				PlayerImage->SetFrameY(2);
@@ -472,7 +516,7 @@ void cPlayer::Render(HDC hdc)
 {
 	char buffer[255];
 
-	RectangleMake(hdc, AttackRect);
+	//RectangleMake(hdc, AttackRect);
 	if(!isDivain)
 		PlayerImage->FrameRender(hdc, PosX, PosY, PlayerImage->GetFrameX(), PlayerImage->GetFrameY(), PlayerImage->GetFrameWidth(), PlayerImage->GetFrameHeight());
 	else
@@ -493,11 +537,11 @@ void cPlayer::Render(HDC hdc)
 		sprintf(buffer, "%d", DamageBuffer);
 		TextOut(hdc, PosX + PlayerImage->GetFrameWidth()/2 , PosY - 10, buffer, strlen(buffer));
 	}
-	RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()/2 +10, 10, 10);
+	/*RectangleMakeCenter(hdc, PosX + PlayerImage->GetFrameWidth() / 2, PosY + PlayerImage->GetFrameHeight()/2, 20, 25);
 	RectangleMakeCenter(hdc, LProveX, LProveY, 5, 5);
 	RectangleMakeCenter(hdc, RProveX, RProveY, 5, 5);
 	RectangleMakeCenter(hdc, TProveX, TProveY, 5, 5);
-	RectangleMakeCenter(hdc, BProveX, BProveY, 5, 5);
+	RectangleMakeCenter(hdc, BProveX, BProveY, 5, 5);*/
 
 
 
@@ -532,7 +576,7 @@ void cPlayer::Render(HDC hdc)
 		
 		HFONT myFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "궁서체");
 		HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
-		SetTextColor(hdc, RGB(0, 0, 0));
+		SetTextColor(hdc, RGB(128, 128, 128));
 		TextOut(hdc, ViewPort.left + 150, ViewPort.top + 30, buffer, strlen(buffer));
 		SelectObject(hdc, oldFont);
 		DeleteObject(myFont);

@@ -9,6 +9,7 @@
 #define PlayerSize 30
 
 class cMonster;
+class cBoss;
 class cProgressBar;
 
 enum PlayerDir
@@ -24,6 +25,7 @@ class cPlayer
 {
 private:
 	cMonster* Monster;
+	cBoss* Boss;
 	cImage* PlayerImage;
 	cImage* Terrain;
 	cImage* CommunicationBox;
@@ -136,6 +138,7 @@ public:
 	void SetIsHit(bool pl_ishit) { isHit = pl_ishit; }
 	void SetisDivain(bool pl_isdivain) { isDivain = pl_isdivain; }
 	void SetMonster(cMonster* pl_monster) { Monster = pl_monster; }
+	void SetBoss(cBoss* pl_Boss) { Boss = pl_Boss; }
 	void SetIsPush(bool pl_push) { isPush = pl_push; }
 	void SetDamageBuffer(int pl_damagebuffer) { DamageBuffer = pl_damagebuffer; }
 #pragma endregion

@@ -13,6 +13,7 @@ void cTitleScene::Update()
 {
 	if (g_pKeyManager->isOnceKeyDown(VK_RETURN))
 	{
+		g_pPlayerManager->GetPlayer()->SetHp(g_pPlayerManager->GetPlayer()->GetMAXHP());
 		g_pSceneManager->SetNextScene(SLIST_PLAY);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}

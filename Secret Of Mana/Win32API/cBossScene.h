@@ -2,7 +2,7 @@
 #include "cGameNode.h"
 
 class cPlayer;
-class cMonster;
+class cBoss;
 
 class cBossScene : public cGameNode
 {
@@ -11,7 +11,9 @@ private:
 	cImage* BackGround_Magenta;
 	cImage*	EmptyBuffer;
 	cPlayer* Player;
-	cMonster* Boss;
+	cBoss* Boss;
+
+	int SeachTime;
 
 	RECT ViewPort;
 

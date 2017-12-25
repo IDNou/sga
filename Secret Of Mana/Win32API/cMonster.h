@@ -3,6 +3,10 @@
 
 class cPlayer;
 
+#define RabitSeachSpeed 5
+#define BeeSeachSpeed 5
+#define CoboltSeachSpeed 5
+
 enum MoveDir {
 	MON_LEFT = 0,
 	MON_RIGHT,

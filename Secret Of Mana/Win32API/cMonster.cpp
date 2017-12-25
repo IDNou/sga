@@ -97,7 +97,12 @@ void cMonster::Update()
 					switch (Direction)
 					{
 					case MON_LEFT:
-						SetFrameY(1);
+						if (Name == "Rabit")
+							SetFrameY(1);
+						else if (Name == "Bee")
+							SetFrameY(3);
+						else if (Name == "Cobolt")
+							SetFrameY(0);
 						if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
 							PosX -= 5;
 						SetFrameX(GetFrameX() + 1);
@@ -108,7 +113,12 @@ void cMonster::Update()
 						}
 						break;
 					case MON_RIGHT:
-						SetFrameY(0);
+						if (Name == "Rabit")
+							SetFrameY(0);
+						else if (Name == "Bee")
+							SetFrameY(2);
+						else if (Name == "Cobolt")
+							SetFrameY(1);
 						if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
 							PosX += 5;
 						SetFrameX(GetFrameX() + 1);
@@ -119,7 +129,12 @@ void cMonster::Update()
 						}
 						break;
 					case MON_UP:
-						SetFrameY(1);
+						if (Name == "Rabit")
+							SetFrameY(1);
+						else if (Name == "Bee")
+							SetFrameY(3);
+						else if (Name == "Cobolt")
+							SetFrameY(2);
 						if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
 							PosY -= 5;
 						SetFrameX(GetFrameX() + 1);
@@ -130,7 +145,12 @@ void cMonster::Update()
 						}
 						break;
 					case MON_DOWN:
-						SetFrameY(0);
+						if (Name == "Rabit")
+							SetFrameY(0);
+						else if (Name == "Bee")
+							SetFrameY(2);
+						else if (Name == "Cobolt")
+							SetFrameY(3);
 						if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
 							PosY += 5;
 						SetFrameX(GetFrameX() + 1);
@@ -193,6 +213,7 @@ void cMonster::Update()
 
 			if (isAttackMode)
 			{
+				//이거 공격모드네
 				// 요기에 조건문으로 근접인지 원거리인지 구분해주면 좋을뜻.
 				if (AttackDelay < 0)
 				{
@@ -264,11 +285,135 @@ void cMonster::Update()
 					}
 					else if (Name == "Bee")
 					{
-
+						switch (Direction)
+						{
+						case MON_LEFT:
+							SetFrameY(4);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_RIGHT:
+							SetFrameY(5);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_UP:
+							SetFrameY(4);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_DOWN:
+							SetFrameY(5);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						}
 					}
 					else if (Name == "Cobolt")
 					{
-
+						switch (Direction)
+						{
+						case MON_LEFT:
+							SetFrameY(4);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_RIGHT:
+							SetFrameY(5);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_UP:
+							SetFrameY(6);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						case MON_DOWN:
+							SetFrameY(7);
+							if (AttackCount < 0)
+							{
+								AttackCount = 20;
+								SetFrameX(GetFrameX() + 1);
+								if (GetFrameX() > MonsterImage->GetMaxFrameX())
+								{
+									AttackDelay = 150;
+									isAttacking = false;
+									isShowAttackRect = true;
+									SetFrameX(0);
+								}
+							}
+							break;
+						}
 					}
 				}
 				
@@ -283,60 +428,181 @@ void cMonster::Update()
 				{
 					DirDelay = 10;
 
-					//오른쪽위
-					if (cosf(PI / 180 * Angle) * 5 > 0 && -sinf(PI / 180 * Angle) * 5 < 0)
+					if (Name == "Rabit")
 					{
-						SetFrameY(0);
-						if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
-							PosX += cosf(PI / 180 * Angle) * 5;
-						if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
-							PosY += -sinf(PI / 180 * Angle) * 5;
-						SetFrameX(GetFrameX() + 1);
-						if (GetFrameX() > MonsterImage->GetMaxFrameX())
+						//오른쪽위
+						if (cosf(PI / 180 * Angle) * RabitSeachSpeed > 0 && -sinf(PI / 180 * Angle) * RabitSeachSpeed < 0)
 						{
-							SetFrameX(0);
+							SetFrameY(0);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * RabitSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * RabitSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						// 오른쪽아래
+						else if (cosf(PI / 180 * Angle) * RabitSeachSpeed > 0 && -sinf(PI / 180 * Angle) * RabitSeachSpeed > 0)
+						{
+							SetFrameY(0);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * RabitSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * RabitSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						//왼쪽아래
+						else if (cosf(PI / 180 * Angle) * RabitSeachSpeed < 0 && -sinf(PI / 180 * Angle) * RabitSeachSpeed > 0)
+						{
+							SetFrameY(1);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * RabitSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * RabitSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						// 왼쪽위
+						else if (cosf(PI / 180 * Angle) * RabitSeachSpeed < 0 && -sinf(PI / 180 * Angle) * RabitSeachSpeed < 0)
+						{
+							SetFrameY(1);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * RabitSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * RabitSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
 						}
 					}
-					// 오른쪽아래
-					else if (cosf(PI / 180 * Angle) * 5 > 0 && -sinf(PI / 180 * Angle) * 5 > 0)
+					else if (Name == "Bee")
 					{
-						SetFrameY(0);
-						if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
-							PosX += cosf(PI / 180 * Angle) * 5;
-						if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
-							PosY += -sinf(PI / 180 * Angle) * 5;
-						SetFrameX(GetFrameX() + 1);
-						if (GetFrameX() > MonsterImage->GetMaxFrameX())
+						//오른쪽위
+						if (cosf(PI / 180 * Angle) * BeeSeachSpeed > 0 && -sinf(PI / 180 * Angle) * BeeSeachSpeed < 0)
 						{
-							SetFrameX(0);
+							SetFrameY(3);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * BeeSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * BeeSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						// 오른쪽아래
+						else if (cosf(PI / 180 * Angle) * BeeSeachSpeed > 0 && -sinf(PI / 180 * Angle) * BeeSeachSpeed > 0)
+						{
+								SetFrameY(3);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * BeeSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * BeeSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						//왼쪽아래
+						else if (cosf(PI / 180 * Angle) * BeeSeachSpeed < 0 && -sinf(PI / 180 * Angle) * BeeSeachSpeed > 0)
+						{
+								SetFrameY(2);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * BeeSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * BeeSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						// 왼쪽위
+						else if (cosf(PI / 180 * Angle) * BeeSeachSpeed < 0 && -sinf(PI / 180 * Angle) * BeeSeachSpeed < 0)
+						{
+								SetFrameY(2);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * BeeSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * BeeSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
 						}
 					}
-					//왼쪽아래
-					else if (cosf(PI / 180 * Angle) * 5 < 0 && -sinf(PI / 180 * Angle) * 5 > 0)
+					else if (Name == "Cobolt")
 					{
-						SetFrameY(1);
-						if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
-							PosX += cosf(PI / 180 * Angle) * 5;
-						if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
-							PosY += -sinf(PI / 180 * Angle) * 5;
-						SetFrameX(GetFrameX() + 1);
-						if (GetFrameX() > MonsterImage->GetMaxFrameX())
+						//오른쪽위
+						if (cosf(PI / 180 * Angle) * CoboltSeachSpeed > 0 && -sinf(PI / 180 * Angle) * CoboltSeachSpeed < 0)
 						{
-							SetFrameX(0);
+							SetFrameY(1);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * CoboltSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * CoboltSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
 						}
-					}
-					// 왼쪽위
-					else if (cosf(PI / 180 * Angle) * 5 < 0 && -sinf(PI / 180 * Angle) * 5 < 0)
-					{
-						SetFrameY(1);
-						if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
-							PosX += cosf(PI / 180 * Angle) * 5;
-						if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
-							PosY += -sinf(PI / 180 * Angle) * 5;
-						SetFrameX(GetFrameX() + 1);
-						if (GetFrameX() > MonsterImage->GetMaxFrameX())
+						// 오른쪽아래
+						else if (cosf(PI / 180 * Angle) * CoboltSeachSpeed > 0 && -sinf(PI / 180 * Angle) * CoboltSeachSpeed > 0)
 						{
-							SetFrameX(0);
+							SetFrameY(1);
+							if (!g_pPixelManager->CheckPixel(Terrain, RProve.x, RProve.y))
+								PosX += cosf(PI / 180 * Angle) * CoboltSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * CoboltSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						//왼쪽아래
+						else if (cosf(PI / 180 * Angle) * CoboltSeachSpeed < 0 && -sinf(PI / 180 * Angle) * CoboltSeachSpeed > 0)
+						{
+							SetFrameY(0);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * CoboltSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, BProve.x, BProve.y))
+								PosY += -sinf(PI / 180 * Angle) * CoboltSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
+						}
+						// 왼쪽위
+						else if (cosf(PI / 180 * Angle) * CoboltSeachSpeed < 0 && -sinf(PI / 180 * Angle) * CoboltSeachSpeed < 0)
+						{
+							SetFrameY(0);
+							if (!g_pPixelManager->CheckPixel(Terrain, LProve.x, LProve.y))
+								PosX += cosf(PI / 180 * Angle) * CoboltSeachSpeed;
+							if (!g_pPixelManager->CheckPixel(Terrain, TProve.x, TProve.y))
+								PosY += -sinf(PI / 180 * Angle) * CoboltSeachSpeed;
+							SetFrameX(GetFrameX() + 1);
+							if (GetFrameX() > MonsterImage->GetMaxFrameX())
+							{
+								SetFrameX(0);
+							}
 						}
 					}
 				}
@@ -366,16 +632,24 @@ void cMonster::Render(HDC hdc)
 {
 	char buffer[255];
 	//RectangleMakeCenter(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY + MonsterImage->GetFrameHeight() / 2, 20, 20);
-	HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+	/*HBRUSH myBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
 	HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, myBrush);
 	RectangleMake(hdc, SeachRect);
 	SelectObject(hdc, oldBrush);
-	DeleteObject(myBrush);
+	DeleteObject(myBrush);*/
 
-	RectangleMakeCenter(hdc, LProve.x - 10, LProve.y, 15, 30);
-	RectangleMakeCenter(hdc, RProve.x + 10, RProve.y, 15, 30);
-	RectangleMakeCenter(hdc, TProve.x , TProve.y - 10, 30, 15);
-	RectangleMakeCenter(hdc, BProve.x , BProve.y + 10, 30, 15);
+	//RectangleMakeCenter(hdc,PosX + MonsterImage->GetFrameWidth()/2, PosY + MonsterImage->GetFrameHeight()/2, 90, 90);
+
+	/*RectangleMakeCenter(hdc, LProve.x, LProve.y, 15, 30);
+	RectangleMakeCenter(hdc, RProve.x, RProve.y, 15, 30);
+	RectangleMakeCenter(hdc, TProve.x , TProve.y, 30, 15);
+	RectangleMakeCenter(hdc, BProve.x , BProve.y, 30, 15);
+
+	RectangleMakeCenter(hdc, LProve.x - 40, LProve.y, 15, 90);
+	RectangleMakeCenter(hdc, RProve.x + 40, RProve.y, 15, 90);
+	RectangleMakeCenter(hdc, TProve.x, TProve.y - 40, 90, 15);
+	RectangleMakeCenter(hdc, BProve.x, BProve.y + 40, 90, 15);*/
+
 	if (!isDivain)
 	{
 		MonsterImage->FrameRender(hdc, PosX, PosY, GetFrameX(), GetFrameY(), MonsterImage->GetFrameWidth(), MonsterImage->GetFrameHeight());
@@ -397,9 +671,9 @@ void cMonster::Render(HDC hdc)
 		sprintf(buffer, "%d", DamageBuffer);
 		TextOut(hdc, PosX + MonsterImage->GetFrameWidth() / 2, PosY - 10, buffer, strlen(buffer));
 	}
-	RectangleMakeCenter(hdc, LProve.x, LProve.y, 5, 5);
+	/*RectangleMakeCenter(hdc, LProve.x, LProve.y, 5, 5);
 	RectangleMakeCenter(hdc, RProve.x, RProve.y, 5, 5);
 	RectangleMakeCenter(hdc, TProve.x, TProve.y, 5, 5);
-	RectangleMakeCenter(hdc, BProve.x, BProve.y, 5, 5);
+	RectangleMakeCenter(hdc, BProve.x, BProve.y, 5, 5);*/
 
 }
