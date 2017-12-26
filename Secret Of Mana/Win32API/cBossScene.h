@@ -13,6 +13,8 @@ private:
 	cPlayer* Player;
 	cBoss* Boss;
 
+	json Place;
+
 	int SeachTime;
 
 	RECT ViewPort;

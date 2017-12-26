@@ -25,6 +25,8 @@ void cHouseScene::Setup()
 	isBuy = false;
 	count = 5;
 
+	g_pSoundManager->Play("StoreSound");
+
 }
 
 void cHouseScene::Update()

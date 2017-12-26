@@ -57,6 +57,10 @@ void cLoadingScene::LoadingImage()
 	g_pSoundManager->ReleaseSound("TitleSound");
 	g_pSoundManager->ReleaseSound("FieldSound");
 	g_pSoundManager->ReleaseSound("WaterPath");
+	g_pSoundManager->ReleaseSound("StoreSound");
+	g_pSoundManager->ReleaseSound("BossSound");
+	g_pSoundManager->ReleaseSound("HitSound");
+	g_pSoundManager->ReleaseSound("SwordSound");
 	
 	g_pImageManager->ReleaseImage("HpBarBack");
 	g_pImageManager->ReleaseImage("HpBarFront");
@@ -128,11 +132,23 @@ void cLoadingScene::LoadingSound()
 		break;
 	case SLIST_PLAY:
 		m_pLoading->LoadSound("FieldSound", "sounds/FieldSound.mp3", true, true);
+		m_pLoading->LoadSound("HitSound", "sounds/HitSound.mp3", false, false);
+		m_pLoading->LoadSound("SwordSound", "sounds/SwordSound.mp3", false, false);
 		break;
 	case SLIST_WATERPATH:
 		m_pLoading->LoadSound("WaterPath", "sounds/WaterPath.mp3", true, true);
+		m_pLoading->LoadSound("HitSound", "sounds/HitSound.mp3", false, false);
+		m_pLoading->LoadSound("SwordSound", "sounds/SwordSound.mp3", false, false);
+		break;
+	case SLIST_HOUSE:
+		m_pLoading->LoadSound("StoreSound", "sounds/StoreSound.mp3", true, true);
+		m_pLoading->LoadSound("HitSound", "sounds/HitSound.mp3", false, false);
+		m_pLoading->LoadSound("SwordSound", "sounds/SwordSound.mp3", false, false);
 		break;
 	case SLIST_BOSSMAP:
+		m_pLoading->LoadSound("BossSound", "sounds/BossSound.mp3", true, true);
+		m_pLoading->LoadSound("HitSound", "sounds/HitSound.mp3", false, false);
+		m_pLoading->LoadSound("SwordSound", "sounds/SwordSound.mp3", false, false);
 		break;
 	}
 }

@@ -441,6 +441,8 @@ void cPlayer::Update()
 			PlayerImage->SetPosY(PosY);
 			MoveCount = MOVECOUNT;
 
+			g_pSoundManager->Play("SwordSound");
+
 			switch (Direction)
 			{
 			case LEFT:
@@ -587,7 +589,7 @@ void cPlayer::Render(HDC hdc)
 	HFONT myFont = CreateFont(14, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, 0, "±Ã¼­Ã¼");
 	HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 	SetBkMode(hdc, TRANSPARENT);
-	SetTextColor(hdc, RGB(230, 160, 10));
+	SetTextColor(hdc, RGB(128, 64, 0));
 	TextOut(hdc, HPBar->GetPosX() - 25, HPBar->GetPosY() - 20, buffer, strlen(buffer));
 	SelectObject(hdc, oldFont);
 	DeleteObject(myFont);

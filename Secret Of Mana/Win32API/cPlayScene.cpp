@@ -270,6 +270,7 @@ void cPlayScene::Update()
 		{
 			if (!iter->second->GetIsHit())
 			{
+				g_pSoundManager->Play("HitSound");
 				iter->second->SetIsHit(true);
 				iter->second->SetPushDir((int)Player->GetPlayerDir());
 				iter->second->SetIsDivain(true);
@@ -325,15 +326,25 @@ void cPlayScene::Update()
 
 	if (g_pKeyManager->isStayKeyDown(VK_ESCAPE))
 	{
+		Place["Place"]["NAME"] = "";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
 		g_pSceneManager->SetNextScene(SLIST_TITLE);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
 
-	/*if (Player->GetHP() <= 0)
+	if (Player->GetHP() <= 0)
 	{
+		Place["Place"]["NAME"] = "";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
 		g_pSceneManager->SetNextScene(SLIST_TITLE);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);
-	}*/
+	}
 
 	SeachTime--;
 	CreateTime--;

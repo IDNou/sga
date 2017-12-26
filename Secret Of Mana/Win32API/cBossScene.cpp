@@ -22,6 +22,8 @@ void cBossScene::Setup()
 	Boss->SetPosY(120);
 	Boss->Setup();
 	Boss->SetTerrain(BackGround_Magenta);
+
+	g_pSoundManager->Play("BossSound");
 }
 
 void cBossScene::Update()
@@ -168,6 +170,7 @@ void cBossScene::Update()
 		&RectMakeCenter(Boss->GetPosX() + Boss->GetBossImage()->GetFrameWidth() / 2, Boss->GetPosY() + Boss->GetBossImage()->GetFrameHeight() / 2, 40, 40))
 		&& !Boss->GetIsDivain())
 	{
+		g_pSoundManager->Play("HitSound");
 		Boss->SetIsHit(true);
 		Boss->SetIsDivain(true);
 		Boss->SetDir((TagBossDir)Player->GetPlayerDir());
@@ -186,6 +189,17 @@ void cBossScene::Update()
 		Player->SetMONEY(Player->GetMoney() + Boss->GetMONEY());
 		/*g_pSceneManager->SetNextScene(SLIST_ENDING);
 		g_pSceneManager->ChangeScene(SLIST_LOADING);*/
+	}
+
+	if (Player->GetHP() <= 0)
+	{
+		Place["Place"]["NAME"] = "";
+		ofstream Input_Place;
+		Input_Place.open("PlayerPlace.json");
+		Input_Place << Place;
+		Input_Place.close();
+		g_pSceneManager->SetNextScene(SLIST_TITLE);
+		g_pSceneManager->ChangeScene(SLIST_LOADING);
 	}
 
 	if (g_pKeyManager->isStayKeyDown(VK_ESCAPE))
